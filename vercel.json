@@ -1,10 +1,22 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": "vite",
-  "regions": ["fra1"],
-  "functions": { "api/index.ts": { "maxDuration": 30 } },
+  "regions": [
+    "fra1"
+  ],
+  "functions": {
+    "api/index.mjs": {
+      "maxDuration": 30
+    }
+  },
   "rewrites": [
-    { "source": "/_api/:path*", "destination": "/api/index?__path=:path*" },
-    { "source": "/(.*)", "destination": "/index.html" }
+    {
+      "source": "/_api/:path*",
+      "destination": "/api/index?__path=:path*"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
   ]
 }

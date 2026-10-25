@@ -1,4 +1,4 @@
-// Generates api/_routes.ts: a static table of every endpoint in /endpoints,
+// Generates server/_routes.ts: a static table of every endpoint in /endpoints,
 // so the serverless function can bundle and dispatch them without a glob.
 import { readdirSync, statSync, writeFileSync } from "node:fs";
 import { join, relative, sep } from "node:path";
@@ -25,5 +25,5 @@ files.forEach((file, i) => {
 });
 lines.push("", "export type Handler = { handle: (request: Request) => Promise<Response> };", "");
 lines.push("export const routes: Record<string, Handler> = {", ...entries, "};", "");
-writeFileSync(join(root, "api", "_routes.ts"), lines.join("\n"));
+writeFileSync(join(root, "server", "_routes.ts"), lines.join("\n"));
 console.log(`Generated ${files.length} routes`);

@@ -1,7 +1,11 @@
 {
   "compilerOptions": {
     "target": "ES2022",
-    "lib": ["ES2023", "DOM", "DOM.Iterable"],
+    "lib": [
+      "ES2023",
+      "DOM",
+      "DOM.Iterable"
+    ],
     "module": "ESNext",
     "moduleResolution": "Bundler",
     "jsx": "react-jsx",
@@ -12,8 +16,23 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "allowImportingTsExtensions": false,
-    "types": ["vite/client", "node"]
+    "types": [
+      "vite/client",
+      "node"
+    ]
   },
-  "include": ["src", "pages", "components", "helpers", "endpoints", "api", "scripts/*.d.ts"],
-  "exclude": ["node_modules", "**/*.spec.tsx", "**/*.example.tsx"]
+  "include": [
+    "src",
+    "pages",
+    "components",
+    "helpers",
+    "endpoints",
+    "scripts/*.d.ts",
+    "server"
+  ],
+  "exclude": [
+    "node_modules",
+    "**/*.spec.tsx",
+    "**/*.example.tsx"
+  ]
 }
