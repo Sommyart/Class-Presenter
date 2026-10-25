@@ -44,31 +44,92 @@
   display: block;
 }
 
-/* Slide transition — direction-aware, subtle, and quick enough not to get
-   in the way of presenting. */
-@keyframes slideInFromRight {
-  from { opacity: 0; transform: translateX(2.5%) scale(0.995); }
-  to   { opacity: 1; transform: translateX(0) scale(1); }
+/* Slide transitions. The outgoing slide stays on screen (.leaving) while it
+   animates out and the incoming one animates in. --dir is 1 going forward and
+   -1 going back, so every style reverses with the direction of travel. */
+.stage {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  perspective: 1600px;
 }
 
-@keyframes slideInFromLeft {
-  from { opacity: 0; transform: translateX(-2.5%) scale(0.995); }
-  to   { opacity: 1; transform: translateX(0) scale(1); }
+.stage .slideImage {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
 }
 
-.slideEnterForward {
-  animation: slideInFromRight var(--animation-duration-slow) cubic-bezier(0.22, 1, 0.36, 1);
+.leaving {
+  pointer-events: none;
+  z-index: 1;
 }
 
-.slideEnterBackward {
-  animation: slideInFromLeft var(--animation-duration-slow) cubic-bezier(0.22, 1, 0.36, 1);
+@keyframes enterSlide {
+  from { transform: translateX(calc(var(--dir) * 100%)); }
+  to   { transform: translateX(0); }
 }
+@keyframes leaveSlide {
+  from { transform: translateX(0); }
+  to   { transform: translateX(calc(var(--dir) * -100%)); }
+}
+@keyframes enterFade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes leaveFade {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+@keyframes enterZoom {
+  from { opacity: 0; transform: scale(0.8); }
+  to   { opacity: 1; transform: scale(1); }
+}
+@keyframes leaveZoom {
+  from { opacity: 1; transform: scale(1); }
+  to   { opacity: 0; transform: scale(1.18); }
+}
+@keyframes enterFlip {
+  from { opacity: 0; transform: rotateY(calc(var(--dir) * 80deg)) scale(0.92); }
+  to   { opacity: 1; transform: rotateY(0) scale(1); }
+}
+@keyframes leaveFlip {
+  from { opacity: 1; transform: rotateY(0) scale(1); }
+  to   { opacity: 0; transform: rotateY(calc(var(--dir) * -80deg)) scale(0.92); }
+}
+@keyframes enterRise {
+  from { opacity: 0; transform: translateY(calc(var(--dir) * 12%)); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes leaveRise {
+  from { opacity: 1; transform: translateY(0); }
+  to   { opacity: 0; transform: translateY(calc(var(--dir) * -12%)); }
+}
+
+.enter_slide { animation: enterSlide 0.6s cubic-bezier(0.65, 0, 0.35, 1) both; }
+.leave_slide { animation: leaveSlide 0.6s cubic-bezier(0.65, 0, 0.35, 1) both; }
+.enter_fade  { animation: enterFade 0.6s ease both; }
+.leave_fade  { animation: leaveFade 0.6s ease both; }
+.enter_zoom  { animation: enterZoom 0.6s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.leave_zoom  { animation: leaveZoom 0.6s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.enter_flip  { animation: enterFlip 0.6s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.leave_flip  { animation: leaveFlip 0.6s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.enter_rise  { animation: enterRise 0.6s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.leave_rise  { animation: leaveRise 0.6s cubic-bezier(0.22, 1, 0.36, 1) both; }
 
 @media (prefers-reduced-motion: reduce) {
-  .slideEnterForward,
-  .slideEnterBackward {
-    animation: none;
+  .enter_slide, .leave_slide, .enter_zoom, .leave_zoom, .enter_flip, .leave_flip,
+  .enter_rise, .leave_rise {
+    animation-name: none;
   }
+  .enter_fade, .leave_fade { animation-duration: 0.2s; }
+}
+
+.transitionBtn {
+  gap: var(--spacing-1);
+  color: inherit;
+  font-size: 0.78rem;
+  font-weight: 600;
 }
 
 .timerWarning .timerValue {

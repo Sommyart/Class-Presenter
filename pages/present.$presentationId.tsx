@@ -13,6 +13,7 @@ import {
   AlertCircle,
   Volume2,
   VolumeX,
+  Sparkles,
 } from "lucide-react";
 import { Button } from "../components/Button";
 import { Spinner } from "../components/Spinner";
@@ -40,6 +41,50 @@ function formatMs(ms: number): string {
 function formatCountdownMs(ms: number): string {
   return formatMs(Math.ceil(Math.max(0, ms) / 1000) * 1000);
 }
+
+
+// --- Slide transitions -----------------------------------------------------
+type TransitionStyle = "slide" | "fade" | "zoom" | "flip" | "rise";
+type TransitionChoice = "mix" | TransitionStyle | "none";
+
+const TRANSITION_CHOICES: TransitionChoice[] = ["mix", "slide", "fade", "zoom", "flip", "rise", "none"];
+const TRANSITION_LABELS: Record<TransitionChoice, string> = {
+  mix: "Mix",
+  slide: "Slide",
+  fade: "Fade",
+  zoom: "Zoom",
+  flip: "Flip",
+  rise: "Rise",
+  none: "None",
+};
+const MIX_POOL: TransitionStyle[] = ["slide", "fade", "zoom", "flip", "rise"];
+// Keep in step with the 0.6s animations in the stylesheet.
+const TRANSITION_MS = 650;
+const TRANSITION_STORAGE_KEY = "classpresenter:transition";
+
+function readStoredTransition(): TransitionChoice {
+  try {
+    const value = window.localStorage.getItem(TRANSITION_STORAGE_KEY);
+    if (value && (TRANSITION_CHOICES as string[]).includes(value)) return value as TransitionChoice;
+  } catch {
+    // Storage can be unavailable (private windows); fall back to the default.
+  }
+  return "mix";
+}
+
+function pickTransition(choice: TransitionChoice, previous: TransitionStyle | null): TransitionStyle | null {
+  if (choice === "none") return null;
+  if (choice !== "mix") return choice;
+  const pool = MIX_POOL.filter((style) => style !== previous);
+  return pool[Math.floor(Math.random() * pool.length)];
+}
+
+type SlideAnimation = {
+  slideId: string | null;
+  fromUrl: string | null;
+  style: TransitionStyle | null;
+  dir: "forward" | "backward";
+};
 
 const CONTROLS_HIDE_DELAY_MS = 3000;
 // Ignore tiny cursor jitter so the controls don't flash back in.
@@ -241,6 +286,47 @@ export default function PresentPage() {
     }
   }, [data, state.currentSlideIndex]);
 
+
+  // --- Slide transitions ---------------------------------------------------
+  // When the slide changes, keep the previous image on screen while it animates
+  // out and the new one animates in. State is derived during render (guarded by
+  // the slide id) so the very first frame of the new slide already animates.
+  const [transitionChoice, setTransitionChoice] = useState<TransitionChoice>(readStoredTransition);
+  const [slideAnim, setSlideAnim] = useState<SlideAnimation>({
+    slideId: null,
+    fromUrl: null,
+    style: null,
+    dir: "forward",
+  });
+  const [shownSlide, setShownSlide] = useState<{ id: string; url: string | null } | null>(null);
+  const liveSlide = data?.slides[state.currentSlideIndex];
+  if (liveSlide && shownSlide?.id !== liveSlide.id) {
+    setShownSlide({ id: liveSlide.id, url: liveSlide.thumbnailUrl ?? null });
+    setSlideAnim({
+      slideId: liveSlide.id,
+      fromUrl: shownSlide?.url ?? null,
+      // The first slide shown (opening the presentation) does not animate.
+      style: shownSlide ? pickTransition(transitionChoice, slideAnim.style) : null,
+      dir: direction,
+    });
+  }
+  useEffect(() => {
+    if (!slideAnim.fromUrl) return;
+    const timer = setTimeout(() => setSlideAnim((a) => ({ ...a, fromUrl: null })), TRANSITION_MS);
+    return () => clearTimeout(timer);
+  }, [slideAnim.slideId, slideAnim.fromUrl]);
+  const cycleTransition = useCallback(() => {
+    setTransitionChoice((current) => {
+      const next = TRANSITION_CHOICES[(TRANSITION_CHOICES.indexOf(current) + 1) % TRANSITION_CHOICES.length];
+      try {
+        window.localStorage.setItem(TRANSITION_STORAGE_KEY, next);
+      } catch {
+        // Not persisted; still applies for this session.
+      }
+      return next;
+    });
+  }, []);
+
   // --- Background music ----------------------------------------------------
   // Two sources: one track for the whole presentation, and optionally a
   // track on an individual slide. A slide's own music takes precedence while
@@ -436,15 +522,30 @@ export default function PresentPage() {
 
       <div className={styles.slideArea}>
         {currentSlide?.thumbnailUrl ? (
-          <img
-            // Keying on the slide id restarts the enter animation each move.
-            key={currentSlide.id}
-            src={currentSlide.thumbnailUrl}
-            alt={`Slide ${state.currentSlideIndex + 1}`}
-            className={`${styles.slideImage} ${
-              direction === "forward" ? styles.slideEnterForward : styles.slideEnterBackward
-            }`}
-          />
+          <div className={styles.stage} style={{ "--dir": direction === "forward" ? 1 : -1 } as React.CSSProperties}>
+            {slideAnim.fromUrl && slideAnim.style && (
+              <img
+                key={`leave-${slideAnim.slideId}`}
+                src={slideAnim.fromUrl}
+                alt=""
+                aria-hidden="true"
+                className={`${styles.slideImage} ${styles.leaving} ${styles[`leave_${slideAnim.style}`]}`}
+                style={{ "--dir": slideAnim.dir === "forward" ? 1 : -1 } as React.CSSProperties}
+              />
+            )}
+            <img
+              // Keying on the slide id restarts the enter animation each move.
+              key={currentSlide.id}
+              src={currentSlide.thumbnailUrl}
+              alt={`Slide ${state.currentSlideIndex + 1}`}
+              className={`${styles.slideImage} ${
+                slideAnim.style && slideAnim.slideId === currentSlide.id
+                  ? styles[`enter_${slideAnim.style}`]
+                  : ""
+              }`}
+              style={{ "--dir": slideAnim.dir === "forward" ? 1 : -1 } as React.CSSProperties}
+            />
+          </div>
         ) : (
           <div className={styles.slideCard}>
             <span className={styles.slideNumber}>
@@ -544,6 +645,21 @@ export default function PresentPage() {
             className={styles.controlBtn}
           >
             <Clock3 className={styles.controlIcon} />
+          </Button>
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={(e) => {
+              cycleTransition();
+              // Don't leave focus here, or Space/Enter would cycle it again.
+              e.currentTarget.blur();
+            }}
+            aria-label={`Slide transition: ${TRANSITION_LABELS[transitionChoice]}. Click to change.`}
+            title="Slide transition (click to change)"
+            className={styles.transitionBtn}
+          >
+            <Sparkles className={styles.controlIcon} />
+            <span>{TRANSITION_LABELS[transitionChoice]}</span>
           </Button>
           <div className={styles.divider} />
 
