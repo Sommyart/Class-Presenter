@@ -7,18 +7,24 @@ import * as r3 from "../endpoints/auth/oauth_authorize_GET";
 import * as r4 from "../endpoints/auth/oauth_callback_GET";
 import * as r5 from "../endpoints/auth/register_with_password_POST";
 import * as r6 from "../endpoints/auth/session_GET";
-import * as r7 from "../endpoints/presentations/audio_presign_POST";
-import * as r8 from "../endpoints/presentations/delete_POST";
-import * as r9 from "../endpoints/presentations/detail_GET";
-import * as r10 from "../endpoints/presentations/list_GET";
-import * as r11 from "../endpoints/presentations/mark_presented_POST";
-import * as r12 from "../endpoints/presentations/set_presentation_audio_POST";
-import * as r13 from "../endpoints/presentations/set_slide_audio_POST";
-import * as r14 from "../endpoints/presentations/thumbnails_presign_POST";
-import * as r15 from "../endpoints/presentations/update_timers_POST";
-import * as r16 from "../endpoints/presentations/upload_complete_POST";
-import * as r17 from "../endpoints/presentations/upload_init_POST";
-import * as r18 from "../endpoints/storage/usage_GET";
+import * as r7 from "../endpoints/canva/callback_GET";
+import * as r8 from "../endpoints/canva/cleanup_POST";
+import * as r9 from "../endpoints/canva/connect_GET";
+import * as r10 from "../endpoints/canva/disconnect_POST";
+import * as r11 from "../endpoints/canva/import_POST";
+import * as r12 from "../endpoints/canva/status_GET";
+import * as r13 from "../endpoints/presentations/audio_presign_POST";
+import * as r14 from "../endpoints/presentations/delete_POST";
+import * as r15 from "../endpoints/presentations/detail_GET";
+import * as r16 from "../endpoints/presentations/list_GET";
+import * as r17 from "../endpoints/presentations/mark_presented_POST";
+import * as r18 from "../endpoints/presentations/set_presentation_audio_POST";
+import * as r19 from "../endpoints/presentations/set_slide_audio_POST";
+import * as r20 from "../endpoints/presentations/thumbnails_presign_POST";
+import * as r21 from "../endpoints/presentations/update_timers_POST";
+import * as r22 from "../endpoints/presentations/upload_complete_POST";
+import * as r23 from "../endpoints/presentations/upload_init_POST";
+import * as r24 from "../endpoints/storage/usage_GET";
 
 export type Handler = { handle: (request: Request) => Promise<Response> };
 
@@ -30,16 +36,22 @@ export const routes: Record<string, Handler> = {
   "GET /auth/oauth_callback": r4,
   "POST /auth/register_with_password": r5,
   "GET /auth/session": r6,
-  "POST /presentations/audio_presign": r7,
-  "POST /presentations/delete": r8,
-  "GET /presentations/detail": r9,
-  "GET /presentations/list": r10,
-  "POST /presentations/mark_presented": r11,
-  "POST /presentations/set_presentation_audio": r12,
-  "POST /presentations/set_slide_audio": r13,
-  "POST /presentations/thumbnails_presign": r14,
-  "POST /presentations/update_timers": r15,
-  "POST /presentations/upload_complete": r16,
-  "POST /presentations/upload_init": r17,
-  "GET /storage/usage": r18,
+  "GET /canva/callback": r7,
+  "POST /canva/cleanup": r8,
+  "GET /canva/connect": r9,
+  "POST /canva/disconnect": r10,
+  "POST /canva/import": r11,
+  "GET /canva/status": r12,
+  "POST /presentations/audio_presign": r13,
+  "POST /presentations/delete": r14,
+  "GET /presentations/detail": r15,
+  "GET /presentations/list": r16,
+  "POST /presentations/mark_presented": r17,
+  "POST /presentations/set_presentation_audio": r18,
+  "POST /presentations/set_slide_audio": r19,
+  "POST /presentations/thumbnails_presign": r20,
+  "POST /presentations/update_timers": r21,
+  "POST /presentations/upload_complete": r22,
+  "POST /presentations/upload_init": r23,
+  "GET /storage/usage": r24,
 };

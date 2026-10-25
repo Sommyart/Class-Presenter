@@ -107,3 +107,14 @@ CREATE TABLE slides (
   UNIQUE (presentation_id, slide_index)
 );
 CREATE INDEX slides_presentation_id_idx ON slides (presentation_id);
+
+-- Canva import: one connection per user. Tokens are stored encrypted (AES-GCM, key derived from JWT_SECRET).
+CREATE TABLE canva_connections (
+  user_id        INTEGER PRIMARY KEY REFERENCES users(id) ON DELETE CASCADE,
+  access_token   TEXT NOT NULL,
+  refresh_token  TEXT NOT NULL,
+  expires_at     TIMESTAMPTZ NOT NULL,
+  scope          TEXT,
+  created_at     TIMESTAMPTZ NOT NULL DEFAULT now(),
+  updated_at     TIMESTAMPTZ NOT NULL DEFAULT now()
+);

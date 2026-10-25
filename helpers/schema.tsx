@@ -17,6 +17,16 @@ export type Timestamp = ColumnType<Date, Date | string, Date | string>;
 
 export type UserRole = "admin" | "user";
 
+export interface CanvaConnections {
+  accessToken: string;
+  createdAt: Generated<Timestamp>;
+  expiresAt: Timestamp;
+  refreshToken: string;
+  scope: string | null;
+  updatedAt: Generated<Timestamp>;
+  userId: number;
+}
+
 export interface LoginAttempts {
   attemptedAt: Generated<Timestamp | null>;
   email: string;
@@ -113,6 +123,7 @@ export interface UserStorage {
 }
 
 export interface DB {
+  canvaConnections: CanvaConnections;
   loginAttempts: LoginAttempts;
   oauthAccounts: OauthAccounts;
   oauthStates: OauthStates;

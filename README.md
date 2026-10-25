@@ -16,6 +16,13 @@ See `.env.example`. Required: `DATABASE_URL`, `JWT_SECRET`, `AWS_ENDPOINT_URL_S3
 
 Google sign-in (optional): create an OAuth client in Google Cloud, add the redirect URI `https://<your-domain>/_api/auth/oauth_callback`, then set `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET` and `VITE_GOOGLE_AUTH=true`.
 
+## Canva import (optional)
+Users connect their own Canva account once, then paste a design link. The server exports the design to PDF through Canva's Connect API and the app processes it like any uploaded PDF.
+1. Create an integration in the Canva developer portal and enable the scopes `design:content:read` and `design:meta:read`.
+2. Register the redirect URL `https://<your-domain>/_api/canva/callback`.
+3. Set `CANVA_CLIENT_ID` and `CANVA_CLIENT_SECRET` in Vercel (and `CANVA_REDIRECT_URI` if your public domain differs).
+Canva tokens are stored encrypted in the `canva_connections` table.
+
 ## Browser uploads need bucket CORS
 Files are uploaded straight from the browser to the bucket. With the Neon bucket created here, cross-origin `PUT`/`GET` from the Vercel domain were observed to be accepted without extra configuration; if you switch storage providers, make sure the bucket allows `PUT`/`GET` from your site origin.
 

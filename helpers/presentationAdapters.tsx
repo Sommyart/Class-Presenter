@@ -41,7 +41,7 @@ export const presentationAdapters: Record<PresentationSourceType, PresentationAd
     implemented: false,
     acceptsUpload: false,
     unavailableReason:
-      "Canva import needs a connected Canva account (OAuth plus export access). No Canva credentials are configured for this app yet, so links can't be imported.",
+      "Canva import isn't set up on this deployment yet (the Canva app credentials are missing), so links can't be imported.",
   },
   google_slides: {
     source: "google_slides",

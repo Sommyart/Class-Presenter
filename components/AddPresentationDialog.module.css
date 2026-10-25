@@ -81,3 +81,28 @@
   color: var(--muted-foreground);
   margin: 0;
 }
+
+.spin {
+  animation: dialogSpin 1s linear infinite;
+}
+
+@keyframes dialogSpin {
+  to { transform: rotate(360deg); }
+}
+
+.textLink {
+  align-self: center;
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 0.8rem;
+  color: var(--muted-foreground);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.helpText {
+  font-size: 0.8rem;
+  color: var(--muted-foreground);
+  margin: 0;
+}

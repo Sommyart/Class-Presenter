@@ -1,5 +1,6 @@
-import React, { useMemo, useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useMemo, useState } from "react";
+import { Link, useSearchParams } from "react-router-dom";
+import { toast } from "sonner";
 import { Plus, ArrowRight, Library, Timer, Presentation as PresentIcon } from "lucide-react";
 import { Button } from "../components/Button";
 import { Skeleton } from "../components/Skeleton";
@@ -26,6 +27,26 @@ function formatDuration(totalSeconds: number): string {
 
 export default function DashboardPage() {
   const [addOpen, setAddOpen] = useState(false);
+  const [dialogTab, setDialogTab] = useState<"upload" | "link">("upload");
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  // Result of the Canva connection redirect.
+  useEffect(() => {
+    const result = searchParams.get("canva");
+    if (!result) return;
+    if (result === "connected") {
+      toast.success("Canva connected. Paste a design link to import it.");
+      setDialogTab("link");
+      setAddOpen(true);
+    } else if (result === "denied") {
+      toast.error("Canva access was not granted.");
+    } else if (result === "not_configured") {
+      toast.error("Canva import is not set up on this deployment yet.");
+    } else {
+      toast.error("Could not connect Canva. Please try again.");
+    }
+    setSearchParams({}, { replace: true });
+  }, [searchParams, setSearchParams]);
   const { data, isLoading } = usePresentations();
   const { authState } = useAuth();
 
@@ -142,7 +163,7 @@ export default function DashboardPage() {
         )}
       </section>
 
-      <AddPresentationDialog open={addOpen} onOpenChange={setAddOpen} />
+      <AddPresentationDialog key={dialogTab} open={addOpen} onOpenChange={setAddOpen} defaultTab={dialogTab} />
     </div>
   );
 }

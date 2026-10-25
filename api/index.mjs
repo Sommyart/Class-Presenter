@@ -23,9 +23,9 @@ var __export = (target, all) => {
 };
 var __copyProps = (to, from, except, desc) => {
   if (from && typeof from === "object" || typeof from === "function") {
-    for (let key of __getOwnPropNames(from))
-      if (!__hasOwnProp.call(to, key) && key !== except)
-        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+    for (let key2 of __getOwnPropNames(from))
+      if (!__hasOwnProp.call(to, key2) && key2 !== except)
+        __defProp(to, key2, { get: () => from[key2], enumerable: !(desc = __getOwnPropDesc(from, key2)) || desc.enumerable });
   }
   return to;
 };
@@ -77,12 +77,12 @@ var init_stringUnionSelector = __esm({
       SelectorType3["ENV"] = "env";
       SelectorType3["CONFIG"] = "shared config entry";
     })(SelectorType || (SelectorType = {}));
-    stringUnionSelector = (obj, key, union, type) => {
-      if (!(key in obj))
+    stringUnionSelector = (obj, key2, union, type) => {
+      if (!(key2 in obj))
         return void 0;
-      const value = obj[key].toUpperCase();
+      const value = obj[key2].toUpperCase();
       if (!Object.values(union).includes(value)) {
-        throw new TypeError(`Cannot load ${type} '${key}'. Expected one of ${Object.values(union)}, got '${obj[key]}'.`);
+        throw new TypeError(`Cannot load ${type} '${key2}'. Expected one of ${Object.values(union)}, got '${obj[key2]}'.`);
       }
       return value;
     };
@@ -713,17 +713,17 @@ function parseQueryString(querystring) {
   querystring = querystring.replace(/^\?/, "");
   if (querystring) {
     for (const pair of querystring.split("&")) {
-      let [key, value = null] = pair.split("=");
-      key = decodeURIComponent(key);
+      let [key2, value = null] = pair.split("=");
+      key2 = decodeURIComponent(key2);
       if (value) {
         value = decodeURIComponent(value);
       }
-      if (!(key in query)) {
-        query[key] = value;
-      } else if (Array.isArray(query[key])) {
-        query[key].push(value);
+      if (!(key2 in query)) {
+        query[key2] = value;
+      } else if (Array.isArray(query[key2])) {
+        query[key2].push(value);
       } else {
-        query[key] = [query[key], value];
+        query[key2] = [query[key2], value];
       }
     }
   }
@@ -826,7 +826,7 @@ var init_circularReplacer = __esm({
   "node_modules/@smithy/core/dist-es/submodules/client/util-waiter/circularReplacer.js"() {
     getCircularReplacer = () => {
       const seen = /* @__PURE__ */ new WeakSet();
-      return (key, value) => {
+      return (key2, value) => {
         if (typeof value === "object" && value !== null) {
           if (seen.has(value)) {
             return "[Circular]";
@@ -1264,8 +1264,8 @@ var init_Schema = __esm({
       namespace;
       traits;
       static assign(instance, values2) {
-        const schema16 = Object.assign(instance, values2);
-        return schema16;
+        const schema18 = Object.assign(instance, values2);
+        return schema18;
       }
       static [Symbol.hasInstance](lhs) {
         const isPrototype = this.prototype.isPrototypeOf(lhs);
@@ -1457,12 +1457,12 @@ var init_NormalizedSchema = __esm({
         this.memberName = memberName;
         const traitStack = [];
         let _ref = ref;
-        let schema16 = ref;
+        let schema18 = ref;
         this._isMemberSchema = false;
         while (isMemberSchema(_ref)) {
           traitStack.push(_ref[1]);
           _ref = _ref[0];
-          schema16 = deref(_ref);
+          schema18 = deref(_ref);
           this._isMemberSchema = true;
         }
         if (traitStack.length > 0) {
@@ -1474,20 +1474,20 @@ var init_NormalizedSchema = __esm({
         } else {
           this.memberTraits = 0;
         }
-        if (schema16 instanceof _NormalizedSchema) {
+        if (schema18 instanceof _NormalizedSchema) {
           const computedMemberTraits = this.memberTraits;
-          Object.assign(this, schema16);
-          this.memberTraits = Object.assign({}, computedMemberTraits, schema16.getMemberTraits(), this.getMemberTraits());
+          Object.assign(this, schema18);
+          this.memberTraits = Object.assign({}, computedMemberTraits, schema18.getMemberTraits(), this.getMemberTraits());
           this.normalizedTraits = void 0;
-          this.memberName = memberName ?? schema16.memberName;
+          this.memberName = memberName ?? schema18.memberName;
           return;
         }
-        this.schema = deref(schema16);
+        this.schema = deref(schema18);
         if (isStaticSchema(this.schema)) {
           this.name = `${this.schema[1]}#${this.schema[2]}`;
           this.traits = this.schema[3];
         } else {
-          this.name = this.memberName ?? String(schema16);
+          this.name = this.memberName ?? String(schema18);
           this.traits = 0;
         }
         if (this._isMemberSchema && !memberName) {
@@ -1635,8 +1635,8 @@ var init_NormalizedSchema = __esm({
         if (!isDoc && !isMap2) {
           throw new Error(`@smithy/core/schema - cannot get key for non-map: ${this.getName(true)}`);
         }
-        const schema16 = this.getSchema();
-        const memberSchema = isDoc ? 15 : schema16[4] ?? 0;
+        const schema18 = this.getSchema();
+        const memberSchema = isDoc ? 15 : schema18[4] ?? 0;
         return member([memberSchema, 0], "key");
       }
       getValueSchema() {
@@ -1789,11 +1789,11 @@ var init_TypeRegistry = __esm({
           }
         }
       }
-      register(shapeId, schema16) {
+      register(shapeId, schema18) {
         const qualifiedName = this.normalizeShapeId(shapeId);
         for (const r5 of [this, _TypeRegistry.for(qualifiedName.split("#")[0])]) {
           if (!r5.schemas.has(qualifiedName)) {
-            r5.schemas.set(qualifiedName, schema16);
+            r5.schemas.set(qualifiedName, schema18);
           }
         }
       }
@@ -1803,9 +1803,9 @@ var init_TypeRegistry = __esm({
           if (!shapeId.includes("#")) {
             const suffix = "#" + shapeId;
             const candidates = [];
-            for (const [shapeId2, schema16] of this.schemas.entries()) {
+            for (const [shapeId2, schema18] of this.schemas.entries()) {
               if (shapeId2.endsWith(suffix)) {
-                candidates.push(schema16);
+                candidates.push(schema18);
               }
             }
             if (candidates.length === 1) {
@@ -1851,9 +1851,9 @@ var init_TypeRegistry = __esm({
         return void 0;
       }
       find(predicate) {
-        for (const schema16 of this.schemas.values()) {
-          if (predicate(schema16)) {
-            return schema16;
+        for (const schema18 of this.schemas.values()) {
+          if (predicate(schema18)) {
+            return schema18;
           }
         }
         return void 0;
@@ -1923,11 +1923,11 @@ var init_schema = __esm({
 });
 
 // node_modules/@smithy/core/dist-es/submodules/client/smithy-client/schemaLogFilter.js
-function schemaLogFilter(schema16, data) {
+function schemaLogFilter(schema18, data) {
   if (data == null) {
     return data;
   }
-  const ns = NormalizedSchema.of(schema16);
+  const ns = NormalizedSchema.of(schema18);
   if (ns.getMergedTraits().sensitive) {
     return SENSITIVE_STRING;
   }
@@ -2004,14 +2004,14 @@ var init_command = __esm({
           delete requestOptions.metricsRecorder;
         }
         let isEventStream;
-        const schema16 = this.schema;
-        const marker = schema16?.[operationEventStreamMarker];
+        const schema18 = this.schema;
+        const marker = schema18?.[operationEventStreamMarker];
         if (marker !== void 0) {
           isEventStream = marker;
-        } else if (schema16) {
-          if (Array.isArray(schema16) && schema16[0] === 9) {
-            const [, , , , input$, output$] = schema16;
-            isEventStream = schema16[operationEventStreamMarker] = Boolean(NormalizedSchema.of(input$).getEventStreamMember() || NormalizedSchema.of(output$).getEventStreamMember());
+        } else if (schema18) {
+          if (Array.isArray(schema18) && schema18[0] === 9) {
+            const [, , , , input$, output$] = schema18;
+            isEventStream = schema18[operationEventStreamMarker] = Boolean(NormalizedSchema.of(input$).getEventStreamMember() || NormalizedSchema.of(output$).getEventStreamMember());
           }
         }
         if (isEventStream) {
@@ -2450,13 +2450,13 @@ var init_get_value_from_text_node = __esm({
     init_transport();
     getValueFromTextNode = (obj) => {
       const textNodeName = "#text";
-      for (const key in obj) {
-        if (!hasOwn(obj, key))
+      for (const key2 in obj) {
+        if (!hasOwn(obj, key2))
           continue;
-        if (obj[key][textNodeName] !== void 0) {
-          obj[key] = obj[key][textNodeName];
-        } else if (typeof obj[key] === "object" && obj[key] !== null) {
-          obj[key] = getValueFromTextNode(obj[key]);
+        if (obj[key2][textNodeName] !== void 0) {
+          obj[key2] = obj[key2][textNodeName];
+        } else if (typeof obj[key2] === "object" && obj[key2] !== null) {
+          obj[key2] = getValueFromTextNode(obj[key2]);
         }
       }
       return obj;
@@ -2511,14 +2511,14 @@ function map2(arg0, arg1, arg2) {
       instructions = arg1;
     }
   }
-  for (const key in instructions) {
-    if (!hasOwn(instructions, key))
+  for (const key2 in instructions) {
+    if (!hasOwn(instructions, key2))
       continue;
-    if (!Array.isArray(instructions[key])) {
-      target[key] = instructions[key];
+    if (!Array.isArray(instructions[key2])) {
+      target[key2] = instructions[key2];
       continue;
     }
-    applyInstruction(target, null, instructions, key);
+    applyInstruction(target, null, instructions, key2);
   }
   return target;
 }
@@ -2535,22 +2535,22 @@ var init_object_mapping = __esm({
     };
     take = (source, instructions) => {
       const out = {};
-      for (const key in instructions) {
-        if (!hasOwn(instructions, key))
+      for (const key2 in instructions) {
+        if (!hasOwn(instructions, key2))
           continue;
-        applyInstruction(out, source, instructions, key);
+        applyInstruction(out, source, instructions, key2);
       }
       return out;
     };
     mapWithFilter = (target, filter, instructions) => {
-      return map2(target, Object.entries(instructions).reduce((_instructions, [key, value]) => {
+      return map2(target, Object.entries(instructions).reduce((_instructions, [key2, value]) => {
         if (Array.isArray(value)) {
-          _instructions[key] = value;
+          _instructions[key2] = value;
         } else {
           if (typeof value === "function") {
-            _instructions[key] = [filter, value()];
+            _instructions[key2] = [filter, value()];
           } else {
-            _instructions[key] = [filter, value];
+            _instructions[key2] = [filter, value];
           }
         }
         return _instructions;
@@ -2626,13 +2626,13 @@ var init_serde_json = __esm({
       }
       if (typeof obj === "object") {
         const target = {};
-        for (const key in obj) {
-          if (!hasOwn(obj, key))
+        for (const key2 in obj) {
+          if (!hasOwn(obj, key2))
             continue;
-          if (obj[key] == null) {
+          if (obj[key2] == null) {
             continue;
           }
-          target[key] = _json(obj[key]);
+          target[key2] = _json(obj[key2]);
         }
         return target;
       }
@@ -3891,14 +3891,14 @@ var init_memoize = __esm({
 var booleanSelector;
 var init_booleanSelector = __esm({
   "node_modules/@smithy/core/dist-es/submodules/config/util-config-provider/booleanSelector.js"() {
-    booleanSelector = (obj, key, type) => {
-      if (!(key in obj))
+    booleanSelector = (obj, key2, type) => {
+      if (!(key2 in obj))
         return void 0;
-      if (obj[key] === "true")
+      if (obj[key2] === "true")
         return true;
-      if (obj[key] === "false")
+      if (obj[key2] === "false")
         return false;
-      throw new Error(`Cannot load ${type} "${key}". Expected "true" or "false", got ${obj[key]}.`);
+      throw new Error(`Cannot load ${type} "${key2}". Expected "true" or "false", got ${obj[key2]}.`);
     };
   }
 });
@@ -3907,12 +3907,12 @@ var init_booleanSelector = __esm({
 var numberSelector;
 var init_numberSelector = __esm({
   "node_modules/@smithy/core/dist-es/submodules/config/util-config-provider/numberSelector.js"() {
-    numberSelector = (obj, key, type) => {
-      if (!(key in obj))
+    numberSelector = (obj, key2, type) => {
+      if (!(key2 in obj))
         return void 0;
-      const numberValue = parseInt(obj[key], 10);
+      const numberValue = parseInt(obj[key2], 10);
       if (Number.isNaN(numberValue)) {
-        throw new TypeError(`Cannot load ${type} '${key}'. Expected number, got '${obj[key]}'.`);
+        throw new TypeError(`Cannot load ${type} '${key2}'. Expected number, got '${obj[key2]}'.`);
       }
       return numberValue;
     };
@@ -4016,15 +4016,15 @@ var init_getConfigData = __esm({
   "node_modules/@smithy/core/dist-es/submodules/config/shared-ini-file-loader/getConfigData.js"() {
     import_types6 = __toESM(require_dist_cjs());
     init_constants3();
-    getConfigData = (data) => Object.entries(data).filter(([key]) => {
-      const indexOfSeparator = key.indexOf(CONFIG_PREFIX_SEPARATOR);
+    getConfigData = (data) => Object.entries(data).filter(([key2]) => {
+      const indexOfSeparator = key2.indexOf(CONFIG_PREFIX_SEPARATOR);
       if (indexOfSeparator === -1) {
         return false;
       }
-      return Object.values(import_types6.IniSectionType).includes(key.substring(0, indexOfSeparator));
-    }).reduce((acc, [key, value]) => {
-      const indexOfSeparator = key.indexOf(CONFIG_PREFIX_SEPARATOR);
-      const updatedKey = key.substring(0, indexOfSeparator) === import_types6.IniSectionType.PROFILE ? key.substring(indexOfSeparator + 1) : key;
+      return Object.values(import_types6.IniSectionType).includes(key2.substring(0, indexOfSeparator));
+    }).reduce((acc, [key2, value]) => {
+      const indexOfSeparator = key2.indexOf(CONFIG_PREFIX_SEPARATOR);
+      const updatedKey = key2.substring(0, indexOfSeparator) === import_types6.IniSectionType.PROFILE ? key2.substring(indexOfSeparator + 1) : key2;
       acc[updatedKey] = value;
       return acc;
     }, {
@@ -4100,8 +4100,8 @@ var init_parseIni = __esm({
                 currentSubSection = void 0;
               }
               map3[currentSection] = map3[currentSection] || {};
-              const key = currentSubSection ? [currentSubSection, name].join(CONFIG_PREFIX_SEPARATOR) : name;
-              map3[currentSection][key] = value;
+              const key2 = currentSubSection ? [currentSubSection, name].join(CONFIG_PREFIX_SEPARATOR) : name;
+              map3[currentSection][key2] = value;
             }
           }
         }
@@ -4177,7 +4177,7 @@ var init_getSsoSessionData = __esm({
   "node_modules/@smithy/core/dist-es/submodules/config/shared-ini-file-loader/getSsoSessionData.js"() {
     import_types8 = __toESM(require_dist_cjs());
     init_loadSharedConfigFiles();
-    getSsoSessionData = (data) => Object.entries(data).filter(([key]) => key.startsWith(import_types8.IniSectionType.SSO_SESSION + CONFIG_PREFIX_SEPARATOR)).reduce((acc, [key, value]) => ({ ...acc, [key.substring(key.indexOf(CONFIG_PREFIX_SEPARATOR) + 1)]: value }), {});
+    getSsoSessionData = (data) => Object.entries(data).filter(([key2]) => key2.startsWith(import_types8.IniSectionType.SSO_SESSION + CONFIG_PREFIX_SEPARATOR)).reduce((acc, [key2, value]) => ({ ...acc, [key2.substring(key2.indexOf(CONFIG_PREFIX_SEPARATOR) + 1)]: value }), {});
   }
 });
 
@@ -4201,11 +4201,11 @@ var init_mergeConfigFiles = __esm({
     mergeConfigFiles = (...files) => {
       const merged = {};
       for (const file of files) {
-        for (const [key, values2] of Object.entries(file)) {
-          if (merged[key] !== void 0) {
-            Object.assign(merged[key], values2);
+        for (const [key2, values2] of Object.entries(file)) {
+          if (merged[key2] !== void 0) {
+            Object.assign(merged[key2], values2);
           } else {
-            merged[key] = values2;
+            merged[key2] = values2;
           }
         }
       }
@@ -4668,7 +4668,7 @@ var init_getResolvedHostname = __esm({
 var getResolvedPartition;
 var init_getResolvedPartition = __esm({
   "node_modules/@smithy/core/dist-es/submodules/config/config-resolver/regionInfo/getResolvedPartition.js"() {
-    getResolvedPartition = (region, { partitionHash }) => Object.keys(partitionHash || {}).find((key) => partitionHash[key].regions.includes(region)) ?? "aws";
+    getResolvedPartition = (region, { partitionHash }) => Object.keys(partitionHash || {}).find((key2) => partitionHash[key2].regions.includes(region)) ?? "aws";
   }
 });
 
@@ -5281,11 +5281,11 @@ var init_EndpointCache = __esm({
         }
       }
       get(endpointParams, resolver) {
-        const key = this.hash(endpointParams);
-        if (key === false) {
+        const key2 = this.hash(endpointParams);
+        if (key2 === false) {
           return resolver();
         }
-        if (!this.data.has(key)) {
+        if (!this.data.has(key2)) {
           if (this.data.size > this.capacity + 10) {
             const keys = this.data.keys();
             let i5 = 0;
@@ -5297,9 +5297,9 @@ var init_EndpointCache = __esm({
               }
             }
           }
-          this.data.set(key, resolver());
+          this.data.set(key2, resolver());
         }
-        return this.data.get(key);
+        return this.data.get(key2);
       }
       size() {
         return this.data.size;
@@ -7550,14 +7550,14 @@ var init_Sha256Js = __esm({
       outer;
       constructor(secret2) {
         if (secret2) {
-          const key = _Sha256Js.normalizeKey(secret2);
+          const key2 = _Sha256Js.normalizeKey(secret2);
           this.inner = new _Sha256Js();
           this.outer = new _Sha256Js();
           const { inner, outer } = this;
           const pad = new Uint8Array(BLOCK * 2);
           for (let i5 = 0; i5 < BLOCK; ++i5) {
-            pad[i5] = 54 ^ key[i5];
-            pad[i5 + BLOCK] = 92 ^ key[i5];
+            pad[i5] = 54 ^ key2[i5];
+            pad[i5 + BLOCK] = 92 ^ key2[i5];
           }
           inner.update(pad.subarray(0, BLOCK));
           outer.update(pad.subarray(BLOCK));
@@ -7636,21 +7636,21 @@ var init_Sha256Js = __esm({
         return out;
       }
       static normalizeKey(secret2) {
-        const key = toUint8Array(secret2);
-        if (key.byteLength > BLOCK) {
+        const key2 = toUint8Array(secret2);
+        if (key2.byteLength > BLOCK) {
           const h5 = new _Sha256Js();
-          h5.update(key);
+          h5.update(key2);
           const out = h5.digestSync();
           const padded = new Uint8Array(BLOCK);
           padded.set(out);
           return padded;
         }
-        if (key.byteLength < BLOCK) {
+        if (key2.byteLength < BLOCK) {
           const padded = new Uint8Array(BLOCK);
-          padded.set(key);
+          padded.set(key2);
           return padded;
         }
-        return key;
+        return key2;
       }
       hashBuffer() {
         this.hashBufferWith(this.state, this.buffer);
@@ -7878,8 +7878,8 @@ var init_Sha256WebCrypto = __esm({
         if (subtle) {
           if (this.secret) {
             this.finished = true;
-            const key = await subtle.importKey("raw", this.secret, { name: "HMAC", hash: "SHA-256" }, false, ["sign"]);
-            const sig2 = await subtle.sign("HMAC", key, data);
+            const key2 = await subtle.importKey("raw", this.secret, { name: "HMAC", hash: "SHA-256" }, false, ["sign"]);
+            const sig2 = await subtle.sign("HMAC", key2, data);
             return new Uint8Array(sig2);
           }
           const hash2 = await subtle.digest("SHA-256", data);
@@ -8712,11 +8712,11 @@ var init_EventStreamSerde = __esm({
             };
           }
           let unionMember = "";
-          for (const key in event) {
-            if (!hasOwn(event, key))
+          for (const key2 in event) {
+            if (!hasOwn(event, key2))
               continue;
-            if (key !== "__type") {
-              unionMember = key;
+            if (key2 !== "__type") {
+              unionMember = key2;
               break;
             }
           }
@@ -8741,11 +8741,11 @@ var init_EventStreamSerde = __esm({
         const initialResponseMarker = Symbol("initialResponseMarker");
         const asyncIterable = marshaller.deserialize(response.body, async (event) => {
           let unionMember = "";
-          for (const key in event) {
-            if (!hasOwn(event, key))
+          for (const key2 in event) {
+            if (!hasOwn(event, key2))
               continue;
-            if (key !== "__type") {
-              unionMember = key;
+            if (key2 !== "__type") {
+              unionMember = key2;
               break;
             }
           }
@@ -8810,10 +8810,10 @@ var init_EventStreamSerde = __esm({
           if (!responseSchema) {
             throw new Error("@smithy::core/protocols - initial-response event encountered in event stream but no response schema given.");
           }
-          for (const key in firstEvent.value) {
-            if (!hasOwn(firstEvent.value, key))
+          for (const key2 in firstEvent.value) {
+            if (!hasOwn(firstEvent.value, key2))
               continue;
-            initialResponseContainer[key] = firstEvent.value[key];
+            initialResponseContainer[key2] = firstEvent.value[key2];
           }
         }
         return {
@@ -9081,24 +9081,24 @@ var init_HttpProtocol = __esm({
       }
       resolveError(name, namespaces, registries) {
         const defaultErrorSchema = [-3, "", "Error", 0, [], [], 0];
-        let schema16;
+        let schema18;
         for (const registry of registries) {
           for (const ns of namespaces) {
             try {
               if (ns === "*") {
-                schema16 = registry.getSchema(name);
+                schema18 = registry.getSchema(name);
               } else {
-                schema16 = registry.getSchema(ns + "#" + name);
+                schema18 = registry.getSchema(ns + "#" + name);
               }
-              const errorCtor = registry.getErrorCtor(schema16);
+              const errorCtor = registry.getErrorCtor(schema18);
               if (errorCtor) {
-                return [schema16, errorCtor, "modeled"];
+                return [schema18, errorCtor, "modeled"];
               } else {
                 const syntheticErrorSchema = registry.getBaseException();
                 if (syntheticErrorSchema) {
                   const syntheticErrorCtor = registry.getErrorCtor(syntheticErrorSchema);
                   if (syntheticErrorCtor) {
-                    return [schema16, syntheticErrorCtor, "synthetic"];
+                    return [schema18, syntheticErrorCtor, "synthetic"];
                   }
                 }
               }
@@ -9148,8 +9148,8 @@ var init_HttpProtocol = __esm({
       getDefaultContentType() {
         throw new Error(`@smithy/core/protocols - ${this.constructor.name} getDefaultContentType() implementation missing.`);
       }
-      async deserializeHttpMessage(schema16, context, response, arg4, arg5) {
-        void schema16;
+      async deserializeHttpMessage(schema18, context, response, arg4, arg5) {
+        void schema18;
         void context;
         void response;
         void arg4;
@@ -9220,8 +9220,8 @@ var init_HttpBindingProtocol = __esm({
               request.path += path;
             }
             const traitSearchParams = new URLSearchParams(search ?? "");
-            for (const [key, value] of traitSearchParams) {
-              query[key] = value;
+            for (const [key2, value] of traitSearchParams) {
+              query[key2] = value;
             }
           }
         }
@@ -9266,11 +9266,11 @@ var init_HttpBindingProtocol = __esm({
             serializer.write(memberNs, inputMemberValue);
             headers[memberTraits.httpHeader.toLowerCase()] = String(serializer.flush());
           } else if (typeof memberTraits.httpPrefixHeaders === "string") {
-            for (const key in inputMemberValue) {
-              if (!hasOwn(inputMemberValue, key))
+            for (const key2 in inputMemberValue) {
+              if (!hasOwn(inputMemberValue, key2))
                 continue;
-              const val = inputMemberValue[key];
-              const amalgam = memberTraits.httpPrefixHeaders + key;
+              const val = inputMemberValue[key2];
+              const amalgam = memberTraits.httpPrefixHeaders + key2;
               serializer.write([memberNs.getValueSchema(), { httpHeader: amalgam }], val);
               headers[amalgam.toLowerCase()] = serializer.flush();
             }
@@ -9311,15 +9311,15 @@ var init_HttpBindingProtocol = __esm({
         const serializer = this.serializer;
         const traits = ns.getMergedTraits();
         if (traits.httpQueryParams) {
-          for (const key in data) {
-            if (!hasOwn(data, key))
+          for (const key2 in data) {
+            if (!hasOwn(data, key2))
               continue;
-            if (!(key in query)) {
-              const val = data[key];
+            if (!(key2 in query)) {
+              const val = data[key2];
               const valueSchema = ns.getValueSchema();
               Object.assign(valueSchema.getMergedTraits(), {
                 ...traits,
-                httpQuery: key,
+                httpQuery: key2,
                 httpQueryParams: void 0
               });
               this.serializeQuery(valueSchema, val, query);
@@ -9379,7 +9379,7 @@ var init_HttpBindingProtocol = __esm({
         dataObject.$metadata = this.deserializeMetadata(response);
         return dataObject;
       }
-      async deserializeHttpMessage(schema16, context, response, arg4, arg5) {
+      async deserializeHttpMessage(schema18, context, response, arg4, arg5) {
         let dataObject;
         if (arg4 instanceof Set) {
           dataObject = arg5;
@@ -9388,7 +9388,7 @@ var init_HttpBindingProtocol = __esm({
         }
         let discardResponseBody = true;
         const deserializer = this.deserializer;
-        const ns = NormalizedSchema.of(schema16);
+        const ns = NormalizedSchema.of(schema18);
         const nonHttpBindingMembers = [];
         for (const [memberName, memberSchema] of ns.structIterator()) {
           const memberTraits = memberSchema.getMemberTraits();
@@ -9412,12 +9412,12 @@ var init_HttpBindingProtocol = __esm({
               }
             }
           } else if (memberTraits.httpHeader) {
-            const key = String(memberTraits.httpHeader).toLowerCase();
-            const value = response.headers[key];
+            const key2 = String(memberTraits.httpHeader).toLowerCase();
+            const value = response.headers[key2];
             if (null != value) {
               if (memberSchema.isListSchema()) {
                 const headerListValueSchema = memberSchema.getValueSchema();
-                headerListValueSchema.getMergedTraits().httpHeader = key;
+                headerListValueSchema.getMergedTraits().httpHeader = key2;
                 let sections;
                 if (headerListValueSchema.isTimestampSchema() && headerListValueSchema.getSchema() === 4) {
                   sections = splitEvery(value, ",", 2);
@@ -9474,7 +9474,7 @@ var init_RpcProtocol = __esm({
         const headers = {};
         const endpoint = await context.endpoint();
         const ns = NormalizedSchema.of(operationSchema?.input);
-        const schema16 = ns.getSchema();
+        const schema18 = ns.getSchema();
         let payload;
         const input = _input && typeof _input === "object" ? _input : {};
         const request = new HttpRequest({
@@ -9508,7 +9508,7 @@ var init_RpcProtocol = __esm({
               });
             }
           } else {
-            serializer.write(schema16, input);
+            serializer.write(schema18, input);
             payload = serializer.flush();
           }
         }
@@ -9761,8 +9761,8 @@ var init_HttpInterceptingShapeDeserializer = __esm({
         this.codecDeserializer.setSerdeContext(serdeContext);
         this.serdeContext = serdeContext;
       }
-      read(schema16, data) {
-        const ns = NormalizedSchema.of(schema16);
+      read(schema18, data) {
+        const ns = NormalizedSchema.of(schema18);
         const traits = ns.getMergedTraits();
         const toString = this.serdeContext?.utf8Encoder ?? toUtf8;
         if (traits.httpHeader || traits.httpResponseCode) {
@@ -9803,8 +9803,8 @@ var init_ToStringShapeSerializer = __esm({
         super();
         this.settings = settings;
       }
-      write(schema16, value) {
-        const ns = NormalizedSchema.of(schema16);
+      write(schema18, value) {
+        const ns = NormalizedSchema.of(schema18);
         switch (typeof value) {
           case "object":
             if (value === null) {
@@ -9902,8 +9902,8 @@ var init_HttpInterceptingShapeSerializer = __esm({
         this.codecSerializer.setSerdeContext(serdeContext);
         this.stringSerializer.setSerdeContext(serdeContext);
       }
-      write(schema16, value) {
-        const ns = NormalizedSchema.of(schema16);
+      write(schema18, value) {
+        const ns = NormalizedSchema.of(schema18);
         const traits = ns.getMergedTraits();
         if (traits.httpHeader || traits.httpLabel || traits.httpQuery) {
           this.stringSerializer.write(ns, value);
@@ -9999,8 +9999,8 @@ var init_httpExtensionConfiguration = __esm({
         httpHandler() {
           return runtimeConfig.requestHandler;
         },
-        updateHttpClientConfig(key, value) {
-          runtimeConfig.requestHandler?.updateHttpClientConfig(key, value);
+        updateHttpClientConfig(key2, value) {
+          runtimeConfig.requestHandler?.updateHttpClientConfig(key2, value);
         },
         httpHandlerConfigs() {
           return runtimeConfig.requestHandler.httpHandlerConfigs();
@@ -10080,15 +10080,15 @@ var init_escape_uri_path = __esm({
 // node_modules/@smithy/core/dist-es/submodules/protocols/querystring-builder/buildQueryString.js
 function buildQueryString(query) {
   const parts = [];
-  for (let key of Object.keys(query).sort()) {
-    const value = query[key];
-    key = escapeUri(key);
+  for (let key2 of Object.keys(query).sort()) {
+    const value = query[key2];
+    key2 = escapeUri(key2);
     if (Array.isArray(value)) {
       for (let i5 = 0, iLen = value.length; i5 < iLen; i5++) {
-        parts.push(`${key}=${escapeUri(value[i5])}`);
+        parts.push(`${key2}=${escapeUri(value[i5])}`);
       }
     } else {
-      let qsEntry = key;
+      let qsEntry = key2;
       if (value || typeof value === "string") {
         qsEntry += `=${escapeUri(value)}`;
       }
@@ -10132,8 +10132,8 @@ var init_UnionSerde = __esm({
         set.delete("__type");
         this.keys = set;
       }
-      mark(key) {
-        this.keys.delete(key);
+      mark(key2) {
+        this.keys.delete(key2);
       }
       hasUnknown() {
         return this.keys.size === 1 && Object.keys(this.to).length === 0;
@@ -10172,7 +10172,7 @@ var init_detectBufferParsing = __esm({
 });
 
 // node_modules/@smithy/core/dist-es/submodules/protocols/json/jsonReviver.js
-function jsonReviver(key, value, context) {
+function jsonReviver(key2, value, context) {
   if (context?.source) {
     const numericString = context.source;
     if (typeof value === "number") {
@@ -10292,8 +10292,8 @@ var init_jsonReviver = __esm({
 });
 
 // node_modules/@smithy/core/dist-es/submodules/protocols/json/needsReviver.js
-function needsReviver(schema16) {
-  const ns = NormalizedSchema.of(schema16);
+function needsReviver(schema18) {
+  const ns = NormalizedSchema.of(schema18);
   const raw = ns.getSchema();
   if (Array.isArray(raw) && ns.isStructSchema()) {
     if (REVIVER_SYMBOL in raw) {
@@ -10348,7 +10348,7 @@ var init_common = __esm({
 });
 
 // node_modules/@smithy/core/dist-es/submodules/protocols/json/parseJsonBody.js
-async function parseJsonBody(streamBody, context, schema16) {
+async function parseJsonBody(streamBody, context, schema18) {
   let parsingInput;
   if (detectBufferParsing() && typeof streamBody?.[Symbol.asyncIterator] === "function") {
     const buffer2 = await collectBody(streamBody, context);
@@ -10366,7 +10366,7 @@ async function parseJsonBody(streamBody, context, schema16) {
   if (parsingInput.length === 0) {
     return {};
   }
-  const reviver = schema16 && needsReviver(schema16) ? jsonReviver : void 0;
+  const reviver = schema18 && needsReviver(schema18) ? jsonReviver : void 0;
   try {
     return JSON.parse(parsingInput, reviver);
   } catch (e5) {
@@ -10391,7 +10391,7 @@ var init_parseJsonBody = __esm({
       value.message = value.message ?? value.Message;
       return value;
     };
-    findKey = (object, key) => Object.keys(object).find((k5) => k5.toLowerCase() === key.toLowerCase());
+    findKey = (object, key2) => Object.keys(object).find((k5) => k5.toLowerCase() === key2.toLowerCase());
     sanitizeErrorCode = (rawValue) => {
       let cleanValue = rawValue;
       if (typeof cleanValue === "number") {
@@ -10486,8 +10486,8 @@ var init_JsonShapeDeserializer2 = __esm({
         super();
         this.settings = settings;
       }
-      async read(schema16, data) {
-        const reviver = needsReviver(schema16) ? jsonReviver : void 0;
+      async read(schema18, data) {
+        const reviver = needsReviver(schema18) ? jsonReviver : void 0;
         let parsed;
         if (typeof data === "string") {
           if (data.length === 0) {
@@ -10501,16 +10501,16 @@ var init_JsonShapeDeserializer2 = __esm({
           const buf = Buffer.isBuffer(data) ? data : Buffer.from(data.buffer, data.byteOffset, data.byteLength);
           parsed = JSON.parse(buf, reviver);
         } else {
-          parsed = await parseJsonBody(data, this.serdeContext, schema16);
+          parsed = await parseJsonBody(data, this.serdeContext, schema18);
         }
-        return this._read(schema16, parsed);
+        return this._read(schema18, parsed);
       }
-      readObject(schema16, data) {
-        return this._read(schema16, data);
+      readObject(schema18, data) {
+        return this._read(schema18, data);
       }
-      _read(schema16, value) {
+      _read(schema18, value) {
         const isObject3 = value !== null && typeof value === "object";
-        const ns = NormalizedSchema.of(schema16);
+        const ns = NormalizedSchema.of(schema18);
         if (isObject3) {
           if (ns.isStructSchema()) {
             return this._readStruct(ns, value);
@@ -10835,18 +10835,18 @@ var init_JsonShapeSerializer2 = __esm({
         this.settings = settings;
         this.json = alloc(INITIAL_BUFFER_SIZE);
       }
-      write(schema16, value) {
+      write(schema18, value) {
         this.i = 0;
         this.rawValue = value;
-        this.rootSchema = NormalizedSchema.of(schema16);
+        this.rootSchema = NormalizedSchema.of(schema18);
         this.passthrough = this.rootSchema.isBlobSchema() || this.rootSchema.isStringSchema();
         if (!this.passthrough) {
           this.writeValue(this.rootSchema, value, void 0);
         }
       }
-      writeDiscriminatedDocument(schema16, value) {
+      writeDiscriminatedDocument(schema18, value) {
         this.i = 0;
-        this.rootSchema = NormalizedSchema.of(schema16);
+        this.rootSchema = NormalizedSchema.of(schema18);
         const ns = this.rootSchema;
         if (ns.isStructSchema() && value != null && typeof value === "object") {
           this.writeValue(ns, value, void 0);
@@ -10874,9 +10874,9 @@ var init_JsonShapeSerializer2 = __esm({
         return result;
       }
       ensure(byteCount) {
-        const { i: i5, json } = this;
-        if (i5 + byteCount > json.length) {
-          let newSize = json.length * 2;
+        const { i: i5, json: json2 } = this;
+        if (i5 + byteCount > json2.length) {
+          let newSize = json2.length * 2;
           while (newSize < i5 + byteCount) {
             newSize *= 2;
           }
@@ -10888,9 +10888,9 @@ var init_JsonShapeSerializer2 = __esm({
       writeAscii(s2) {
         const z = s2.length;
         this.ensure(z);
-        let { i: i5, json } = this;
+        let { i: i5, json: json2 } = this;
         for (let j5 = 0; j5 < z; ++j5) {
-          json[i5] = s2.charCodeAt(j5);
+          json2[i5] = s2.charCodeAt(j5);
           i5 += 1;
         }
         this.i = i5;
@@ -10898,12 +10898,12 @@ var init_JsonShapeSerializer2 = __esm({
       writeAsciiQuoted(s2) {
         const z = s2.length;
         this.ensure(z + 4);
-        let { json, i: i5 } = this;
-        json[i5++] = QUOTE;
+        let { json: json2, i: i5 } = this;
+        json2[i5++] = QUOTE;
         for (let j5 = 0; j5 < z; ++j5) {
-          json[i5++] = s2.charCodeAt(j5);
+          json2[i5++] = s2.charCodeAt(j5);
         }
-        json[i5++] = QUOTE;
+        json2[i5++] = QUOTE;
         this.i = i5;
       }
       writeJsonString(s2) {
@@ -10940,14 +10940,14 @@ var init_JsonShapeSerializer2 = __esm({
             this.ensure(6 + (z - j5 - 1) * 3 + 1);
             this.writeUnicodeEscape(c5);
           } else {
-            let { i: i5, json } = this;
+            let { i: i5, json: json2 } = this;
             if (c5 < 2048) {
-              json[i5++] = 192 | c5 >> 6;
-              json[i5++] = 128 | c5 & 63;
+              json2[i5++] = 192 | c5 >> 6;
+              json2[i5++] = 128 | c5 & 63;
             } else {
-              json[i5++] = 224 | c5 >> 12;
-              json[i5++] = 128 | c5 >> 6 & 63;
-              json[i5++] = 128 | c5 & 63;
+              json2[i5++] = 224 | c5 >> 12;
+              json2[i5++] = 128 | c5 >> 6 & 63;
+              json2[i5++] = 128 | c5 & 63;
             }
             this.i = i5;
           }
@@ -10955,12 +10955,12 @@ var init_JsonShapeSerializer2 = __esm({
         this.json[this.i++] = QUOTE;
       }
       writeUnicodeEscape(code) {
-        let { json, i: i5 } = this;
-        json[i5++] = BACKSLASH;
-        json[i5++] = 117;
+        let { json: json2, i: i5 } = this;
+        json2[i5++] = BACKSLASH;
+        json2[i5++] = 117;
         const hex = code.toString(16).padStart(4, "0");
         for (let j5 = 0; j5 < 4; ++j5) {
-          json[i5++] = hex.charCodeAt(j5);
+          json2[i5++] = hex.charCodeAt(j5);
         }
         this.i = i5;
       }
@@ -10975,10 +10975,10 @@ var init_JsonShapeSerializer2 = __esm({
       writeBase64(data) {
         const b64Len = Math.ceil(data.length / 3) * 4;
         this.ensure(b64Len + 2);
-        const json = this.json;
+        const json2 = this.json;
         const B64 = _JsonShapeSerializer2.B64;
         let i5 = this.i;
-        json[i5++] = QUOTE;
+        json2[i5++] = QUOTE;
         const len = data.length;
         const remainder = len % 3;
         const mainLen = len - remainder;
@@ -10986,33 +10986,33 @@ var init_JsonShapeSerializer2 = __esm({
           const a5 = data[j5];
           const b6 = data[j5 + 1];
           const c5 = data[j5 + 2];
-          json[i5++] = B64[a5 >> 2];
-          json[i5++] = B64[(a5 & 3) << 4 | b6 >> 4];
-          json[i5++] = B64[(b6 & 15) << 2 | c5 >> 6];
-          json[i5++] = B64[c5 & 63];
+          json2[i5++] = B64[a5 >> 2];
+          json2[i5++] = B64[(a5 & 3) << 4 | b6 >> 4];
+          json2[i5++] = B64[(b6 & 15) << 2 | c5 >> 6];
+          json2[i5++] = B64[c5 & 63];
         }
         if (remainder === 2) {
           const a5 = data[mainLen];
           const b6 = data[mainLen + 1];
-          json[i5++] = B64[a5 >> 2];
-          json[i5++] = B64[(a5 & 3) << 4 | b6 >> 4];
-          json[i5++] = B64[(b6 & 15) << 2];
-          json[i5++] = 61;
+          json2[i5++] = B64[a5 >> 2];
+          json2[i5++] = B64[(a5 & 3) << 4 | b6 >> 4];
+          json2[i5++] = B64[(b6 & 15) << 2];
+          json2[i5++] = 61;
         } else if (remainder === 1) {
           const a5 = data[mainLen];
-          json[i5++] = B64[a5 >> 2];
-          json[i5++] = B64[(a5 & 3) << 4];
-          json[i5++] = 61;
-          json[i5++] = 61;
+          json2[i5++] = B64[a5 >> 2];
+          json2[i5++] = B64[(a5 & 3) << 4];
+          json2[i5++] = 61;
+          json2[i5++] = 61;
         }
-        json[i5++] = QUOTE;
+        json2[i5++] = QUOTE;
         this.i = i5;
       }
-      writeValue(schema16, value, container) {
+      writeValue(schema18, value, container) {
         if (value == null) {
           if (container?.isStructSchema()) {
             if (value === void 0) {
-              const ns2 = NormalizedSchema.of(schema16);
+              const ns2 = NormalizedSchema.of(schema18);
               if (ns2.isIdempotencyToken()) {
                 this.writeAsciiQuoted(generateIdempotencyToken());
                 return;
@@ -11025,7 +11025,7 @@ var init_JsonShapeSerializer2 = __esm({
           this.i += 4;
           return;
         }
-        const ns = NormalizedSchema.of(schema16);
+        const ns = NormalizedSchema.of(schema18);
         const isObject3 = typeof value === "object";
         if (ns.isStringSchema()) {
           const mediaType = ns.getMergedTraits().mediaType;
@@ -11075,8 +11075,8 @@ var init_JsonShapeSerializer2 = __esm({
             }
             return;
           }
-          const json = JSON.stringify(value);
-          this.writeAscii(json);
+          const json2 = JSON.stringify(value);
+          this.writeAscii(json2);
           return;
         }
         if (typeof value === "string") {
@@ -11099,12 +11099,12 @@ var init_JsonShapeSerializer2 = __esm({
         }
         if (typeof value === "boolean") {
           this.ensure(5);
-          let { i: i5, json } = this;
+          let { i: i5, json: json2 } = this;
           if (value) {
-            json.set(TRUE, i5);
+            json2.set(TRUE, i5);
             i5 += 4;
           } else {
-            json.set(FALSE, i5);
+            json2.set(FALSE, i5);
             i5 += 5;
           }
           this.i = i5;
@@ -11187,9 +11187,9 @@ var init_JsonShapeSerializer2 = __esm({
                 break;
               }
             }
-            let json;
+            let json2;
             if (!hasSpecials) {
-              json = JSON.stringify(value);
+              json2 = JSON.stringify(value);
             } else {
               const out = [];
               for (let i5 = 0; i5 < value.length; ++i5) {
@@ -11202,10 +11202,10 @@ var init_JsonShapeSerializer2 = __esm({
                   out.push(v);
                 }
               }
-              json = JSON.stringify(out);
+              json2 = JSON.stringify(out);
             }
-            this.ensure(json.length * 3);
-            this.i += encoder3.encodeInto(json, this.json.subarray(this.i)).written;
+            this.ensure(json2.length * 3);
+            this.i += encoder3.encodeInto(json2, this.json.subarray(this.i)).written;
             return;
           }
         }
@@ -11245,12 +11245,12 @@ var init_JsonShapeSerializer2 = __esm({
                 value[k5] = void 0;
               }
             }
-            const json = JSON.stringify(value);
+            const json2 = JSON.stringify(value);
             if (modifications) {
               Object.assign(value, modifications);
             }
-            this.ensure(json.length * 3);
-            this.i += encoder3.encodeInto(json, this.json.subarray(this.i)).written;
+            this.ensure(json2.length * 3);
+            this.i += encoder3.encodeInto(json2, this.json.subarray(this.i)).written;
             return;
           }
         }
@@ -11459,16 +11459,16 @@ var init_JsonShapeDeserializer = __esm({
         super();
         this.settings = settings;
       }
-      async read(schema16, data) {
-        const reviver = needsReviver(schema16) ? jsonReviver : void 0;
-        return this._read(schema16, typeof data === "string" ? JSON.parse(data, reviver) : await parseJsonBody(data, this.serdeContext, schema16));
+      async read(schema18, data) {
+        const reviver = needsReviver(schema18) ? jsonReviver : void 0;
+        return this._read(schema18, typeof data === "string" ? JSON.parse(data, reviver) : await parseJsonBody(data, this.serdeContext, schema18));
       }
-      readObject(schema16, data) {
-        return this._read(schema16, data);
+      readObject(schema18, data) {
+        return this._read(schema18, data);
       }
-      _read(schema16, value) {
+      _read(schema18, value) {
         const isObject3 = value !== null && typeof value === "object";
-        const ns = NormalizedSchema.of(schema16);
+        const ns = NormalizedSchema.of(schema18);
         if (isObject3) {
           if (ns.isStructSchema()) {
             const record = value;
@@ -11627,7 +11627,7 @@ var init_jsonReplacer = __esm({
           throw new Error("@aws-sdk/core/protocols - JsonReplacer exhausted.");
         }
         this.stage = 1;
-        return (key, value) => {
+        return (key2, value) => {
           if (value instanceof NumericValue) {
             const v = `${NUMERIC_CONTROL_CHAR + "nv" + this.counter++}_` + value.string;
             this.values.set(`"${v}"`, value.string);
@@ -11642,7 +11642,7 @@ var init_jsonReplacer = __esm({
           return value;
         };
       }
-      replaceInJson(json) {
+      replaceInJson(json2) {
         if (this.stage === 0) {
           throw new Error("@aws-sdk/core/protocols - JsonReplacer not created yet.");
         }
@@ -11651,12 +11651,12 @@ var init_jsonReplacer = __esm({
         }
         this.stage = 2;
         if (this.counter === 0) {
-          return json;
+          return json2;
         }
-        for (const [key, value] of this.values) {
-          json = json.replace(key, value);
+        for (const [key2, value] of this.values) {
+          json2 = json2.replace(key2, value);
         }
-        return json;
+        return json2;
       }
     };
   }
@@ -11682,8 +11682,8 @@ var init_JsonShapeSerializer = __esm({
         super();
         this.settings = settings;
       }
-      write(schema16, value) {
-        this.rootSchema = NormalizedSchema.of(schema16);
+      write(schema18, value) {
+        this.rootSchema = NormalizedSchema.of(schema18);
         this.buffer = this._write(this.rootSchema, value);
       }
       flush() {
@@ -11699,15 +11699,15 @@ var init_JsonShapeSerializer = __esm({
         }
         return this.buffer;
       }
-      writeDiscriminatedDocument(schema16, value) {
-        this.write(schema16, value);
+      writeDiscriminatedDocument(schema18, value) {
+        this.write(schema18, value);
         if (typeof this.buffer === "object") {
-          this.buffer.__type = NormalizedSchema.of(schema16).getName(true);
+          this.buffer.__type = NormalizedSchema.of(schema18).getName(true);
         }
       }
-      _write(schema16, value, container) {
+      _write(schema18, value, container) {
         const isObject3 = value !== null && typeof value === "object";
-        const ns = NormalizedSchema.of(schema16);
+        const ns = NormalizedSchema.of(schema18);
         if (isObject3) {
           if (ns.isStructSchema()) {
             const record = value;
@@ -12767,7 +12767,7 @@ var init_StandardRetryStrategy2 = __esm({
     getDelayFromRetryAfterHeader = (response) => {
       if (!HttpResponse.isInstance(response))
         return;
-      const retryAfterHeaderName = Object.keys(response.headers).find((key) => key.toLowerCase() === "retry-after");
+      const retryAfterHeaderName = Object.keys(response.headers).find((key2) => key2.toLowerCase() === "retry-after");
       if (!retryAfterHeaderName)
         return;
       const retryAfter = response.headers[retryAfterHeaderName];
@@ -13129,8 +13129,8 @@ var init_invoke_store = __esm({
     }
     InvokeStoreBase = class {
       static PROTECTED_KEYS = PROTECTED_KEYS;
-      isProtectedKey(key) {
-        return Object.values(PROTECTED_KEYS).includes(key);
+      isProtectedKey(key2) {
+        return Object.values(PROTECTED_KEYS).includes(key2);
       }
       getRequestId() {
         return this.get(PROTECTED_KEYS.REQUEST_ID) ?? "-";
@@ -13159,15 +13159,15 @@ var init_invoke_store = __esm({
       hasContext() {
         return this.currentContext !== void 0;
       }
-      get(key) {
-        return this.currentContext?.[key];
+      get(key2) {
+        return this.currentContext?.[key2];
       }
-      set(key, value) {
-        if (this.isProtectedKey(key)) {
-          throw new Error(`Cannot modify protected Lambda context field: ${String(key)}`);
+      set(key2, value) {
+        if (this.isProtectedKey(key2)) {
+          throw new Error(`Cannot modify protected Lambda context field: ${String(key2)}`);
         }
         this.currentContext = this.currentContext || {};
-        this.currentContext[key] = value;
+        this.currentContext[key2] = value;
       }
       run(context, fn) {
         this.currentContext = context;
@@ -13188,18 +13188,18 @@ var init_invoke_store = __esm({
       hasContext() {
         return this.als.getStore() !== void 0;
       }
-      get(key) {
-        return this.als.getStore()?.[key];
+      get(key2) {
+        return this.als.getStore()?.[key2];
       }
-      set(key, value) {
-        if (this.isProtectedKey(key)) {
-          throw new Error(`Cannot modify protected Lambda context field: ${String(key)}`);
+      set(key2, value) {
+        if (this.isProtectedKey(key2)) {
+          throw new Error(`Cannot modify protected Lambda context field: ${String(key2)}`);
         }
         const store = this.als.getStore();
         if (!store) {
           throw new Error("No context available");
         }
-        store[key] = value;
+        store[key2] = value;
       }
       run(context, fn) {
         return this.als.run(context, fn);
@@ -13594,12 +13594,12 @@ var init_DefaultIdentityProviderConfig = __esm({
     DefaultIdentityProviderConfig = class {
       authSchemes = /* @__PURE__ */ new Map();
       constructor(config) {
-        for (const key in config) {
-          if (!hasOwn(config, key))
+        for (const key2 in config) {
+          if (!hasOwn(config, key2))
             continue;
-          const value = config[key];
+          const value = config[key2];
           if (value !== void 0) {
-            this.authSchemes.set(key, value);
+            this.authSchemes.set(key2, value);
           }
         }
       }
@@ -14198,8 +14198,8 @@ async function checkFeatures(context, config, args) {
     if (credentials.accountId) {
       setFeature2(context, "RESOLVED_ACCOUNT_ID", "T");
     }
-    for (const [key, value] of Object.entries(credentials.$source ?? {})) {
-      setFeature2(context, key, value);
+    for (const [key2, value] of Object.entries(credentials.$source ?? {})) {
+      setFeature2(context, key2, value);
     }
   }
 }
@@ -14229,8 +14229,8 @@ var init_constants7 = __esm({
 // node_modules/@aws-sdk/core/dist-es/submodules/client/middleware-user-agent/encode-features.js
 function encodeFeatures(features) {
   let buffer2 = "";
-  for (const key in features) {
-    const val = features[key];
+  for (const key2 in features) {
+    const val = features[key2];
     if (buffer2.length + val.length + 1 <= BYTE_LIMIT) {
       if (buffer2.length) {
         buffer2 += "," + val;
@@ -16403,32 +16403,32 @@ var init_S3ExpressIdentityCache = __esm({
       constructor(data = {}) {
         this.data = data;
       }
-      get(key) {
-        const entry = this.data[key];
+      get(key2) {
+        const entry = this.data[key2];
         if (!entry) {
           return;
         }
         return entry;
       }
-      set(key, entry) {
-        this.data[key] = entry;
+      set(key2, entry) {
+        this.data[key2] = entry;
         return entry;
       }
-      delete(key) {
-        delete this.data[key];
+      delete(key2) {
+        delete this.data[key2];
       }
       async purgeExpired() {
         const now = Date.now();
         if (this.lastPurgeTime + _S3ExpressIdentityCache.EXPIRED_CREDENTIAL_PURGE_INTERVAL_MS > now) {
           return;
         }
-        for (const key in this.data) {
-          const entry = this.data[key];
+        for (const key2 in this.data) {
+          const entry = this.data[key2];
           if (!entry.isRefreshing) {
             const credential = await entry.identity;
             if (credential.expiration) {
               if (credential.expiration.getTime() < now) {
-                delete this.data[key];
+                delete this.data[key2];
               }
             }
           }
@@ -16474,32 +16474,32 @@ var init_S3ExpressIdentityProviderImpl = __esm({
         this.cache = cache6;
       }
       async getS3ExpressIdentity(awsIdentity, identityProperties) {
-        const key = identityProperties.Bucket;
+        const key2 = identityProperties.Bucket;
         const { cache: cache6 } = this;
-        const entry = cache6.get(key);
+        const entry = cache6.get(key2);
         if (entry) {
           return entry.identity.then((identity) => {
             const isExpired = (identity.expiration?.getTime() ?? 0) < Date.now();
             if (isExpired) {
-              return cache6.set(key, new S3ExpressIdentityCacheEntry(this.getIdentity(key))).identity;
+              return cache6.set(key2, new S3ExpressIdentityCacheEntry(this.getIdentity(key2))).identity;
             }
             const isExpiringSoon = (identity.expiration?.getTime() ?? 0) < Date.now() + _S3ExpressIdentityProviderImpl.REFRESH_WINDOW_MS;
             if (isExpiringSoon && !entry.isRefreshing) {
               entry.isRefreshing = true;
-              this.getIdentity(key).then((id) => {
-                cache6.set(key, new S3ExpressIdentityCacheEntry(Promise.resolve(id)));
+              this.getIdentity(key2).then((id) => {
+                cache6.set(key2, new S3ExpressIdentityCacheEntry(Promise.resolve(id)));
               });
             }
             return identity;
           });
         }
-        return cache6.set(key, new S3ExpressIdentityCacheEntry(this.getIdentity(key))).identity;
+        return cache6.set(key2, new S3ExpressIdentityCacheEntry(this.getIdentity(key2))).identity;
       }
-      async getIdentity(key) {
+      async getIdentity(key2) {
         await this.cache.purgeExpired().catch((error2) => {
           console.warn("Error while clearing expired entries in S3ExpressIdentityCache: \n" + error2);
         });
-        const session = await this.createSessionFn(key);
+        const session = await this.createSessionFn(key2);
         if (!session.Credentials?.AccessKeyId || !session.Credentials?.SecretAccessKey) {
           throw new Error("s3#createSession response credential missing AccessKeyId or SecretAccessKey.");
         }
@@ -16528,8 +16528,8 @@ var init_s3Configuration = __esm({
         useAccelerateEndpoint: useAccelerateEndpoint ?? false,
         disableMultiregionAccessPoints: disableMultiregionAccessPoints ?? false,
         followRegionRedirects: followRegionRedirects ?? false,
-        s3ExpressIdentityProvider: s3ExpressIdentityProvider ?? new S3ExpressIdentityProviderImpl(async (key) => s3ClientProvider().send(new CreateSessionCommandCtor({
-          Bucket: key
+        s3ExpressIdentityProvider: s3ExpressIdentityProvider ?? new S3ExpressIdentityProviderImpl(async (key2) => s3ClientProvider().send(new CreateSessionCommandCtor({
+          Bucket: key2
         }))),
         bucketEndpoint: bucketEndpoint ?? false,
         expectContinueHeader: expectContinueHeader ?? 2097152
@@ -16755,22 +16755,22 @@ var require_dist_cjs2 = __commonJS({
     var getCanonicalQuery = ({ query = {} }) => {
       const keys = [];
       const serialized = {};
-      for (const key in query) {
-        if (!hasOwn3(query, key))
+      for (const key2 in query) {
+        if (!hasOwn3(query, key2))
           continue;
-        if (key.toLowerCase() === SIGNATURE_HEADER) {
+        if (key2.toLowerCase() === SIGNATURE_HEADER) {
           continue;
         }
-        const encodedKey = escapeUri2(key);
+        const encodedKey = escapeUri2(key2);
         keys.push(encodedKey);
-        const value = query[key];
+        const value = query[key2];
         if (typeof value === "string") {
           serialized[encodedKey] = `${encodedKey}=${escapeUri2(value)}`;
         } else if (Array.isArray(value)) {
           serialized[encodedKey] = value.slice(0).reduce((encoded, value2) => encoded.concat([`${encodedKey}=${escapeUri2(value2)}`]), []).sort().join("&");
         }
       }
-      return keys.sort().map((key) => serialized[key]).filter((serialized2) => serialized2).join("&");
+      return keys.sort().map((key2) => serialized[key2]).filter((serialized2) => serialized2).join("&");
     };
     var iso8601 = (time2) => toDate(time2).toISOString().replace(/\.\d{3}Z$/, "Z");
     var toDate = (time2) => {
@@ -16868,11 +16868,11 @@ ${toHex2(hashedRequest)}`;
       while (cacheQueue.length > MAX_CACHE_SIZE) {
         delete signingKeyCache[cacheQueue.shift()];
       }
-      let key = `AWS4${credentials.secretAccessKey}`;
+      let key2 = `AWS4${credentials.secretAccessKey}`;
       for (const signable of [shortDate, region, service, KEY_TYPE_IDENTIFIER]) {
-        key = await hmac3(sha256Constructor, key, signable);
+        key2 = await hmac3(sha256Constructor, key2, signable);
       }
-      return signingKeyCache[cacheKey] = key;
+      return signingKeyCache[cacheKey] = key2;
     };
     var clearCredentialCache = () => {
       cacheQueue.length = 0;
@@ -17525,8 +17525,8 @@ var init_format_url = __esm({
 });
 
 // node_modules/@aws-sdk/core/dist-es/submodules/util/hasOwn.js
-function hasOwn2(container, key) {
-  return Object.prototype.hasOwnProperty.call(container, key);
+function hasOwn2(container, key2) {
+  return Object.prototype.hasOwnProperty.call(container, key2);
 }
 var init_hasOwn2 = __esm({
   "node_modules/@aws-sdk/core/dist-es/submodules/util/hasOwn.js"() {
@@ -17757,7 +17757,7 @@ var init_ProtocolLib = __esm({
         try {
           return registry.getSchema(errorName);
         } catch (e5) {
-          return registry.find((schema16) => NormalizedSchema.of(schema16).getMergedTraits().awsQueryError?.[0] === errorName);
+          return registry.find((schema18) => NormalizedSchema.of(schema18).getMergedTraits().awsQueryError?.[0] === errorName);
         }
       }
     };
@@ -18244,8 +18244,8 @@ var init_UnionSerde2 = __esm({
         set.delete("__type");
         this.keys = set;
       }
-      mark(key) {
-        this.keys.delete(key);
+      mark(key2) {
+        this.keys.delete(key2);
       }
       hasUnknown() {
         return this.keys.size === 1 && Object.keys(this.to).length === 0;
@@ -18294,8 +18294,8 @@ var init_XmlShapeDeserializer = __esm({
         this.serdeContext = serdeContext;
         this.stringDeserializer.setSerdeContext(serdeContext);
       }
-      read(schema16, bytes, key) {
-        const ns = NormalizedSchema.of(schema16);
+      read(schema18, bytes, key2) {
+        const ns = NormalizedSchema.of(schema18);
         const memberSchemas = ns.getMemberSchemas();
         const isEventPayload = ns.isStructSchema() && ns.isMemberSchema() && !!Object.values(memberSchemas).find((memberNs) => {
           return !!memberNs.getMemberTraits().eventPayload;
@@ -18313,7 +18313,7 @@ var init_XmlShapeDeserializer = __esm({
         }
         const xmlString = (this.serdeContext?.utf8Encoder ?? toUtf8)(bytes);
         const parsedObject = this.parseXml(xmlString);
-        return this.readSchema(schema16, key ? parsedObject[key] : parsedObject);
+        return this.readSchema(schema18, key2 ? parsedObject[key2] : parsedObject);
       }
       readSchema(_schema, value) {
         const ns = NormalizedSchema.of(_schema);
@@ -18356,12 +18356,12 @@ var init_XmlShapeDeserializer = __esm({
             const keyProperty = keyNs.getMergedTraits().xmlName ?? "key";
             const valueProperty = memberNs.getMergedTraits().xmlName ?? "value";
             for (const entry of entries) {
-              const key = entry[keyProperty];
+              const key2 = entry[keyProperty];
               const value2 = entry[valueProperty];
-              if (key === "__proto__") {
+              if (key2 === "__proto__") {
                 writeKey2(buffer2);
               }
-              buffer2[key] = this.readSchema(memberNs, value2);
+              buffer2[key2] = this.readSchema(memberNs, value2);
             }
             return buffer2;
           }
@@ -18413,10 +18413,10 @@ var init_XmlShapeDeserializer = __esm({
             throw e5;
           }
           const textNodeName = "#text";
-          const key = Object.keys(parsedObj)[0];
-          const parsedObjToReturn = parsedObj[key];
+          const key2 = Object.keys(parsedObj)[0];
+          const parsedObjToReturn = parsedObj[key2];
           if (parsedObjToReturn[textNodeName]) {
-            parsedObjToReturn[key] = parsedObjToReturn[textNodeName];
+            parsedObjToReturn[key2] = parsedObjToReturn[textNodeName];
             delete parsedObjToReturn[textNodeName];
           }
           return getValueFromTextNode(parsedObjToReturn);
@@ -18443,11 +18443,11 @@ var init_QueryShapeSerializer = __esm({
         super();
         this.settings = settings;
       }
-      write(schema16, value, prefix = "") {
+      write(schema18, value, prefix = "") {
         if (this.buffer === void 0) {
           this.buffer = "";
         }
-        const ns = NormalizedSchema.of(schema16);
+        const ns = NormalizedSchema.of(schema18);
         if (prefix && !prefix.endsWith(".")) {
           prefix += ".";
         }
@@ -18520,8 +18520,8 @@ var init_QueryShapeSerializer = __esm({
                 }
                 const traits = member2.getMergedTraits();
                 const suffix = this.getKey("member", traits.xmlName, traits.ec2QueryName);
-                const key = flat ? `${prefix}${i5}` : `${prefix}${suffix}.${i5}`;
-                this.write(member2, item, key);
+                const key2 = flat ? `${prefix}${i5}` : `${prefix}${suffix}.${i5}`;
+                this.write(member2, item, key2);
                 ++i5;
               }
             }
@@ -18539,11 +18539,11 @@ var init_QueryShapeSerializer = __esm({
               }
               const keyTraits = keySchema.getMergedTraits();
               const keySuffix = this.getKey("key", keyTraits.xmlName, keyTraits.ec2QueryName);
-              const key = flat ? `${prefix}${i5}.${keySuffix}` : `${prefix}entry.${i5}.${keySuffix}`;
+              const key2 = flat ? `${prefix}${i5}.${keySuffix}` : `${prefix}entry.${i5}.${keySuffix}`;
               const valTraits = memberSchema.getMergedTraits();
               const valueSuffix = this.getKey("value", valTraits.xmlName, valTraits.ec2QueryName);
               const valueKey = flat ? `${prefix}${i5}.${valueSuffix}` : `${prefix}entry.${i5}.${valueSuffix}`;
-              this.write(keySchema, k5, key);
+              this.write(keySchema, k5, key2);
               this.write(memberSchema, v, valueKey);
               ++i5;
             }
@@ -18557,16 +18557,16 @@ var init_QueryShapeSerializer = __esm({
               }
               const traits = member2.getMergedTraits();
               const suffix = this.getKey(memberName, traits.xmlName, traits.ec2QueryName, "struct");
-              const key = `${prefix}${suffix}`;
-              this.write(member2, value[memberName], key);
+              const key2 = `${prefix}${suffix}`;
+              this.write(member2, value[memberName], key2);
               didWriteMember = true;
             }
             if (!didWriteMember && ns.isUnionSchema()) {
               const { $unknown } = value;
               if (Array.isArray($unknown)) {
                 const [k5, v] = $unknown;
-                const key = `${prefix}${k5}`;
-                this.write(15, v, key);
+                const key2 = `${prefix}${k5}`;
+                this.write(15, v, key2);
               }
             }
           }
@@ -18588,17 +18588,17 @@ var init_QueryShapeSerializer = __esm({
         if (ec2 && ec2QueryName) {
           return ec2QueryName;
         }
-        const key = xmlName ?? memberName;
+        const key2 = xmlName ?? memberName;
         if (capitalizeKeys && keySource === "struct") {
-          return key[0].toUpperCase() + key.slice(1);
+          return key2[0].toUpperCase() + key2.slice(1);
         }
-        return key;
+        return key2;
       }
-      writeKey(key) {
-        if (key.endsWith(".")) {
-          key = key.slice(0, key.length - 1);
+      writeKey(key2) {
+        if (key2.endsWith(".")) {
+          key2 = key2.slice(0, key2.length - 1);
         }
-        this.buffer += `&${extendedEncodeURIComponent(key)}=`;
+        this.buffer += `&${extendedEncodeURIComponent(key2)}=`;
       }
       writeValue(value) {
         this.buffer += extendedEncodeURIComponent(value);
@@ -18784,8 +18784,8 @@ var init_XmlShapeSerializer = __esm({
         super();
         this.settings = settings;
       }
-      write(schema16, value) {
-        const ns = NormalizedSchema.of(schema16);
+      write(schema18, value) {
+        const ns = NormalizedSchema.of(schema18);
         if (ns.isStringSchema() && typeof value === "string") {
           this.stringBuffer = value;
         } else if (ns.isBlobSchema()) {
@@ -18922,8 +18922,8 @@ var init_XmlShapeSerializer = __esm({
         const sparse = !!mapValueTraits.sparse;
         const flat = !!mapTraits.xmlFlattened;
         const [xmlnsAttr, xmlns] = this.getXmlnsAttribute(mapMember, parentXmlns);
-        const addKeyValue = (entry, key, val) => {
-          const keyNode = import_xml_builder2.XmlNode.of(keyTag, key);
+        const addKeyValue = (entry, key2, val) => {
+          const keyNode = import_xml_builder2.XmlNode.of(keyTag, key2);
           const [keyXmlnsAttr, keyXmlns] = this.getXmlnsAttribute(mapKeySchema, xmlns);
           if (keyXmlns) {
             keyNode.addAttribute(keyXmlnsAttr, keyXmlns);
@@ -18942,11 +18942,11 @@ var init_XmlShapeSerializer = __esm({
           entry.addChildNode(valueNode);
         };
         if (flat) {
-          for (const key in map3) {
-            const val = map3[key];
+          for (const key2 in map3) {
+            const val = map3[key2];
             if (sparse || val != null) {
               const entry = import_xml_builder2.XmlNode.of(mapTraits.xmlName ?? mapMember.getMemberName());
-              addKeyValue(entry, key, val);
+              addKeyValue(entry, key2, val);
               container.addChildNode(entry);
             }
           }
@@ -18959,11 +18959,11 @@ var init_XmlShapeSerializer = __esm({
             }
             container.addChildNode(mapNode);
           }
-          for (const key in map3) {
-            const val = map3[key];
+          for (const key2 in map3) {
+            const val = map3[key2];
             if (sparse || val != null) {
               const entry = import_xml_builder2.XmlNode.of("entry");
-              addKeyValue(entry, key, val);
+              addKeyValue(entry, key2, val);
               (containerIsMap ? container : mapNode).addChildNode(entry);
             }
           }
@@ -19126,10 +19126,10 @@ var init_AwsRestXmlProtocol = __esm({
         const errorIdentifier = loadRestXmlErrorCode(response, dataObject) ?? "Unknown";
         this.mixin.compose(this.compositeErrorRegistry, errorIdentifier, this.options.defaultNamespace);
         if (dataObject.Error && typeof dataObject.Error === "object") {
-          for (const key of Object.keys(dataObject.Error)) {
-            dataObject[key] = dataObject.Error[key];
-            if (key.toLowerCase() === "message") {
-              dataObject.message = dataObject.Error[key];
+          for (const key2 of Object.keys(dataObject.Error)) {
+            dataObject[key2] = dataObject.Error[key2];
+            if (key2.toLowerCase() === "message") {
+              dataObject.message = dataObject.Error[key2];
             }
           }
         }
@@ -21028,10 +21028,10 @@ or increase socketAcquisitionWarningTimeout=(millis) in the NodeHttpHandler conf
           });
         });
       }
-      updateHttpClientConfig(key, value) {
+      updateHttpClientConfig(key2, value) {
         this.config = void 0;
         this.configProvider = this.configProvider.then((config) => {
-          if (key === Symbol.for("logger")) {
+          if (key2 === Symbol.for("logger")) {
             return {
               ...config,
               logger: config.logger ?? value
@@ -21039,7 +21039,7 @@ or increase socketAcquisitionWarningTimeout=(millis) in the NodeHttpHandler conf
           }
           return {
             ...config,
-            [key]: value
+            [key2]: value
           };
         });
       }
@@ -21457,12 +21457,12 @@ or increase socketAcquisitionWarningTimeout=(millis) in the NodeHttpHandler conf
           writeRequestBodyPromise = writeRequestBody(clientHttp2Stream, request, effectiveRequestTimeout);
         });
       }
-      updateHttpClientConfig(key, value) {
+      updateHttpClientConfig(key2, value) {
         this.config = void 0;
         this.configProvider = this.configProvider.then((config) => {
           return {
             ...config,
-            [key]: value
+            [key2]: value
           };
         });
       }
@@ -22740,9 +22740,9 @@ var require_dist_cjs9 = __commonJS({
         throw new TokenProviderError2(`Token is expired. ${REFRESH_MESSAGE}`, false);
       }
     };
-    var validateTokenKey = (key, value, forRefresh = false) => {
+    var validateTokenKey = (key2, value, forRefresh = false) => {
       if (typeof value === "undefined") {
-        throw new TokenProviderError2(`Value not present for '${key}' in SSO Token${forRefresh ? ". Cannot refresh" : ""}. ${REFRESH_MESSAGE}`, false);
+        throw new TokenProviderError2(`Value not present for '${key2}' in SSO Token${forRefresh ? ". Cannot refresh" : ""}. ${REFRESH_MESSAGE}`, false);
       }
     };
     var { writeFile } = promises;
@@ -26671,13 +26671,13 @@ var init_Sha1Js = __esm({
       outer;
       constructor(secret2) {
         if (secret2) {
-          const key = _Sha1Js.normalizeKey(secret2);
+          const key2 = _Sha1Js.normalizeKey(secret2);
           this.inner = new _Sha1Js();
           this.outer = new _Sha1Js();
           const pad = new Uint8Array(BLOCK2 * 2);
           for (let i5 = 0; i5 < BLOCK2; ++i5) {
-            pad[i5] = 54 ^ key[i5];
-            pad[i5 + BLOCK2] = 92 ^ key[i5];
+            pad[i5] = 54 ^ key2[i5];
+            pad[i5 + BLOCK2] = 92 ^ key2[i5];
           }
           this.inner.update(pad.subarray(0, BLOCK2));
           this.outer.update(pad.subarray(BLOCK2));
@@ -26777,17 +26777,17 @@ var init_Sha1Js = __esm({
         return out;
       }
       static normalizeKey(secret2) {
-        const key = toUint8Array(secret2);
-        if (key.byteLength > BLOCK2) {
+        const key2 = toUint8Array(secret2);
+        if (key2.byteLength > BLOCK2) {
           const h5 = new _Sha1Js();
-          h5.update(key);
+          h5.update(key2);
           const digest3 = h5.digestSync();
           const padded2 = new Uint8Array(BLOCK2);
           padded2.set(digest3);
           return padded2;
         }
         const padded = new Uint8Array(BLOCK2);
-        padded.set(key);
+        padded.set(key2);
         return padded;
       }
       hashBuffer(data, offset) {
@@ -26932,8 +26932,8 @@ var init_Sha1WebCrypto = __esm({
         if (subtle2) {
           if (this.secret) {
             this.finished = true;
-            const key = await subtle2.importKey("raw", this.secret, { name: "HMAC", hash: "SHA-1" }, false, ["sign"]);
-            const sig2 = await subtle2.sign("HMAC", key, data);
+            const key2 = await subtle2.importKey("raw", this.secret, { name: "HMAC", hash: "SHA-1" }, false, ["sign"]);
+            const sig2 = await subtle2.sign("HMAC", key2, data);
             return new Uint8Array(sig2);
           }
           const hash2 = await subtle2.digest("SHA-1", data);
@@ -35300,7 +35300,7 @@ var require_dist_cjs16 = __commonJS({
     };
     var PutBucketAnalyticsConfigurationCommand = class extends command5(_ep3, _mw4, "PutBucketAnalyticsConfiguration", PutBucketAnalyticsConfiguration$) {
     };
-    var PutBucketCorsCommand2 = class extends command5(_ep3, _mw3, "PutBucketCors", PutBucketCors$) {
+    var PutBucketCorsCommand = class extends command5(_ep3, _mw3, "PutBucketCors", PutBucketCors$) {
     };
     var PutBucketEncryptionCommand = class extends command5(_ep3, _mw3, "PutBucketEncryption", PutBucketEncryption$) {
     };
@@ -35541,7 +35541,7 @@ var require_dist_cjs16 = __commonJS({
       PutBucketAccelerateConfigurationCommand,
       PutBucketAclCommand,
       PutBucketAnalyticsConfigurationCommand,
-      PutBucketCorsCommand: PutBucketCorsCommand2,
+      PutBucketCorsCommand,
       PutBucketEncryptionCommand,
       PutBucketIntelligentTieringConfigurationCommand,
       PutBucketInventoryConfigurationCommand,
@@ -36532,7 +36532,7 @@ var require_dist_cjs16 = __commonJS({
     exports.PutBucketAnalyticsConfigurationCommand = PutBucketAnalyticsConfigurationCommand;
     exports.PutBucketAnalyticsConfigurationRequest$ = PutBucketAnalyticsConfigurationRequest$;
     exports.PutBucketCors$ = PutBucketCors$;
-    exports.PutBucketCorsCommand = PutBucketCorsCommand2;
+    exports.PutBucketCorsCommand = PutBucketCorsCommand;
     exports.PutBucketCorsRequest$ = PutBucketCorsRequest$;
     exports.PutBucketEncryption$ = PutBucketEncryption$;
     exports.PutBucketEncryptionCommand = PutBucketEncryptionCommand;
@@ -36985,10 +36985,10 @@ var CreateSchemaNode = freeze({
   is(node) {
     return node.kind === "CreateSchemaNode";
   },
-  create(schema16, params) {
+  create(schema18, params) {
     return freeze({
       kind: "CreateSchemaNode",
-      schema: IdentifierNode.create(schema16),
+      schema: IdentifierNode.create(schema18),
       ...params
     });
   },
@@ -37056,10 +37056,10 @@ var SchemableIdentifierNode = freeze({
       identifier: IdentifierNode.create(identifier)
     });
   },
-  createWithSchema(schema16, identifier) {
+  createWithSchema(schema18, identifier) {
     return freeze({
       kind: "SchemableIdentifierNode",
-      schema: IdentifierNode.create(schema16),
+      schema: IdentifierNode.create(schema18),
       identifier: IdentifierNode.create(identifier)
     });
   }
@@ -37090,10 +37090,10 @@ var DropSchemaNode = freeze({
   is(node) {
     return node.kind === "DropSchemaNode";
   },
-  create(schema16, params) {
+  create(schema18, params) {
     return freeze({
       kind: "DropSchemaNode",
-      schema: IdentifierNode.create(schema16),
+      schema: IdentifierNode.create(schema18),
       ...params
     });
   },
@@ -37150,10 +37150,10 @@ var TableNode = freeze({
       table: SchemableIdentifierNode.create(table2)
     });
   },
-  createWithSchema(schema16, table2) {
+  createWithSchema(schema18, table2) {
     return freeze({
       kind: "TableNode",
-      table: SchemableIdentifierNode.createWithSchema(schema16, table2)
+      table: SchemableIdentifierNode.createWithSchema(schema18, table2)
     });
   }
 });
@@ -37656,8 +37656,8 @@ function parseOrderedColumnName(column) {
   }
 }
 function parseStringReferenceWithTableAndSchema(parts) {
-  const [schema16, table2, column] = parts;
-  return ReferenceNode.create(ColumnNode.create(column), TableNode.createWithSchema(schema16, table2));
+  const [schema18, table2, column] = parts;
+  return ReferenceNode.create(ColumnNode.create(column), TableNode.createWithSchema(schema18, table2));
 }
 function parseStringReferenceWithTable(parts) {
   const [table2, column] = parts;
@@ -38497,8 +38497,8 @@ var ColumnUpdateNode = freeze({
 // node_modules/kysely/dist/esm/parser/update-set-parser.js
 function parseUpdateExpression(update) {
   const updateObj = isFunction(update) ? update(expressionBuilder()) : update;
-  return Object.entries(updateObj).filter(([_, value]) => value !== void 0).map(([key, value]) => {
-    return ColumnUpdateNode.create(ColumnNode.create(key), parseValueExpression(value));
+  return Object.entries(updateObj).filter(([_, value]) => value !== void 0).map(([key2, value]) => {
+    return ColumnUpdateNode.create(ColumnNode.create(key2), parseValueExpression(value));
   });
 }
 
@@ -41092,9 +41092,9 @@ var WithSchemaTransformer = class extends OperationNodeTransformer {
   #schema;
   #schemableIds = /* @__PURE__ */ new Set();
   #ctes = /* @__PURE__ */ new Set();
-  constructor(schema16) {
+  constructor(schema18) {
     super();
-    this.#schema = schema16;
+    this.#schema = schema18;
   }
   transformNodeImpl(node) {
     if (!this.#isRootOperationNode(node)) {
@@ -41195,8 +41195,8 @@ var WithSchemaTransformer = class extends OperationNodeTransformer {
 // node_modules/kysely/dist/esm/plugin/with-schema/with-schema-plugin.js
 var WithSchemaPlugin = class {
   #transformer;
-  constructor(schema16) {
-    this.#transformer = new WithSchemaTransformer(schema16);
+  constructor(schema18) {
+    this.#transformer = new WithSchemaTransformer(schema18);
   }
   transformQuery(args) {
     return this.#transformer.transformNode(args.node);
@@ -41465,10 +41465,10 @@ var QueryCreator = class _QueryCreator {
    * select "p"."name" from "mammals"."pet" as "p"
    * ```
    */
-  withSchema(schema16) {
+  withSchema(schema18) {
     return new _QueryCreator({
       ...this.#props,
-      executor: this.#props.executor.withPluginAtFront(new WithSchemaPlugin(schema16))
+      executor: this.#props.executor.withPluginAtFront(new WithSchemaPlugin(schema18))
     });
   }
 };
@@ -42688,8 +42688,8 @@ var JSONPathBuilder = class {
    * select "profile"->'addresses'->0->'city' as "city" from "person"
    * ```
    */
-  key(key) {
-    return this.#createBuilderWithPathLeg("Member", key);
+  key(key2) {
+    return this.#createBuilderWithPathLeg("Member", key2);
   }
   #createBuilderWithPathLeg(legType, value) {
     return new TraversedJSONPathBuilder(JSONReferenceNode.cloneWithTraversal(this.#node, JSONPathNode.is(this.#node.traversal) ? JSONPathNode.cloneWithLeg(this.#node.traversal, JSONPathLegNode.create(legType, value)) : JSONOperatorChainNode.cloneWithValue(this.#node.traversal, ValueNode.createImmediate(value))));
@@ -42846,8 +42846,8 @@ function createExpressionBuilder(executor = NOOP_QUERY_EXECUTOR) {
         return new ExpressionWrapper(ParensNode.create(node));
       }
     },
-    withSchema(schema16) {
-      return createExpressionBuilder(executor.withPluginAtFront(new WithSchemaPlugin(schema16)));
+    withSchema(schema18) {
+      return createExpressionBuilder(executor.withPluginAtFront(new WithSchemaPlugin(schema18)));
     }
   });
   eb.fn = createFunctionModule();
@@ -42906,8 +42906,8 @@ function parseAliasedTable(from) {
 function parseTable(from) {
   const SCHEMA_SEPARATOR = ".";
   if (from.includes(SCHEMA_SEPARATOR)) {
-    const [schema16, table2] = from.split(SCHEMA_SEPARATOR).map(trim2);
-    return TableNode.createWithSchema(schema16, table2);
+    const [schema18, table2] = from.split(SCHEMA_SEPARATOR).map(trim2);
+    return TableNode.createWithSchema(schema18, table2);
   } else {
     return TableNode.create(from);
   }
@@ -44946,11 +44946,11 @@ var SchemaModule = class _SchemaModule {
    *   .execute()
    * ```
    */
-  createSchema(schema16) {
+  createSchema(schema18) {
     return new CreateSchemaBuilder({
       queryId: createQueryId(),
       executor: this.#executor,
-      node: CreateSchemaNode.create(schema16)
+      node: CreateSchemaNode.create(schema18)
     });
   }
   /**
@@ -44964,11 +44964,11 @@ var SchemaModule = class _SchemaModule {
    *   .execute()
    * ```
    */
-  dropSchema(schema16) {
+  dropSchema(schema18) {
     return new DropSchemaBuilder({
       queryId: createQueryId(),
       executor: this.#executor,
-      node: DropSchemaNode.create(schema16)
+      node: DropSchemaNode.create(schema18)
     });
   }
   /**
@@ -45086,8 +45086,8 @@ var SchemaModule = class _SchemaModule {
   /**
    * See {@link QueryCreator.withSchema}
    */
-  withSchema(schema16) {
-    return new _SchemaModule(this.#executor.withPluginAtFront(new WithSchemaPlugin(schema16)));
+  withSchema(schema18) {
+    return new _SchemaModule(this.#executor.withPluginAtFront(new WithSchemaPlugin(schema18)));
   }
 };
 
@@ -45622,10 +45622,10 @@ var Kysely = class _Kysely extends QueryCreator {
   /**
    * @override
    */
-  withSchema(schema16) {
+  withSchema(schema18) {
     return new _Kysely({
       ...this.#props,
-      executor: this.#props.executor.withPluginAtFront(new WithSchemaPlugin(schema16))
+      executor: this.#props.executor.withPluginAtFront(new WithSchemaPlugin(schema18))
     });
   }
   /**
@@ -45731,10 +45731,10 @@ var Transaction = class _Transaction extends Kysely {
   /**
    * @override
    */
-  withSchema(schema16) {
+  withSchema(schema18) {
     return new _Transaction({
       ...this.#props,
-      executor: this.#props.executor.withPluginAtFront(new WithSchemaPlugin(schema16))
+      executor: this.#props.executor.withPluginAtFront(new WithSchemaPlugin(schema18))
     });
   }
   withTables() {
@@ -47475,14 +47475,14 @@ var CamelCasePlugin = class {
     return args.result;
   }
   mapRow(row) {
-    return Object.keys(row).reduce((obj, key) => {
-      let value = row[key];
+    return Object.keys(row).reduce((obj, key2) => {
+      let value = row[key2];
       if (Array.isArray(value)) {
         value = value.map((it) => canMap(it, this.opt) ? this.mapRow(it) : it);
       } else if (canMap(value, this.opt)) {
         value = this.mapRow(value);
       }
-      obj[this.camelCase(key)] = value;
+      obj[this.camelCase(key2)] = value;
       return obj;
     }, {});
   }
@@ -48506,7 +48506,7 @@ function Connection(options, queues = {}, { onopen = noop2, onend = noop2, onclo
         break;
       }
       try {
-        handle20(incoming.subarray(0, length + 1));
+        handle26(incoming.subarray(0, length + 1));
       } catch (e5) {
         query && (query.cursorFn || query.describeFirst) && write(Sync);
         errored(e5);
@@ -48613,7 +48613,7 @@ function Connection(options, queues = {}, { onopen = noop2, onend = noop2, onclo
     delay = (typeof backoff2 === "function" ? backoff2(options.shared.retries) : backoff2) * 1e3;
     onclose(connection2, Errors.connection("CONNECTION_CLOSED", options, socket));
   }
-  function handle20(xs, x = xs[0]) {
+  function handle26(xs, x = xs[0]) {
     (x === 68 ? DataRow : (
       // D
       x === 100 ? CopyData : (
@@ -49084,8 +49084,8 @@ function parseError(x) {
 function md5(x) {
   return crypto2.createHash("md5").update(x).digest("hex");
 }
-function hmac(key, x) {
-  return crypto2.createHmac("sha256", key).update(x).digest();
+function hmac(key2, x) {
+  return crypto2.createHmac("sha256", key2).update(x).digest();
 }
 function sha256(x) {
   return crypto2.createHash("sha256").update(x).digest();
@@ -49199,13 +49199,13 @@ function Subscribe(postgres2, options) {
     }
     function data(x2) {
       if (x2[0] === 119) {
-        parse(x2.subarray(25), state3, sql3.options.parsers, handle20, options.transform);
+        parse(x2.subarray(25), state3, sql3.options.parsers, handle26, options.transform);
       } else if (x2[0] === 107 && x2[17]) {
         state3.lsn = x2.subarray(1, 9);
         pong();
       }
     }
-    function handle20(a5, b6) {
+    function handle26(a5, b6) {
       const path = b6.relation.schema + "." + b6.relation.table;
       call("*", a5, b6);
       call("*:" + path, a5, b6);
@@ -49229,7 +49229,7 @@ function Subscribe(postgres2, options) {
 function Time(x) {
   return new Date(Date.UTC(2e3, 0, 1) + Number(x / BigInt(1e3)));
 }
-function parse(x, state2, parsers2, handle20, transform) {
+function parse(x, state2, parsers2, handle26, transform) {
   const char = (acc, [k5, v]) => (acc[k5.charCodeAt(0)] = v, acc);
   Object.entries({
     R: (x2) => {
@@ -49268,7 +49268,7 @@ function parse(x, state2, parsers2, handle20, transform) {
       let i5 = 1;
       const relation = state2[x2.readUInt32BE(i5)];
       const { row } = tuples(x2, relation.columns, i5 += 7, transform);
-      handle20(row, {
+      handle26(row, {
         command: "insert",
         relation
       });
@@ -49277,13 +49277,13 @@ function parse(x, state2, parsers2, handle20, transform) {
       let i5 = 1;
       const relation = state2[x2.readUInt32BE(i5)];
       i5 += 4;
-      const key = x2[i5] === 75;
-      handle20(
-        key || x2[i5] === 79 ? tuples(x2, relation.columns, i5 += 3, transform).row : null,
+      const key2 = x2[i5] === 75;
+      handle26(
+        key2 || x2[i5] === 79 ? tuples(x2, relation.columns, i5 += 3, transform).row : null,
         {
           command: "delete",
           relation,
-          key
+          key: key2
         }
       );
     },
@@ -49291,14 +49291,14 @@ function parse(x, state2, parsers2, handle20, transform) {
       let i5 = 1;
       const relation = state2[x2.readUInt32BE(i5)];
       i5 += 4;
-      const key = x2[i5] === 75;
-      const xs = key || x2[i5] === 79 ? tuples(x2, relation.columns, i5 += 3, transform) : null;
+      const key2 = x2[i5] === 75;
+      const xs = key2 || x2[i5] === 79 ? tuples(x2, relation.columns, i5 += 3, transform) : null;
       xs && (i5 = xs.i);
       const { row } = tuples(x2, relation.columns, i5 + 3, transform);
-      handle20(row, {
+      handle26(row, {
         command: "update",
         relation,
-        key,
+        key: key2,
         old: xs && xs.row
       });
     },
@@ -49325,8 +49325,8 @@ function parseEvent(x) {
   const xs = x.match(/^(\*|insert|update|delete)?:?([^.]+?\.?[^=]+)?=?(.+)?/i) || [];
   if (!xs)
     throw new Error("Malformed subscribe pattern: " + x);
-  const [, command5, path, key] = xs;
-  return (command5 || "*") + (path ? ":" + (path.indexOf(".") === -1 ? "public." + path : path) : "") + (key ? "=" + key : "");
+  const [, command5, path, key2] = xs;
+  return (command5 || "*") + (path ? ":" + (path.indexOf(".") === -1 ? "public." + path : path) : "") + (key2 ? "=" + key2 : "");
 }
 
 // node_modules/postgres/src/large.js
@@ -49451,7 +49451,7 @@ function Postgres(a5, b6) {
       unsafe,
       notify,
       array,
-      json,
+      json: json2,
       file
     });
     return sql3;
@@ -49608,7 +49608,7 @@ function Postgres(a5, b6) {
     queue === open ? c5.idleTimer.start() : c5.idleTimer.cancel();
     return c5;
   }
-  function json(x) {
+  function json2(x) {
     return new Parameter(x, 3802);
   }
   function array(x, type) {
@@ -49961,9 +49961,9 @@ var util;
   };
   util2.objectKeys = typeof Object.keys === "function" ? (obj) => Object.keys(obj) : (object) => {
     const keys = [];
-    for (const key in object) {
-      if (Object.prototype.hasOwnProperty.call(object, key)) {
-        keys.push(key);
+    for (const key2 in object) {
+      if (Object.prototype.hasOwnProperty.call(object, key2)) {
+        keys.push(key2);
       }
     }
     return keys;
@@ -50081,8 +50081,8 @@ var ZodIssueCode = util.arrayToEnum([
   "not_finite"
 ]);
 var quotelessJson = (obj) => {
-  const json = JSON.stringify(obj, null, 2);
-  return json.replace(/"([^"]+)":/g, "$1:");
+  const json2 = JSON.stringify(obj, null, 2);
+  return json2.replace(/"([^"]+)":/g, "$1:");
 };
 var ZodError = class _ZodError extends Error {
   get errors() {
@@ -50363,10 +50363,10 @@ var ParseStatus = class _ParseStatus {
   static async mergeObjectAsync(status, pairs) {
     const syncPairs = [];
     for (const pair of pairs) {
-      const key = await pair.key;
+      const key2 = await pair.key;
       const value = await pair.value;
       syncPairs.push({
-        key,
+        key: key2,
         value
       });
     }
@@ -50375,17 +50375,17 @@ var ParseStatus = class _ParseStatus {
   static mergeObjectSync(status, pairs) {
     const finalObject = {};
     for (const pair of pairs) {
-      const { key, value } = pair;
-      if (key.status === "aborted")
+      const { key: key2, value } = pair;
+      if (key2.status === "aborted")
         return INVALID;
       if (value.status === "aborted")
         return INVALID;
-      if (key.status === "dirty")
+      if (key2.status === "dirty")
         status.dirty();
       if (value.status === "dirty")
         status.dirty();
-      if (key.value !== "__proto__" && (typeof value.value !== "undefined" || pair.alwaysSet)) {
-        finalObject[key.value] = value.value;
+      if (key2.value !== "__proto__" && (typeof value.value !== "undefined" || pair.alwaysSet)) {
+        finalObject[key2.value] = value.value;
       }
     }
     return { status: status.value, value: finalObject };
@@ -50410,12 +50410,12 @@ var errorUtil;
 
 // node_modules/zod/v3/types.js
 var ParseInputLazyPath = class {
-  constructor(parent, value, path, key) {
+  constructor(parent, value, path, key2) {
     this._cachedPath = [];
     this.parent = parent;
     this.data = value;
     this._path = path;
-    this._key = key;
+    this._key = key2;
   }
   get path() {
     if (!this._cachedPath.length) {
@@ -52147,9 +52147,9 @@ var ZodArray = class _ZodArray extends ZodType {
     return this.min(1, message2);
   }
 };
-ZodArray.create = (schema16, params) => {
+ZodArray.create = (schema18, params) => {
   return new ZodArray({
-    type: schema16,
+    type: schema18,
     minLength: null,
     maxLength: null,
     exactLength: null,
@@ -52157,30 +52157,30 @@ ZodArray.create = (schema16, params) => {
     ...processCreateParams(params)
   });
 };
-function deepPartialify(schema16) {
-  if (schema16 instanceof ZodObject) {
+function deepPartialify(schema18) {
+  if (schema18 instanceof ZodObject) {
     const newShape = {};
-    for (const key in schema16.shape) {
-      const fieldSchema = schema16.shape[key];
-      newShape[key] = ZodOptional.create(deepPartialify(fieldSchema));
+    for (const key2 in schema18.shape) {
+      const fieldSchema = schema18.shape[key2];
+      newShape[key2] = ZodOptional.create(deepPartialify(fieldSchema));
     }
     return new ZodObject({
-      ...schema16._def,
+      ...schema18._def,
       shape: () => newShape
     });
-  } else if (schema16 instanceof ZodArray) {
+  } else if (schema18 instanceof ZodArray) {
     return new ZodArray({
-      ...schema16._def,
-      type: deepPartialify(schema16.element)
+      ...schema18._def,
+      type: deepPartialify(schema18.element)
     });
-  } else if (schema16 instanceof ZodOptional) {
-    return ZodOptional.create(deepPartialify(schema16.unwrap()));
-  } else if (schema16 instanceof ZodNullable) {
-    return ZodNullable.create(deepPartialify(schema16.unwrap()));
-  } else if (schema16 instanceof ZodTuple) {
-    return ZodTuple.create(schema16.items.map((item) => deepPartialify(item)));
+  } else if (schema18 instanceof ZodOptional) {
+    return ZodOptional.create(deepPartialify(schema18.unwrap()));
+  } else if (schema18 instanceof ZodNullable) {
+    return ZodNullable.create(deepPartialify(schema18.unwrap()));
+  } else if (schema18 instanceof ZodTuple) {
+    return ZodTuple.create(schema18.items.map((item) => deepPartialify(item)));
   } else {
-    return schema16;
+    return schema18;
   }
 }
 var ZodObject = class _ZodObject extends ZodType {
@@ -52213,29 +52213,29 @@ var ZodObject = class _ZodObject extends ZodType {
     const { shape, keys: shapeKeys } = this._getCached();
     const extraKeys = [];
     if (!(this._def.catchall instanceof ZodNever && this._def.unknownKeys === "strip")) {
-      for (const key in ctx.data) {
-        if (!shapeKeys.includes(key)) {
-          extraKeys.push(key);
+      for (const key2 in ctx.data) {
+        if (!shapeKeys.includes(key2)) {
+          extraKeys.push(key2);
         }
       }
     }
     const pairs = [];
-    for (const key of shapeKeys) {
-      const keyValidator = shape[key];
-      const value = ctx.data[key];
+    for (const key2 of shapeKeys) {
+      const keyValidator = shape[key2];
+      const value = ctx.data[key2];
       pairs.push({
-        key: { status: "valid", value: key },
-        value: keyValidator._parse(new ParseInputLazyPath(ctx, value, ctx.path, key)),
-        alwaysSet: key in ctx.data
+        key: { status: "valid", value: key2 },
+        value: keyValidator._parse(new ParseInputLazyPath(ctx, value, ctx.path, key2)),
+        alwaysSet: key2 in ctx.data
       });
     }
     if (this._def.catchall instanceof ZodNever) {
       const unknownKeys = this._def.unknownKeys;
       if (unknownKeys === "passthrough") {
-        for (const key of extraKeys) {
+        for (const key2 of extraKeys) {
           pairs.push({
-            key: { status: "valid", value: key },
-            value: { status: "valid", value: ctx.data[key] }
+            key: { status: "valid", value: key2 },
+            value: { status: "valid", value: ctx.data[key2] }
           });
         }
       } else if (unknownKeys === "strict") {
@@ -52252,15 +52252,15 @@ var ZodObject = class _ZodObject extends ZodType {
       }
     } else {
       const catchall = this._def.catchall;
-      for (const key of extraKeys) {
-        const value = ctx.data[key];
+      for (const key2 of extraKeys) {
+        const value = ctx.data[key2];
         pairs.push({
-          key: { status: "valid", value: key },
+          key: { status: "valid", value: key2 },
           value: catchall._parse(
-            new ParseInputLazyPath(ctx, value, ctx.path, key)
+            new ParseInputLazyPath(ctx, value, ctx.path, key2)
             //, ctx.child(key), value, getParsedType(value)
           ),
-          alwaysSet: key in ctx.data
+          alwaysSet: key2 in ctx.data
         });
       }
     }
@@ -52268,10 +52268,10 @@ var ZodObject = class _ZodObject extends ZodType {
       return Promise.resolve().then(async () => {
         const syncPairs = [];
         for (const pair of pairs) {
-          const key = await pair.key;
+          const key2 = await pair.key;
           const value = await pair.value;
           syncPairs.push({
-            key,
+            key: key2,
             value,
             alwaysSet: pair.alwaysSet
           });
@@ -52396,8 +52396,8 @@ var ZodObject = class _ZodObject extends ZodType {
   //   }) as any;
   //   return merged;
   // }
-  setKey(key, schema16) {
-    return this.augment({ [key]: schema16 });
+  setKey(key2, schema18) {
+    return this.augment({ [key2]: schema18 });
   }
   // merge<Incoming extends AnyZodObject>(
   //   merging: Incoming
@@ -52428,9 +52428,9 @@ var ZodObject = class _ZodObject extends ZodType {
   }
   pick(mask) {
     const shape = {};
-    for (const key of util.objectKeys(mask)) {
-      if (mask[key] && this.shape[key]) {
-        shape[key] = this.shape[key];
+    for (const key2 of util.objectKeys(mask)) {
+      if (mask[key2] && this.shape[key2]) {
+        shape[key2] = this.shape[key2];
       }
     }
     return new _ZodObject({
@@ -52440,9 +52440,9 @@ var ZodObject = class _ZodObject extends ZodType {
   }
   omit(mask) {
     const shape = {};
-    for (const key of util.objectKeys(this.shape)) {
-      if (!mask[key]) {
-        shape[key] = this.shape[key];
+    for (const key2 of util.objectKeys(this.shape)) {
+      if (!mask[key2]) {
+        shape[key2] = this.shape[key2];
       }
     }
     return new _ZodObject({
@@ -52458,12 +52458,12 @@ var ZodObject = class _ZodObject extends ZodType {
   }
   partial(mask) {
     const newShape = {};
-    for (const key of util.objectKeys(this.shape)) {
-      const fieldSchema = this.shape[key];
-      if (mask && !mask[key]) {
-        newShape[key] = fieldSchema;
+    for (const key2 of util.objectKeys(this.shape)) {
+      const fieldSchema = this.shape[key2];
+      if (mask && !mask[key2]) {
+        newShape[key2] = fieldSchema;
       } else {
-        newShape[key] = fieldSchema.optional();
+        newShape[key2] = fieldSchema.optional();
       }
     }
     return new _ZodObject({
@@ -52473,16 +52473,16 @@ var ZodObject = class _ZodObject extends ZodType {
   }
   required(mask) {
     const newShape = {};
-    for (const key of util.objectKeys(this.shape)) {
-      if (mask && !mask[key]) {
-        newShape[key] = this.shape[key];
+    for (const key2 of util.objectKeys(this.shape)) {
+      if (mask && !mask[key2]) {
+        newShape[key2] = this.shape[key2];
       } else {
-        const fieldSchema = this.shape[key];
+        const fieldSchema = this.shape[key2];
         let newField = fieldSchema;
         while (newField instanceof ZodOptional) {
           newField = newField._def.innerType;
         }
-        newShape[key] = newField;
+        newShape[key2] = newField;
       }
     }
     return new _ZodObject({
@@ -52726,14 +52726,14 @@ function mergeValues(a5, b6) {
     return { valid: true, data: a5 };
   } else if (aType === ZodParsedType.object && bType === ZodParsedType.object) {
     const bKeys = util.objectKeys(b6);
-    const sharedKeys = util.objectKeys(a5).filter((key) => bKeys.indexOf(key) !== -1);
+    const sharedKeys = util.objectKeys(a5).filter((key2) => bKeys.indexOf(key2) !== -1);
     const newObj = { ...a5, ...b6 };
-    for (const key of sharedKeys) {
-      const sharedValue = mergeValues(a5[key], b6[key]);
+    for (const key2 of sharedKeys) {
+      const sharedValue = mergeValues(a5[key2], b6[key2]);
       if (!sharedValue.valid) {
         return { valid: false };
       }
-      newObj[key] = sharedValue.data;
+      newObj[key2] = sharedValue.data;
     }
     return { valid: true, data: newObj };
   } else if (aType === ZodParsedType.array && bType === ZodParsedType.array) {
@@ -52843,10 +52843,10 @@ var ZodTuple = class _ZodTuple extends ZodType {
       status.dirty();
     }
     const items = [...ctx.data].map((item, itemIndex) => {
-      const schema16 = this._def.items[itemIndex] || this._def.rest;
-      if (!schema16)
+      const schema18 = this._def.items[itemIndex] || this._def.rest;
+      if (!schema18)
         return null;
-      return schema16._parse(new ParseInputLazyPath(ctx, item, ctx.path, itemIndex));
+      return schema18._parse(new ParseInputLazyPath(ctx, item, ctx.path, itemIndex));
     }).filter((x) => !!x);
     if (ctx.common.async) {
       return Promise.all(items).then((results) => {
@@ -52897,11 +52897,11 @@ var ZodRecord = class _ZodRecord extends ZodType {
     const pairs = [];
     const keyType = this._def.keyType;
     const valueType = this._def.valueType;
-    for (const key in ctx.data) {
+    for (const key2 in ctx.data) {
       pairs.push({
-        key: keyType._parse(new ParseInputLazyPath(ctx, key, ctx.path, key)),
-        value: valueType._parse(new ParseInputLazyPath(ctx, ctx.data[key], ctx.path, key)),
-        alwaysSet: key in ctx.data
+        key: keyType._parse(new ParseInputLazyPath(ctx, key2, ctx.path, key2)),
+        value: valueType._parse(new ParseInputLazyPath(ctx, ctx.data[key2], ctx.path, key2)),
+        alwaysSet: key2 in ctx.data
       });
     }
     if (ctx.common.async) {
@@ -52949,9 +52949,9 @@ var ZodMap = class extends ZodType {
     }
     const keyType = this._def.keyType;
     const valueType = this._def.valueType;
-    const pairs = [...ctx.data.entries()].map(([key, value], index) => {
+    const pairs = [...ctx.data.entries()].map(([key2, value], index) => {
       return {
-        key: keyType._parse(new ParseInputLazyPath(ctx, key, ctx.path, [index, "key"])),
+        key: keyType._parse(new ParseInputLazyPath(ctx, key2, ctx.path, [index, "key"])),
         value: valueType._parse(new ParseInputLazyPath(ctx, value, ctx.path, [index, "value"]))
       };
     });
@@ -52959,30 +52959,30 @@ var ZodMap = class extends ZodType {
       const finalMap = /* @__PURE__ */ new Map();
       return Promise.resolve().then(async () => {
         for (const pair of pairs) {
-          const key = await pair.key;
+          const key2 = await pair.key;
           const value = await pair.value;
-          if (key.status === "aborted" || value.status === "aborted") {
+          if (key2.status === "aborted" || value.status === "aborted") {
             return INVALID;
           }
-          if (key.status === "dirty" || value.status === "dirty") {
+          if (key2.status === "dirty" || value.status === "dirty") {
             status.dirty();
           }
-          finalMap.set(key.value, value.value);
+          finalMap.set(key2.value, value.value);
         }
         return { status: status.value, value: finalMap };
       });
     } else {
       const finalMap = /* @__PURE__ */ new Map();
       for (const pair of pairs) {
-        const key = pair.key;
+        const key2 = pair.key;
         const value = pair.value;
-        if (key.status === "aborted" || value.status === "aborted") {
+        if (key2.status === "aborted" || value.status === "aborted") {
           return INVALID;
         }
-        if (key.status === "dirty" || value.status === "dirty") {
+        if (key2.status === "dirty" || value.status === "dirty") {
           status.dirty();
         }
-        finalMap.set(key.value, value.value);
+        finalMap.set(key2.value, value.value);
       }
       return { status: status.value, value: finalMap };
     }
@@ -53360,9 +53360,9 @@ var ZodPromise = class extends ZodType {
     }));
   }
 };
-ZodPromise.create = (schema16, params) => {
+ZodPromise.create = (schema18, params) => {
   return new ZodPromise({
-    type: schema16,
+    type: schema18,
     typeName: ZodFirstPartyTypeKind.ZodPromise,
     ...processCreateParams(params)
   });
@@ -53490,17 +53490,17 @@ var ZodEffects = class extends ZodType {
     util.assertNever(effect);
   }
 };
-ZodEffects.create = (schema16, effect, params) => {
+ZodEffects.create = (schema18, effect, params) => {
   return new ZodEffects({
-    schema: schema16,
+    schema: schema18,
     typeName: ZodFirstPartyTypeKind.ZodEffects,
     effect,
     ...processCreateParams(params)
   });
 };
-ZodEffects.createWithPreprocess = (preprocess, schema16, params) => {
+ZodEffects.createWithPreprocess = (preprocess, schema18, params) => {
   return new ZodEffects({
-    schema: schema16,
+    schema: schema18,
     effect: { type: "preprocess", transform: preprocess },
     typeName: ZodFirstPartyTypeKind.ZodEffects,
     ...processCreateParams(params)
@@ -53862,12 +53862,12 @@ var DoubleIndexedKV = class {
     this.keyToValue = /* @__PURE__ */ new Map();
     this.valueToKey = /* @__PURE__ */ new Map();
   }
-  set(key, value) {
-    this.keyToValue.set(key, value);
-    this.valueToKey.set(value, key);
+  set(key2, value) {
+    this.keyToValue.set(key2, value);
+    this.valueToKey.set(value, key2);
   }
-  getByKey(key) {
-    return this.keyToValue.get(key);
+  getByKey(key2) {
+    return this.keyToValue.get(key2);
   }
   getByValue(value) {
     return this.valueToKey.get(value);
@@ -53931,9 +53931,9 @@ function valuesOfObj(record) {
     return Object.values(record);
   }
   const values2 = [];
-  for (const key in record) {
-    if (record.hasOwnProperty(key)) {
-      values2.push(record[key]);
+  for (const key2 in record) {
+    if (record.hasOwnProperty(key2)) {
+      values2.push(record[key2]);
     }
   }
   return values2;
@@ -53953,7 +53953,7 @@ function find(record, predicate) {
   return void 0;
 }
 function forEach(record, run) {
-  Object.entries(record).forEach(([key, value]) => run(value, key));
+  Object.entries(record).forEach(([key2, value]) => run(value, key2));
 }
 function includes(arr, value) {
   return arr.indexOf(value) !== -1;
@@ -54016,7 +54016,7 @@ var isTypedArray = (payload) => ArrayBuffer.isView(payload) && !(payload instanc
 var isURL = (payload) => payload instanceof URL;
 
 // node_modules/superjson/dist/pathstringifier.js
-var escapeKey = (key) => key.replace(/\./g, "\\.");
+var escapeKey = (key2) => key2.replace(/\./g, "\\.");
 var stringifyPath = (path) => path.map(String).map(escapeKey).join(".");
 var parsePath = (string) => {
   const result = [];
@@ -54217,17 +54217,17 @@ var simpleRulesByAnnotation = {};
 simpleRules.forEach((rule) => {
   simpleRulesByAnnotation[rule.annotation] = rule;
 });
-var untransformValue = (json, type, superJson) => {
+var untransformValue = (json2, type, superJson) => {
   if (isArray(type)) {
     switch (type[0]) {
       case "symbol":
-        return symbolRule.untransform(json, type, superJson);
+        return symbolRule.untransform(json2, type, superJson);
       case "class":
-        return classRule.untransform(json, type, superJson);
+        return classRule.untransform(json2, type, superJson);
       case "custom":
-        return customRule.untransform(json, type, superJson);
+        return customRule.untransform(json2, type, superJson);
       case "typed-array":
-        return typedArrayRule.untransform(json, type, superJson);
+        return typedArrayRule.untransform(json2, type, superJson);
       default:
         throw new Error("Unknown transformation: " + type);
     }
@@ -54236,7 +54236,7 @@ var untransformValue = (json, type, superJson) => {
     if (!transformation) {
       throw new Error("Unknown transformation: " + type);
     }
-    return transformation.untransform(json, superJson);
+    return transformation.untransform(json2, superJson);
   }
 };
 
@@ -54265,11 +54265,11 @@ function validatePath(path) {
 var getDeep = (object, path) => {
   validatePath(path);
   for (let i5 = 0; i5 < path.length; i5++) {
-    const key = path[i5];
+    const key2 = path[i5];
     if (isSet(object)) {
-      object = getNthKey(object, +key);
+      object = getNthKey(object, +key2);
     } else if (isMap(object)) {
-      const row = +key;
+      const row = +key2;
       const type = +path[++i5] === 0 ? "key" : "value";
       const keyOfRow = getNthKey(object, row);
       switch (type) {
@@ -54281,7 +54281,7 @@ var getDeep = (object, path) => {
           break;
       }
     } else {
-      object = object[key];
+      object = object[key2];
     }
   }
   return object;
@@ -54293,21 +54293,21 @@ var setDeep = (object, path, mapper) => {
   }
   let parent = object;
   for (let i5 = 0; i5 < path.length - 1; i5++) {
-    const key = path[i5];
+    const key2 = path[i5];
     if (isArray(parent)) {
-      const index = +key;
+      const index = +key2;
       parent = parent[index];
     } else if (isPlainObject2(parent)) {
-      parent = parent[key];
+      parent = parent[key2];
     } else if (isSet(parent)) {
-      const row = +key;
+      const row = +key2;
       parent = getNthKey(parent, row);
     } else if (isMap(parent)) {
       const isEnd = i5 === path.length - 2;
       if (isEnd) {
         break;
       }
-      const row = +key;
+      const row = +key2;
       const type = +path[++i5] === 0 ? "key" : "value";
       const keyOfRow = getNthKey(parent, row);
       switch (type) {
@@ -54362,13 +54362,13 @@ function traverse(tree, walker2, origin = []) {
     return;
   }
   if (!isArray(tree)) {
-    forEach(tree, (subtree, key) => traverse(subtree, walker2, [...origin, ...parsePath(key)]));
+    forEach(tree, (subtree, key2) => traverse(subtree, walker2, [...origin, ...parsePath(key2)]));
     return;
   }
   const [nodeValue, children] = tree;
   if (children) {
-    forEach(children, (child, key) => {
-      traverse(child, walker2, [...origin, ...parsePath(key)]);
+    forEach(children, (child, key2) => {
+      traverse(child, walker2, [...origin, ...parsePath(key2)]);
     });
   }
   walker2(nodeValue, origin);
@@ -54477,8 +54477,8 @@ var walker = (object, identities, superJson, dedupe, path = [], objectsInThisPat
     if (isArray(recursiveResult.annotations)) {
       innerAnnotations[index] = recursiveResult.annotations;
     } else if (isPlainObject2(recursiveResult.annotations)) {
-      forEach(recursiveResult.annotations, (tree, key) => {
-        innerAnnotations[escapeKey(index) + "." + key] = tree;
+      forEach(recursiveResult.annotations, (tree, key2) => {
+        innerAnnotations[escapeKey(index) + "." + key2] = tree;
       });
     }
   });
@@ -54520,12 +54520,12 @@ function isUndefined3(payload) {
 var isNullOrUndefined = isOneOf(isNull3, isUndefined3);
 
 // node_modules/copy-anything/dist/index.js
-function assignProp(carry, key, newVal, originalObject, includeNonenumerable) {
-  const propType = {}.propertyIsEnumerable.call(originalObject, key) ? "enumerable" : "nonenumerable";
+function assignProp(carry, key2, newVal, originalObject, includeNonenumerable) {
+  const propType = {}.propertyIsEnumerable.call(originalObject, key2) ? "enumerable" : "nonenumerable";
   if (propType === "enumerable")
-    carry[key] = newVal;
+    carry[key2] = newVal;
   if (includeNonenumerable && propType === "nonenumerable") {
-    Object.defineProperty(carry, key, {
+    Object.defineProperty(carry, key2, {
       value: newVal,
       enumerable: false,
       writable: true,
@@ -54542,13 +54542,13 @@ function copy(target, options = {}) {
   }
   const props = Object.getOwnPropertyNames(target);
   const symbols = Object.getOwnPropertySymbols(target);
-  return [...props, ...symbols].reduce((carry, key) => {
-    if (isArray2(options.props) && !options.props.includes(key)) {
+  return [...props, ...symbols].reduce((carry, key2) => {
+    if (isArray2(options.props) && !options.props.includes(key2)) {
       return carry;
     }
-    const val = target[key];
+    const val = target[key2];
     const newVal = copy(val, options);
-    assignProp(carry, key, newVal, target, options.nonenumerable);
+    assignProp(carry, key2, newVal, target, options.nonenumerable);
     return carry;
   }, {});
 }
@@ -54587,8 +54587,8 @@ var SuperJSON = class {
     return res;
   }
   deserialize(payload) {
-    const { json, meta } = payload;
-    let result = copy(json);
+    const { json: json2, meta } = payload;
+    let result = copy(json2);
     if (meta?.values) {
       result = applyValueAnnotations(result, meta.values, this);
     }
@@ -54856,51 +54856,51 @@ function serializeJoseHeader(Err, header) {
 }
 
 // node_modules/jose/dist/webapi/lib/key.js
-var tag = (key) => key[Symbol.toStringTag];
-var jwkMatchesOp = (entry, key, usage) => {
+var tag = (key2) => key2[Symbol.toStringTag];
+var jwkMatchesOp = (entry, key2, usage) => {
   const { alg } = entry;
-  if (key.use !== void 0) {
+  if (key2.use !== void 0) {
     const expected = usage === "sign" || usage === "verify" ? "sig" : "enc";
-    if (key.use !== expected)
+    if (key2.use !== expected)
       throw new TypeError(`Invalid key for this operation, its "use" must be "${expected}" when present`);
   }
-  if (key.alg !== void 0 && key.alg !== alg)
+  if (key2.alg !== void 0 && key2.alg !== alg)
     throw new TypeError(`Invalid key for this operation, its "alg" must be "${alg}" when present`);
-  if (Array.isArray(key.key_ops)) {
+  if (Array.isArray(key2.key_ops)) {
     const expectedKeyOp = usage === "encrypt" || usage === "decrypt" ? entry.ops?.[usage === "encrypt" ? 0 : 1] : usage;
-    if (expectedKeyOp && !key.key_ops.includes(expectedKeyOp))
+    if (expectedKeyOp && !key2.key_ops.includes(expectedKeyOp))
       throw new TypeError(`Invalid key for this operation, its "key_ops" must include "${expectedKeyOp}" when present`);
   }
 };
-async function prepareKey(entry, key, usage) {
+async function prepareKey(entry, key2, usage) {
   const { alg, secret: secret2 } = entry, privateKey = usage === "decrypt" || usage === "sign";
-  if (secret2 && key instanceof Uint8Array)
-    return key;
+  if (secret2 && key2 instanceof Uint8Array)
+    return key2;
   let normalized, keyObject;
-  if (isObject2(key)) {
-    if (normalized = normalizeJwk(key), typeof normalized.kty != "string")
-      throw invalidKeyType(alg, key, secret2);
+  if (isObject2(key2)) {
+    if (normalized = normalizeJwk(key2), typeof normalized.kty != "string")
+      throw invalidKeyType(alg, key2, secret2);
     if (!(secret2 ? normalized.kty === "oct" && typeof normalized.k == "string" : normalized.kty !== "oct" && (privateKey ? normalized.kty === "AKP" && typeof normalized.priv == "string" || typeof normalized.d == "string" : normalized.d === void 0 && normalized.priv === void 0)))
       throw new TypeError(secret2 ? 'JSON Web Key for symmetric algorithms must have JWK "kty" (Key Type) equal to "oct" and the JWK "k" (Key Value) present' : `JSON Web Key for this operation must be a ${privateKey ? "private" : "public"} JWK`);
     if (jwkMatchesOp(entry, normalized, usage), normalized.kty === "oct")
       return decode(normalized.k);
-    if (!Object.isFrozen(key)) {
-      const { key_ops } = key;
-      Array.isArray(key_ops) && Object.freeze(key_ops), Object.freeze(key);
+    if (!Object.isFrozen(key2)) {
+      const { key_ops } = key2;
+      Array.isArray(key_ops) && Object.freeze(key_ops), Object.freeze(key2);
     }
   } else {
-    if (!isKeyLike(key))
-      throw invalidKeyType(alg, key, secret2);
+    if (!isKeyLike(key2))
+      throw invalidKeyType(alg, key2, secret2);
     const expectedType = secret2 ? "secret" : privateKey ? "private" : "public";
-    if (key.type !== expectedType && (secret2 || ["secret", "public", "private"].includes(key.type)))
-      throw new TypeError(`${tag(key)} instances must be of type "${expectedType}" for the ${alg} algorithm`);
-    if (isCryptoKey(key))
-      return key;
-    if (keyObject = key, keyObject.type === "secret")
+    if (key2.type !== expectedType && (secret2 || ["secret", "public", "private"].includes(key2.type)))
+      throw new TypeError(`${tag(key2)} instances must be of type "${expectedType}" for the ${alg} algorithm`);
+    if (isCryptoKey(key2))
+      return key2;
+    if (keyObject = key2, keyObject.type === "secret")
       return keyObject.export();
   }
   cache ||= /* @__PURE__ */ new WeakMap();
-  const cacheKey = key;
+  const cacheKey = key2;
   let cached = cache.get(cacheKey);
   if (cached?.[alg])
     return cached[alg];
@@ -54917,17 +54917,17 @@ var nist = {
   secp384r1: "P-384",
   secp521r1: "P-521"
 };
-var isCryptoKey = (key) => {
-  if (key?.[Symbol.toStringTag] === "CryptoKey")
+var isCryptoKey = (key2) => {
+  if (key2?.[Symbol.toStringTag] === "CryptoKey")
     return true;
   try {
-    return key instanceof CryptoKey;
+    return key2 instanceof CryptoKey;
   } catch {
     return false;
   }
 };
-var isKeyObject = (key) => key?.[Symbol.toStringTag] === "KeyObject";
-var isKeyLike = (key) => isCryptoKey(key) || isKeyObject(key);
+var isKeyObject = (key2) => key2?.[Symbol.toStringTag] === "KeyObject";
+var isKeyLike = (key2) => isCryptoKey(key2) || isKeyObject(key2);
 function message(msg, actual, ...types2) {
   if (types2.length > 2) {
     const last = types2.pop();
@@ -54940,17 +54940,17 @@ function invalidKeyType(alg, actual, secret2) {
   return secret2 && types2.push("Uint8Array"), new TypeError(message(`Key for the ${alg} algorithm must be `, actual, ...types2));
 }
 var unusable = (name, prop = "algorithm.name") => new TypeError(`CryptoKey does not support this operation, its ${prop} must be ${name}`);
-function checkUsage(key, usage) {
-  if (usage && !key.usages.includes(usage))
+function checkUsage(key2, usage) {
+  if (usage && !key2.usages.includes(usage))
     throw new TypeError(`CryptoKey does not support this operation, its usages must include ${usage}.`);
 }
-function checkModulusLength(alg, key) {
-  const { modulusLength } = key.algorithm;
+function checkModulusLength(alg, key2) {
+  const { modulusLength } = key2.algorithm;
   if (typeof modulusLength != "number" || modulusLength < 2048)
     throw new TypeError(`${alg} requires key modulusLength to be 2048 bits or larger`);
 }
-function checkCryptoKey(key, expected, usage) {
-  const algorithm = key.algorithm;
+function checkCryptoKey(key2, expected, usage) {
+  const algorithm = key2.algorithm;
   if (algorithm.name !== expected.name)
     throw unusable(expected.name);
   if (expected.hash && algorithm.hash?.name !== expected.hash)
@@ -54959,7 +54959,7 @@ function checkCryptoKey(key, expected, usage) {
     throw unusable(expected.namedCurve, "algorithm.namedCurve");
   if (expected.length !== void 0 && algorithm.length !== expected.length)
     throw unusable(expected.length, "algorithm.length");
-  checkUsage(key, usage);
+  checkUsage(key2, usage);
 }
 function snapshotJwk(jwk) {
   return { __proto__: null, ...jwk };
@@ -54982,8 +54982,8 @@ async function jwkToKey(entry, jwk, extractable) {
   const algorithm = entry.resolve?.({ kty: jwk.kty, crv: jwk.crv }) ?? entry.subtle, isPrivate = !!(jwk.d || jwk.priv), keyData = { ...jwk, ext: extractable ?? jwk.ext };
   return keyData.kty !== "AKP" && delete keyData.alg, delete keyData.use, crypto.subtle.importKey("jwk", keyData, algorithm, keyData.ext ?? !isPrivate, jwk.key_ops ?? entry.usages[isPrivate ? 1 : 0]);
 }
-async function rawKey(key, expected, usage, extractable = false) {
-  return key instanceof Uint8Array && (key = await crypto.subtle.importKey("raw", key, expected, extractable, [usage])), checkCryptoKey(key, expected, usage), key;
+async function rawKey(key2, expected, usage, extractable = false) {
+  return key2 instanceof Uint8Array && (key2 = await crypto.subtle.importKey("raw", key2, expected, extractable, [usage])), checkCryptoKey(key2, expected, usage), key2;
 }
 
 // node_modules/jose/dist/webapi/lib/key_descriptor.js
@@ -55078,7 +55078,7 @@ function encodeCompactUnencodedPayload(payload) {
     throw new JWSInvalid("JWS Compact Serialization payload must use only ASCII characters");
   }
 }
-async function verifySignature(jws, shared, key, encodeUnencodedPayload, parsedProtected) {
+async function verifySignature(jws, shared, key2, encodeUnencodedPayload, parsedProtected) {
   const { protected: encodedProtected, header, payload: inputPayload } = jws, parsedProt = parsedProtected ?? parseProtectedHeader(encodedProtected);
   if (!isDisjoint(parsedProt, header))
     throw new JWSInvalid("JWS Protected and JWS Unprotected Header Parameter names must be disjoint");
@@ -55094,8 +55094,8 @@ async function verifySignature(jws, shared, key, encodeUnencodedPayload, parsedP
     throw new JWSInvalid("JWS Payload must be a string or an Uint8Array instance");
   const signingPayload = b64 || typeof inputPayload != "string" ? inputPayload : encodeUnencodedPayload(inputPayload);
   let resolvedKey = false;
-  typeof key == "function" && (key = await key(parsedProt, jws), resolvedKey = true);
-  const entry = jwsAlgorithm(alg), data = concat(encodedProtected !== void 0 ? encode(encodedProtected) : new Uint8Array(), encode("."), typeof signingPayload == "string" ? shared[2] ??= encodeBase64url(signingPayload, "payload", JWSInvalid) : signingPayload), signature = decodeBase64url(jws.signature, "signature", JWSInvalid), k5 = await prepareKey(entry, key, "verify"), cryptoKey = await rawKey(k5, entry.subtle, "verify");
+  typeof key2 == "function" && (key2 = await key2(parsedProt, jws), resolvedKey = true);
+  const entry = jwsAlgorithm(alg), data = concat(encodedProtected !== void 0 ? encode(encodedProtected) : new Uint8Array(), encode("."), typeof signingPayload == "string" ? shared[2] ??= encodeBase64url(signingPayload, "payload", JWSInvalid) : signingPayload), signature = decodeBase64url(jws.signature, "signature", JWSInvalid), k5 = await prepareKey(entry, key2, "verify"), cryptoKey = await rawKey(k5, entry.subtle, "verify");
   entry.minRsaBits && checkModulusLength(entry.alg, cryptoKey);
   let verified = false;
   try {
@@ -55107,13 +55107,13 @@ async function verifySignature(jws, shared, key, encodeUnencodedPayload, parsedP
   const result = { payload: typeof signingPayload == "string" ? decodeBase64url(signingPayload, "payload", JWSInvalid) : signingPayload };
   return encodedProtected !== void 0 && (result.protectedHeader = parsedProt), header !== void 0 && (result.unprotectedHeader = header), resolvedKey ? [{ ...result, key: k5 }, b64] : [result, b64];
 }
-async function verifyCompact(jws, shared, key) {
+async function verifyCompact(jws, shared, key2) {
   if (jws instanceof Uint8Array && (jws = decoder.decode(jws)), typeof jws != "string")
     throw new JWSInvalid("Compact JWS must be a string or Uint8Array");
   const { 0: protectedHeader, 1: payload, 2: signature, length } = jws.split(".");
   if (length !== 3)
     throw new JWSInvalid("Invalid Compact JWS");
-  return verifySignature({ payload, protected: protectedHeader, signature }, shared, key, encodeCompactUnencodedPayload);
+  return verifySignature({ payload, protected: protectedHeader, signature }, shared, key2, encodeCompactUnencodedPayload);
 }
 
 // node_modules/jose/dist/webapi/lib/jwt_claims_set.js
@@ -55256,8 +55256,8 @@ var JWTClaimsBuilder = class {
 };
 
 // node_modules/jose/dist/webapi/jwt/verify.js
-async function jwtVerify(jwt, key, options) {
-  const [verified, b64] = await verifyCompact(jwt, prepareVerify(options), key);
+async function jwtVerify(jwt, key2, options) {
+  const [verified, b64] = await verifyCompact(jwt, prepareVerify(options), key2);
   if (!b64)
     throw new JWTInvalid("JWTs MUST NOT use unencoded payload");
   const payload = validateClaimsSet(verified.protectedHeader, verified.payload, options);
@@ -55265,7 +55265,7 @@ async function jwtVerify(jwt, key, options) {
 }
 
 // node_modules/jose/dist/webapi/lib/jws_sign.js
-async function createSignature(input, key, rejectUnencoded) {
+async function createSignature(input, key2, rejectUnencoded) {
   let [payload, protectedHeader, unprotectedHeader, crit] = input, protectedHeaderString = "";
   if (protectedHeader !== void 0) {
     const normalized = serializeJoseHeader(JWSInvalid, protectedHeader);
@@ -55289,7 +55289,7 @@ async function createSignature(input, key, rejectUnencoded) {
     encoded ? (payloadS = encoded[0] ??= encode2(payload), payloadB = encoded[1] ??= encode(payloadS)) : (payloadS = encode2(payload), data = encoder.encode(`${protectedHeaderString}.${payloadS}`));
   }
   data ??= concat(encode(protectedHeaderString), encode("."), payloadB);
-  const k5 = await rawKey(await prepareKey(entry, key, "sign"), entry.subtle, "sign");
+  const k5 = await rawKey(await prepareKey(entry, key2, "sign"), entry.subtle, "sign");
   entry.minRsaBits && checkModulusLength(entry.alg, k5);
   const jws = {
     signature: encode2(new Uint8Array(await crypto.subtle.sign(entry.signing, k5, data))),
@@ -55297,8 +55297,8 @@ async function createSignature(input, key, rejectUnencoded) {
   };
   return protectedHeader && (jws.protected = protectedHeaderString), unprotectedHeader && (jws.header = unprotectedHeader), [jws, b64];
 }
-async function createCompactSignature(payload, protectedHeader, crit, key, rejectUnencoded) {
-  const [jws] = await createSignature([payload, protectedHeader, void 0, crit], key, rejectUnencoded);
+async function createCompactSignature(payload, protectedHeader, crit, key2, rejectUnencoded) {
+  const [jws] = await createSignature([payload, protectedHeader, void 0, crit], key2, rejectUnencoded);
   return `${jws.protected}.${jws.payload}.${jws.signature}`;
 }
 
@@ -55309,8 +55309,8 @@ var SignJWT = class extends SignJWT_base {
   setProtectedHeader(protectedHeader) {
     return assertNotSet(this.#protectedHeader, "setProtectedHeader"), this.#protectedHeader = protectedHeader, this;
   }
-  async sign(key, options) {
-    return createCompactSignature(jwtData(this), this.#protectedHeader, options?.crit, key, () => {
+  async sign(key2, options) {
+    return createCompactSignature(jwtData(this), this.#protectedHeader, options?.crit, key2, () => {
       throw new JWTInvalid("JWTs MUST NOT use unencoded payload");
     });
   }
@@ -55387,8 +55387,8 @@ function clearServerSession(response) {
 import { randomBytes } from "crypto";
 async function handle(request) {
   try {
-    const json = SuperJSON.parse(await request.text());
-    const { tempToken } = schema.parse(json);
+    const json2 = SuperJSON.parse(await request.text());
+    const { tempToken } = schema.parse(json2);
     const tempSession = await db.selectFrom("sessions").selectAll().where("id", "=", tempToken).limit(1).executeTakeFirst();
     if (!tempSession) {
       return new Response(
@@ -57022,19 +57022,19 @@ function _streamtoword(data, offp) {
     word = word << 8 | data[offp] & 255, offp = (offp + 1) % data.length;
   return { key: word, offp };
 }
-function _key(key, P, S2) {
+function _key(key2, P, S2) {
   var offset = 0, lr = [0, 0], plen = P.length, slen = S2.length, sw;
   for (var i5 = 0; i5 < plen; i5++)
-    sw = _streamtoword(key, offset), offset = sw.offp, P[i5] = P[i5] ^ sw.key;
+    sw = _streamtoword(key2, offset), offset = sw.offp, P[i5] = P[i5] ^ sw.key;
   for (i5 = 0; i5 < plen; i5 += 2)
     lr = _encipher(lr, 0, P, S2), P[i5] = lr[0], P[i5 + 1] = lr[1];
   for (i5 = 0; i5 < slen; i5 += 2)
     lr = _encipher(lr, 0, P, S2), S2[i5] = lr[0], S2[i5 + 1] = lr[1];
 }
-function _ekskey(data, key, P, S2) {
+function _ekskey(data, key2, P, S2) {
   var offp = 0, lr = [0, 0], plen = P.length, slen = S2.length, sw;
   for (var i5 = 0; i5 < plen; i5++)
-    sw = _streamtoword(key, offp), offp = sw.offp, P[i5] = P[i5] ^ sw.key;
+    sw = _streamtoword(key2, offp), offp = sw.offp, P[i5] = P[i5] ^ sw.key;
   offp = 0;
   for (i5 = 0; i5 < plen; i5 += 2)
     sw = _streamtoword(data, offp), offp = sw.offp, lr[0] ^= sw.key, sw = _streamtoword(data, offp), offp = sw.offp, lr[1] ^= sw.key, lr = _encipher(lr, 0, P, S2), P[i5] = lr[0], P[i5 + 1] = lr[1];
@@ -57185,8 +57185,8 @@ function safeToDate(value) {
 }
 async function handle2(request) {
   try {
-    const json = SuperJSON.parse(await request.text());
-    const { email, password } = schema2.parse(json);
+    const json2 = SuperJSON.parse(await request.text());
+    const { email, password } = schema2.parse(json2);
     const normalizedEmail = email.toLowerCase();
     const now = /* @__PURE__ */ new Date();
     const windowStart = new Date(
@@ -58296,8 +58296,8 @@ async function generatePasswordHash(password) {
 // endpoints/auth/register_with_password_POST.ts
 async function handle6(request) {
   try {
-    const json = SuperJSON.parse(await request.text());
-    const { email, password, displayName } = schema5.parse(json);
+    const json2 = SuperJSON.parse(await request.text());
+    const { email, password, displayName } = schema5.parse(json2);
     const existingUser = await db.selectFrom("users").select("id").where("email", "=", email).limit(1).execute();
     if (existingUser.length > 0) {
       return new Response(
@@ -58472,10 +58472,238 @@ async function handle7(request) {
   }
 }
 
-// endpoints/presentations/audio_presign_POST.ts
-var audio_presign_POST_exports = {};
-__export(audio_presign_POST_exports, {
+// endpoints/canva/callback_GET.ts
+var callback_GET_exports = {};
+__export(callback_GET_exports, {
   handle: () => handle8
+});
+
+// helpers/canva.ts
+import crypto6 from "crypto";
+var CANVA_API = "https://api.canva.com/rest/v1";
+var CANVA_AUTHORIZE_URL = "https://www.canva.com/api/oauth/authorize";
+var CANVA_SCOPES = "design:content:read design:meta:read";
+function canvaConfigured() {
+  return Boolean(process.env.CANVA_CLIENT_ID && process.env.CANVA_CLIENT_SECRET);
+}
+function canvaRedirectUri(requestUrl) {
+  return process.env.CANVA_REDIRECT_URI || `${new URL(requestUrl).origin}/_api/canva/callback`;
+}
+function key() {
+  const secret2 = process.env.JWT_SECRET;
+  if (!secret2) throw new Error("JWT_SECRET is not configured");
+  return crypto6.createHash("sha256").update(`canva-tokens:${secret2}`).digest();
+}
+function encrypt(plain) {
+  const iv = crypto6.randomBytes(12);
+  const cipher = crypto6.createCipheriv("aes-256-gcm", key(), iv);
+  const data = Buffer.concat([cipher.update(plain, "utf8"), cipher.final()]);
+  return [iv, cipher.getAuthTag(), data].map((b6) => b6.toString("base64")).join(".");
+}
+function decrypt(value) {
+  const [iv, tag2, data] = value.split(".").map((p3) => Buffer.from(p3, "base64"));
+  const decipher = crypto6.createDecipheriv("aes-256-gcm", key(), iv);
+  decipher.setAuthTag(tag2);
+  return Buffer.concat([decipher.update(data), decipher.final()]).toString("utf8");
+}
+async function tokenRequest(params) {
+  const basic = Buffer.from(
+    `${process.env.CANVA_CLIENT_ID}:${process.env.CANVA_CLIENT_SECRET}`
+  ).toString("base64");
+  const res = await fetch(`${CANVA_API}/oauth/token`, {
+    method: "POST",
+    headers: {
+      Authorization: `Basic ${basic}`,
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    body: new URLSearchParams(params).toString()
+  });
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) {
+    throw new Error(
+      `Canva sign-in failed (${res.status}): ${String(data.error_description ?? data.error ?? "unknown error")}`
+    );
+  }
+  return data;
+}
+function exchangeCodeForTokens(code, codeVerifier, redirectUri) {
+  return tokenRequest({
+    grant_type: "authorization_code",
+    code,
+    code_verifier: codeVerifier,
+    redirect_uri: redirectUri
+  });
+}
+async function saveConnection(userId, tokens) {
+  const expiresAt = new Date(Date.now() + tokens.expires_in * 1e3);
+  const values2 = {
+    accessToken: encrypt(tokens.access_token),
+    refreshToken: encrypt(tokens.refresh_token),
+    expiresAt,
+    scope: tokens.scope ?? null,
+    updatedAt: /* @__PURE__ */ new Date()
+  };
+  await db.insertInto("canvaConnections").values({ userId, ...values2 }).onConflict((oc) => oc.column("userId").doUpdateSet(values2)).execute();
+}
+async function hasConnection(userId) {
+  const row = await db.selectFrom("canvaConnections").select("userId").where("userId", "=", userId).executeTakeFirst();
+  return Boolean(row);
+}
+async function deleteConnection(userId) {
+  await db.deleteFrom("canvaConnections").where("userId", "=", userId).execute();
+}
+async function getAccessToken(userId) {
+  const row = await db.selectFrom("canvaConnections").selectAll().where("userId", "=", userId).executeTakeFirst();
+  if (!row) return null;
+  if (new Date(row.expiresAt).getTime() - Date.now() > 6e4) {
+    return decrypt(row.accessToken);
+  }
+  try {
+    const refreshed = await tokenRequest({
+      grant_type: "refresh_token",
+      refresh_token: decrypt(row.refreshToken)
+    });
+    await saveConnection(userId, refreshed);
+    return refreshed.access_token;
+  } catch (error2) {
+    console.error("Canva token refresh failed", error2);
+    await deleteConnection(userId);
+    return null;
+  }
+}
+var DESIGN_URL = /canva\.com\/design\/([A-Za-z0-9_-]+)/i;
+async function resolveDesignId(input) {
+  let url;
+  try {
+    url = new URL(input.trim());
+  } catch {
+    return null;
+  }
+  const direct = url.href.match(DESIGN_URL);
+  if (direct) return direct[1];
+  if (url.hostname === "canva.link") {
+    let current = url.href;
+    for (let hop = 0; hop < 5; hop++) {
+      const res = await fetch(current, { redirect: "manual" });
+      const next = res.headers.get("location");
+      if (!next) return null;
+      current = new URL(next, current).href;
+      const found = current.match(DESIGN_URL);
+      if (found) return found[1];
+    }
+  }
+  return null;
+}
+async function canvaFetch(token, path, init) {
+  const res = await fetch(`${CANVA_API}${path}`, {
+    ...init,
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+      ...init?.headers ?? {}
+    }
+  });
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) {
+    const message2 = data?.message ?? data?.error ?? `HTTP ${res.status}`;
+    throw new CanvaApiError(res.status, String(message2));
+  }
+  return data;
+}
+var CanvaApiError = class extends Error {
+  constructor(status, message2) {
+    super(message2);
+    this.status = status;
+    this.name = "CanvaApiError";
+  }
+};
+async function getDesignTitle(token, designId) {
+  try {
+    const data = await canvaFetch(token, `/designs/${designId}`);
+    return data?.design?.title ?? null;
+  } catch {
+    return null;
+  }
+}
+async function exportDesignAsPdf(token, designId) {
+  const created = await canvaFetch(token, "/exports", {
+    method: "POST",
+    body: JSON.stringify({ design_id: designId, format: { type: "pdf" } })
+  });
+  const jobId = created?.job?.id;
+  if (!jobId) throw new Error("Canva did not start the export.");
+  const deadline = Date.now() + 45e3;
+  while (Date.now() < deadline) {
+    await new Promise((resolve) => setTimeout(resolve, 1500));
+    const polled = await canvaFetch(token, `/exports/${jobId}`);
+    const job = polled?.job;
+    if (job?.status === "success") return job.urls ?? [];
+    if (job?.status === "failed") {
+      const code = job?.error?.code;
+      if (code === "license_required") {
+        throw new Error("Canva says this design needs a license (premium content) before it can be exported.");
+      }
+      if (code === "approval_required") {
+        throw new Error("Canva says this design needs approval before it can be exported.");
+      }
+      throw new Error(job?.error?.message ?? "Canva could not export this design.");
+    }
+  }
+  throw new Error("Canva took too long to export this design. Please try again.");
+}
+
+// endpoints/canva/callback_GET.ts
+function redirect(location) {
+  return new Response("Redirecting...", {
+    status: 302,
+    headers: {
+      Location: location,
+      "Cache-Control": "no-store",
+      // The state cookie has done its job.
+      "Set-Cookie": "canva_state=; HttpOnly; Secure; SameSite=Lax; Path=/; Max-Age=0"
+    }
+  });
+}
+function readCookie(request, name) {
+  const header = request.headers.get("cookie") ?? "";
+  for (const part of header.split(";")) {
+    const [k5, ...rest] = part.trim().split("=");
+    if (k5 === name) return decodeURIComponent(rest.join("="));
+  }
+  return null;
+}
+async function handle8(request) {
+  try {
+    const url = new URL(request.url);
+    if (url.searchParams.get("error")) return redirect("/dashboard?canva=denied");
+    const code = url.searchParams.get("code");
+    const state2 = url.searchParams.get("state");
+    if (!code || !state2 || !canvaConfigured()) return redirect("/dashboard?canva=error");
+    if (readCookie(request, "canva_state") !== state2) return redirect("/dashboard?canva=error");
+    let userId;
+    try {
+      userId = (await getServerUserSession(request)).user.id;
+    } catch {
+      return redirect("/login");
+    }
+    const row = await db.selectFrom("oauthStates").selectAll().where("state", "=", state2).where("provider", "=", "canva").executeTakeFirst();
+    if (!row || new Date(row.expiresAt).getTime() < Date.now()) {
+      return redirect("/dashboard?canva=error");
+    }
+    await db.deleteFrom("oauthStates").where("state", "=", state2).execute();
+    const tokens = await exchangeCodeForTokens(code, row.codeVerifier, row.redirectUrl);
+    await saveConnection(userId, tokens);
+    return redirect("/dashboard?canva=connected");
+  } catch (error2) {
+    console.error("Canva callback failed", error2);
+    return redirect("/dashboard?canva=error");
+  }
+}
+
+// endpoints/canva/cleanup_POST.ts
+var cleanup_POST_exports = {};
+__export(cleanup_POST_exports, {
+  handle: () => handle9
 });
 
 // helpers/storage.ts
@@ -58547,10 +58775,215 @@ async function remove(args) {
     return { ok: false };
   }
 }
+async function putObject(args) {
+  await s3().send(
+    new import_client_s3.PutObjectCommand({
+      Bucket: bucket(),
+      Key: args.filename,
+      Body: args.body,
+      ContentType: args.contentType,
+      ContentLength: args.body.byteLength
+    })
+  );
+}
+
+// endpoints/canva/cleanup_POST.schema.ts
+var schema6 = external_exports.object({ tempPath: external_exports.string().min(1).max(500) });
+
+// endpoints/canva/cleanup_POST.ts
+async function handle9(request) {
+  try {
+    const { user } = await getServerUserSession(request);
+    const input = schema6.parse(SuperJSON.parse(await request.text()));
+    const prefix = `imports/${user.id}/`;
+    if (!input.tempPath.startsWith(prefix) || input.tempPath.includes("..")) {
+      return new Response(SuperJSON.stringify({ error: "Invalid path" }), {
+        status: 400,
+        headers: { "Content-Type": "application/json" }
+      });
+    }
+    await remove({ visibility: "private", filename: input.tempPath });
+    return new Response(SuperJSON.stringify({ removed: true }), {
+      headers: { "Content-Type": "application/json" }
+    });
+  } catch (error2) {
+    const message2 = error2 instanceof Error ? error2.message : "Cleanup failed";
+    const status = message2.toLowerCase().includes("not authenticated") ? 401 : 400;
+    return new Response(SuperJSON.stringify({ error: message2 }), {
+      status,
+      headers: { "Content-Type": "application/json" }
+    });
+  }
+}
+
+// endpoints/canva/connect_GET.ts
+var connect_GET_exports = {};
+__export(connect_GET_exports, {
+  handle: () => handle10
+});
+import crypto7 from "crypto";
+function redirect2(location, extraHeaders = {}) {
+  return new Response("Redirecting...", {
+    status: 302,
+    headers: { Location: location, "Cache-Control": "no-store", ...extraHeaders }
+  });
+}
+async function handle10(request) {
+  try {
+    try {
+      await getServerUserSession(request);
+    } catch {
+      return redirect2("/login");
+    }
+    if (!canvaConfigured()) return redirect2("/dashboard?canva=not_configured");
+    const redirectUri = canvaRedirectUri(request.url);
+    const state2 = crypto7.randomBytes(32).toString("hex");
+    const codeVerifier = crypto7.randomBytes(48).toString("base64url");
+    const codeChallenge = crypto7.createHash("sha256").update(codeVerifier).digest("base64url");
+    try {
+      await db.deleteFrom("oauthStates").where("expiresAt", "<", /* @__PURE__ */ new Date()).execute();
+    } catch {
+    }
+    await db.insertInto("oauthStates").values({
+      state: state2,
+      provider: "canva",
+      redirectUrl: redirectUri,
+      codeVerifier,
+      expiresAt: new Date(Date.now() + 10 * 60 * 1e3),
+      createdAt: /* @__PURE__ */ new Date()
+    }).execute();
+    const query = [
+      ["response_type", "code"],
+      ["client_id", process.env.CANVA_CLIENT_ID],
+      ["redirect_uri", redirectUri],
+      ["scope", CANVA_SCOPES],
+      ["state", state2],
+      ["code_challenge", codeChallenge],
+      ["code_challenge_method", "S256"]
+    ].map(([k5, v]) => `${k5}=${encodeURIComponent(v)}`).join("&");
+    return redirect2(`${CANVA_AUTHORIZE_URL}?${query}`, {
+      "Set-Cookie": `canva_state=${state2}; HttpOnly; Secure; SameSite=Lax; Path=/; Max-Age=600`
+    });
+  } catch (error2) {
+    console.error("Canva connect failed", error2);
+    return redirect2("/dashboard?canva=error");
+  }
+}
+
+// endpoints/canva/disconnect_POST.ts
+var disconnect_POST_exports = {};
+__export(disconnect_POST_exports, {
+  handle: () => handle11
+});
+async function handle11(request) {
+  try {
+    const { user } = await getServerUserSession(request);
+    await deleteConnection(user.id);
+    return new Response(SuperJSON.stringify({ disconnected: true }), {
+      headers: { "Content-Type": "application/json" }
+    });
+  } catch (error2) {
+    const message2 = error2 instanceof Error ? error2.message : "Could not disconnect Canva";
+    const status = message2.toLowerCase().includes("not authenticated") ? 401 : 400;
+    return new Response(SuperJSON.stringify({ error: message2 }), {
+      status,
+      headers: { "Content-Type": "application/json" }
+    });
+  }
+}
+
+// endpoints/canva/import_POST.ts
+var import_POST_exports = {};
+__export(import_POST_exports, {
+  handle: () => handle12
+});
+import crypto8 from "crypto";
+
+// endpoints/canva/import_POST.schema.ts
+var schema7 = external_exports.object({ url: external_exports.string().min(1).max(2e3) });
+
+// endpoints/canva/import_POST.ts
+var json = (body, status = 200) => new Response(SuperJSON.stringify(body), {
+  status,
+  headers: { "Content-Type": "application/json" }
+});
+async function handle12(request) {
+  try {
+    const { user } = await getServerUserSession(request);
+    const input = schema7.parse(SuperJSON.parse(await request.text()));
+    const designId = await resolveDesignId(input.url);
+    if (!designId) {
+      return json({ error: "That doesn't look like a Canva design link. Paste the link from Canva's Share menu." }, 400);
+    }
+    const token = await getAccessToken(user.id);
+    if (!token) {
+      return json({ error: "Your Canva account isn't connected. Connect it and try again." }, 409);
+    }
+    const title = await getDesignTitle(token, designId) ?? "Canva design";
+    const urls = await exportDesignAsPdf(token, designId);
+    if (urls.length !== 1) {
+      return json(
+        { error: `Canva returned ${urls.length} files for this design instead of one PDF, which isn't supported yet.` },
+        400
+      );
+    }
+    const download = await fetch(urls[0]);
+    if (!download.ok) return json({ error: "Could not download the exported PDF from Canva." }, 502);
+    const bytes = new Uint8Array(await download.arrayBuffer());
+    await assertStorageAvailable(user.id, bytes.byteLength);
+    const tempPath = `imports/${user.id}/${crypto8.randomUUID()}.pdf`;
+    await putObject({ filename: tempPath, body: bytes, contentType: "application/pdf" });
+    const signed = await getUrl({ visibility: "private", filename: tempPath, expiresInSeconds: 900 });
+    if (!signed.ok) return json({ error: "Could not prepare the exported PDF." }, 500);
+    return json({ tempPath, title, sizeBytes: bytes.byteLength, downloadUrl: signed.url });
+  } catch (error2) {
+    if (error2 instanceof InsufficientStorageError) return json({ error: error2.message }, 413);
+    if (error2 instanceof CanvaApiError) {
+      if (error2.status === 401 || error2.status === 403) {
+        return json({ error: `Canva refused access (${error2.message}). Reconnect Canva and make sure you can open this design.` }, 403);
+      }
+      if (error2.status === 404) return json({ error: "Canva could not find that design. Check the link and your access." }, 404);
+      if (error2.status === 429) return json({ error: "Canva is rate limiting exports. Wait a minute and try again." }, 429);
+      return json({ error: `Canva error: ${error2.message}` }, 502);
+    }
+    const message2 = error2 instanceof Error ? error2.message : "Canva import failed";
+    const status = message2.toLowerCase().includes("not authenticated") ? 401 : 400;
+    return json({ error: message2 }, status);
+  }
+}
+
+// endpoints/canva/status_GET.ts
+var status_GET_exports = {};
+__export(status_GET_exports, {
+  handle: () => handle13
+});
+async function handle13(request) {
+  try {
+    const { user } = await getServerUserSession(request);
+    const configured = canvaConfigured();
+    const connected = configured ? await hasConnection(user.id) : false;
+    return new Response(SuperJSON.stringify({ configured, connected }), {
+      headers: { "Content-Type": "application/json" }
+    });
+  } catch (error2) {
+    const message2 = error2 instanceof Error ? error2.message : "Could not check Canva";
+    const status = message2.toLowerCase().includes("not authenticated") ? 401 : 400;
+    return new Response(SuperJSON.stringify({ error: message2 }), {
+      status,
+      headers: { "Content-Type": "application/json" }
+    });
+  }
+}
+
+// endpoints/presentations/audio_presign_POST.ts
+var audio_presign_POST_exports = {};
+__export(audio_presign_POST_exports, {
+  handle: () => handle14
+});
 
 // endpoints/presentations/audio_presign_POST.schema.ts
 var MAX_AUDIO_BYTES = 20 * 1024 * 1024;
-var schema6 = external_exports.object({
+var schema8 = external_exports.object({
   presentationId: external_exports.string().min(1),
   // null = one track for the whole presentation, rather than a single slide.
   slideIndex: external_exports.number().int().min(0).nullable(),
@@ -58562,11 +58995,11 @@ var schema6 = external_exports.object({
 });
 
 // endpoints/presentations/audio_presign_POST.ts
-async function handle8(request) {
+async function handle14(request) {
   try {
     const { user } = await getServerUserSession(request);
-    const json = SuperJSON.parse(await request.text());
-    const input = schema6.parse(json);
+    const json2 = SuperJSON.parse(await request.text());
+    const input = schema8.parse(json2);
     const presentation = await db.selectFrom("presentations").select(["id", "userId"]).where("id", "=", input.presentationId).executeTakeFirst();
     if (!presentation || presentation.userId !== user.id) {
       return new Response(SuperJSON.stringify({ error: "Presentation not found" }), {
@@ -58613,20 +59046,20 @@ async function handle8(request) {
 // endpoints/presentations/delete_POST.ts
 var delete_POST_exports = {};
 __export(delete_POST_exports, {
-  handle: () => handle9
+  handle: () => handle15
 });
 
 // endpoints/presentations/delete_POST.schema.ts
-var schema7 = external_exports.object({
+var schema9 = external_exports.object({
   presentationId: external_exports.string().min(1)
 });
 
 // endpoints/presentations/delete_POST.ts
-async function handle9(request) {
+async function handle15(request) {
   try {
     const { user } = await getServerUserSession(request);
-    const json = SuperJSON.parse(await request.text());
-    const input = schema7.parse(json);
+    const json2 = SuperJSON.parse(await request.text());
+    const input = schema9.parse(json2);
     const presentation = await db.selectFrom("presentations").select(["id", "userId", "storagePath", "audioPath"]).where("id", "=", input.presentationId).executeTakeFirst();
     if (!presentation || presentation.userId !== user.id) {
       return new Response(SuperJSON.stringify({ error: "Presentation not found" }), {
@@ -58679,11 +59112,11 @@ async function handle9(request) {
 // endpoints/presentations/detail_GET.ts
 var detail_GET_exports = {};
 __export(detail_GET_exports, {
-  handle: () => handle10
+  handle: () => handle16
 });
 
 // endpoints/presentations/detail_GET.schema.ts
-var schema8 = external_exports.object({
+var schema10 = external_exports.object({
   presentationId: external_exports.string().min(1)
 });
 
@@ -58694,11 +59127,11 @@ function toNum2(value) {
   if (typeof value === "string") return Number(value);
   return 0;
 }
-async function handle10(request) {
+async function handle16(request) {
   try {
     const { user } = await getServerUserSession(request);
     const url = new URL(request.url);
-    const input = schema8.parse({ presentationId: url.searchParams.get("presentationId") ?? "" });
+    const input = schema10.parse({ presentationId: url.searchParams.get("presentationId") ?? "" });
     const presentation = await db.selectFrom("presentations").select([
       "id",
       "userId",
@@ -58791,7 +59224,7 @@ async function handle10(request) {
 // endpoints/presentations/list_GET.ts
 var list_GET_exports = {};
 __export(list_GET_exports, {
-  handle: () => handle11
+  handle: () => handle17
 });
 function toNum3(value) {
   if (typeof value === "number") return value;
@@ -58799,7 +59232,7 @@ function toNum3(value) {
   if (typeof value === "string") return Number(value);
   return 0;
 }
-async function handle11(request) {
+async function handle17(request) {
   try {
     const { user } = await getServerUserSession(request);
     const rows = await db.selectFrom("presentations").select([
@@ -58820,19 +59253,19 @@ async function handle11(request) {
     if (ids.length > 0) {
       const slideRows = await db.selectFrom("slides").select(["presentationId", "slideIndex", "thumbnailPath", "timerEnabled"]).where("presentationId", "in", ids).execute();
       for (const slide of slideRows) {
-        const key = String(slide.presentationId);
+        const key2 = String(slide.presentationId);
         if (slide.timerEnabled) {
-          timerCounts.set(key, (timerCounts.get(key) ?? 0) + 1);
+          timerCounts.set(key2, (timerCounts.get(key2) ?? 0) + 1);
         }
         if (slide.slideIndex === 0 && slide.thumbnailPath) {
-          coverPaths.set(key, slide.thumbnailPath);
+          coverPaths.set(key2, slide.thumbnailPath);
         }
       }
     }
     const presentations = await Promise.all(
       rows.map(async (row) => {
-        const key = String(row.id);
-        const coverPath = coverPaths.get(key);
+        const key2 = String(row.id);
+        const coverPath = coverPaths.get(key2);
         let thumbnailUrl = null;
         if (coverPath) {
           const signed = await getUrl({
@@ -58843,13 +59276,13 @@ async function handle11(request) {
           thumbnailUrl = signed.ok ? signed.url : null;
         }
         return {
-          id: key,
+          id: key2,
           title: row.title,
           sourceType: row.sourceType,
           originalFileName: row.originalFileName,
           fileSizeBytes: toNum3(row.fileSizeBytes),
           slideCount: row.slideCount,
-          slideTimersConfigured: timerCounts.get(key) ?? 0,
+          slideTimersConfigured: timerCounts.get(key2) ?? 0,
           autoAdvance: row.autoAdvance,
           lastPresentedAt: row.lastPresentedAt,
           createdAt: row.createdAt,
@@ -58875,20 +59308,20 @@ async function handle11(request) {
 // endpoints/presentations/mark_presented_POST.ts
 var mark_presented_POST_exports = {};
 __export(mark_presented_POST_exports, {
-  handle: () => handle12
+  handle: () => handle18
 });
 
 // endpoints/presentations/mark_presented_POST.schema.ts
-var schema9 = external_exports.object({
+var schema11 = external_exports.object({
   presentationId: external_exports.string().min(1)
 });
 
 // endpoints/presentations/mark_presented_POST.ts
-async function handle12(request) {
+async function handle18(request) {
   try {
     const { user } = await getServerUserSession(request);
-    const json = SuperJSON.parse(await request.text());
-    const input = schema9.parse(json);
+    const json2 = SuperJSON.parse(await request.text());
+    const input = schema11.parse(json2);
     const now = /* @__PURE__ */ new Date();
     const result = await db.updateTable("presentations").set({ lastPresentedAt: now }).where("id", "=", input.presentationId).where("userId", "=", user.id).executeTakeFirst();
     if (Number(result.numUpdatedRows ?? 0) === 0) {
@@ -58914,11 +59347,11 @@ async function handle12(request) {
 // endpoints/presentations/set_presentation_audio_POST.ts
 var set_presentation_audio_POST_exports = {};
 __export(set_presentation_audio_POST_exports, {
-  handle: () => handle13
+  handle: () => handle19
 });
 
 // endpoints/presentations/set_presentation_audio_POST.schema.ts
-var schema10 = external_exports.object({
+var schema12 = external_exports.object({
   presentationId: external_exports.string().min(1),
   // null clears the presentation-wide music.
   audioPath: external_exports.string().min(1).nullable(),
@@ -58927,11 +59360,11 @@ var schema10 = external_exports.object({
 });
 
 // endpoints/presentations/set_presentation_audio_POST.ts
-async function handle13(request) {
+async function handle19(request) {
   try {
     const { user } = await getServerUserSession(request);
-    const json = SuperJSON.parse(await request.text());
-    const input = schema10.parse(json);
+    const json2 = SuperJSON.parse(await request.text());
+    const input = schema12.parse(json2);
     const presentation = await db.selectFrom("presentations").select(["id", "userId", "audioPath"]).where("id", "=", input.presentationId).executeTakeFirst();
     if (!presentation || presentation.userId !== user.id) {
       return new Response(SuperJSON.stringify({ error: "Presentation not found" }), {
@@ -58969,11 +59402,11 @@ async function handle13(request) {
 // endpoints/presentations/set_slide_audio_POST.ts
 var set_slide_audio_POST_exports = {};
 __export(set_slide_audio_POST_exports, {
-  handle: () => handle14
+  handle: () => handle20
 });
 
 // endpoints/presentations/set_slide_audio_POST.schema.ts
-var schema11 = external_exports.object({
+var schema13 = external_exports.object({
   presentationId: external_exports.string().min(1),
   slideIndex: external_exports.number().int().min(0),
   // null clears the slide's music.
@@ -58983,11 +59416,11 @@ var schema11 = external_exports.object({
 });
 
 // endpoints/presentations/set_slide_audio_POST.ts
-async function handle14(request) {
+async function handle20(request) {
   try {
     const { user } = await getServerUserSession(request);
-    const json = SuperJSON.parse(await request.text());
-    const input = schema11.parse(json);
+    const json2 = SuperJSON.parse(await request.text());
+    const input = schema13.parse(json2);
     const presentation = await db.selectFrom("presentations").select(["id", "userId"]).where("id", "=", input.presentationId).executeTakeFirst();
     if (!presentation || presentation.userId !== user.id) {
       return new Response(SuperJSON.stringify({ error: "Presentation not found" }), {
@@ -59032,11 +59465,11 @@ async function handle14(request) {
 // endpoints/presentations/thumbnails_presign_POST.ts
 var thumbnails_presign_POST_exports = {};
 __export(thumbnails_presign_POST_exports, {
-  handle: () => handle15
+  handle: () => handle21
 });
 
 // endpoints/presentations/thumbnails_presign_POST.schema.ts
-var schema12 = external_exports.object({
+var schema14 = external_exports.object({
   presentationId: external_exports.string().min(1),
   slides: external_exports.array(
     external_exports.object({
@@ -59052,11 +59485,11 @@ var schema12 = external_exports.object({
 });
 
 // endpoints/presentations/thumbnails_presign_POST.ts
-async function handle15(request) {
+async function handle21(request) {
   try {
     const { user } = await getServerUserSession(request);
-    const json = SuperJSON.parse(await request.text());
-    const input = schema12.parse(json);
+    const json2 = SuperJSON.parse(await request.text());
+    const input = schema14.parse(json2);
     const presentation = await db.selectFrom("presentations").select(["id", "userId"]).where("id", "=", input.presentationId).executeTakeFirst();
     if (!presentation || presentation.userId !== user.id) {
       return new Response(SuperJSON.stringify({ error: "Presentation not found" }), {
@@ -59124,13 +59557,13 @@ async function handle15(request) {
 // endpoints/presentations/update_timers_POST.ts
 var update_timers_POST_exports = {};
 __export(update_timers_POST_exports, {
-  handle: () => handle16
+  handle: () => handle22
 });
 
 // endpoints/presentations/update_timers_POST.schema.ts
 var GLOBAL_TIMER_MODES = ["elapsed", "countdown"];
 var MAX_GLOBAL_COUNTDOWN_SECONDS = 24 * 60 * 60;
-var schema13 = external_exports.object({
+var schema15 = external_exports.object({
   presentationId: external_exports.string().min(1),
   autoAdvance: external_exports.boolean().optional(),
   // "elapsed" counts up from zero; "countdown" counts down from a set time.
@@ -59149,11 +59582,11 @@ var schema13 = external_exports.object({
 });
 
 // endpoints/presentations/update_timers_POST.ts
-async function handle16(request) {
+async function handle22(request) {
   try {
     const { user } = await getServerUserSession(request);
-    const json = SuperJSON.parse(await request.text());
-    const input = schema13.parse(json);
+    const json2 = SuperJSON.parse(await request.text());
+    const input = schema15.parse(json2);
     const presentation = await db.selectFrom("presentations").select(["id", "userId"]).where("id", "=", input.presentationId).executeTakeFirst();
     if (!presentation || presentation.userId !== user.id) {
       return new Response(SuperJSON.stringify({ error: "Presentation not found" }), {
@@ -59203,11 +59636,11 @@ async function handle16(request) {
 // endpoints/presentations/upload_complete_POST.ts
 var upload_complete_POST_exports = {};
 __export(upload_complete_POST_exports, {
-  handle: () => handle17
+  handle: () => handle23
 });
 
 // endpoints/presentations/upload_complete_POST.schema.ts
-var schema14 = external_exports.object({
+var schema16 = external_exports.object({
   presentationId: external_exports.string().min(1),
   fileSizeBytes: external_exports.number().int().nonnegative(),
   slides: external_exports.array(
@@ -59220,11 +59653,11 @@ var schema14 = external_exports.object({
 });
 
 // endpoints/presentations/upload_complete_POST.ts
-async function handle17(request) {
+async function handle23(request) {
   try {
     const { user } = await getServerUserSession(request);
-    const json = SuperJSON.parse(await request.text());
-    const input = schema14.parse(json);
+    const json2 = SuperJSON.parse(await request.text());
+    const input = schema16.parse(json2);
     const presentation = await db.selectFrom("presentations").select(["id", "userId"]).where("id", "=", input.presentationId).executeTakeFirst();
     if (!presentation || presentation.userId !== user.id) {
       return new Response(SuperJSON.stringify({ error: "Presentation not found" }), {
@@ -59272,12 +59705,12 @@ async function handle17(request) {
 // endpoints/presentations/upload_init_POST.ts
 var upload_init_POST_exports = {};
 __export(upload_init_POST_exports, {
-  handle: () => handle18
+  handle: () => handle24
 });
 
 // endpoints/presentations/upload_init_POST.schema.ts
 var uploadSourceTypes = ["pptx", "pdf"];
-var schema15 = external_exports.object({
+var schema17 = external_exports.object({
   title: external_exports.string().min(1).max(300),
   originalFileName: external_exports.string().min(1).max(300),
   sourceType: external_exports.enum(uploadSourceTypes),
@@ -59287,11 +59720,11 @@ var schema15 = external_exports.object({
 
 // endpoints/presentations/upload_init_POST.ts
 var ESTIMATED_THUMBNAIL_BYTES_PER_FILE = 2 * 1024 * 1024;
-async function handle18(request) {
+async function handle24(request) {
   try {
     const { user } = await getServerUserSession(request);
-    const json = SuperJSON.parse(await request.text());
-    const input = schema15.parse(json);
+    const json2 = SuperJSON.parse(await request.text());
+    const input = schema17.parse(json2);
     await assertStorageAvailable(
       user.id,
       input.fileSizeBytes,
@@ -59349,9 +59782,9 @@ async function handle18(request) {
 // endpoints/storage/usage_GET.ts
 var usage_GET_exports = {};
 __export(usage_GET_exports, {
-  handle: () => handle19
+  handle: () => handle25
 });
-async function handle19(request) {
+async function handle25(request) {
   try {
     const { user } = await getServerUserSession(request);
     const usage = await reconcileUserStorage(user.id);
@@ -59377,6 +59810,12 @@ var routes = {
   "GET /auth/oauth_callback": oauth_callback_GET_exports,
   "POST /auth/register_with_password": register_with_password_POST_exports,
   "GET /auth/session": session_GET_exports,
+  "GET /canva/callback": callback_GET_exports,
+  "POST /canva/cleanup": cleanup_POST_exports,
+  "GET /canva/connect": connect_GET_exports,
+  "POST /canva/disconnect": disconnect_POST_exports,
+  "POST /canva/import": import_POST_exports,
+  "GET /canva/status": status_GET_exports,
   "POST /presentations/audio_presign": audio_presign_POST_exports,
   "POST /presentations/delete": delete_POST_exports,
   "GET /presentations/detail": detail_GET_exports,

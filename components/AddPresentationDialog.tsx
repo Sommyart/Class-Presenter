@@ -1,6 +1,7 @@
 import React, { useState } from "react";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { Upload, AlertCircle } from "lucide-react";
+import { Upload, AlertCircle, Link2, Loader2 } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -23,11 +24,17 @@ import { Button } from "./Button";
 import { useUploadPresentation } from "../helpers/usePresentationQueries";
 import { presentationAdapters } from "../helpers/presentationAdapters";
 import type { UploadProgress } from "../helpers/uploadPresentation";
+import { getCanvaStatus } from "../endpoints/canva/status_GET.schema";
+import { postCanvaImport } from "../endpoints/canva/import_POST.schema";
+import { postCanvaCleanup } from "../endpoints/canva/cleanup_POST.schema";
+import { postCanvaDisconnect } from "../endpoints/canva/disconnect_POST.schema";
 import styles from "./AddPresentationDialog.module.css";
 
 interface AddPresentationDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  /** Which tab to show when the dialog opens (e.g. "link" after connecting Canva). */
+  defaultTab?: "upload" | "link";
 }
 
 const STAGE_LABEL: Record<UploadProgress["stage"], string> = {
@@ -39,12 +46,21 @@ const STAGE_LABEL: Record<UploadProgress["stage"], string> = {
   done: "Done",
 };
 
-export const AddPresentationDialog = ({ open, onOpenChange }: AddPresentationDialogProps) => {
+export const AddPresentationDialog = ({ open, onOpenChange, defaultTab = "upload" }: AddPresentationDialogProps) => {
   const [linkSource, setLinkSource] = useState<"canva" | "google_slides">("canva");
   const [linkUrl, setLinkUrl] = useState("");
   const [progress, setProgress] = useState<UploadProgress | null>(null);
 
   const upload = useUploadPresentation(setProgress);
+  const queryClient = useQueryClient();
+  const [canvaBusy, setCanvaBusy] = useState(false);
+
+  const canvaStatus = useQuery({
+    queryKey: ["canva-status"],
+    queryFn: () => getCanvaStatus(),
+    enabled: open && linkSource === "canva",
+    staleTime: 30_000,
+  });
 
   const handleFiles = (files: File[]) => {
     const file = files[0];
@@ -74,7 +90,38 @@ export const AddPresentationDialog = ({ open, onOpenChange }: AddPresentationDia
   };
 
   const adapter = presentationAdapters[linkSource];
-  const isUploading = upload.isPending;
+  const isUploading = upload.isPending || canvaBusy;
+
+  const handleCanvaImport = async () => {
+    setCanvaBusy(true);
+    let tempPath: string | null = null;
+    try {
+      const staged = await postCanvaImport({ url: linkUrl });
+      tempPath = staged.tempPath;
+      const response = await fetch(staged.downloadUrl);
+      if (!response.ok) throw new Error("Could not download the exported PDF.");
+      const blob = await response.blob();
+      const safeTitle = staged.title.replace(/[\\/:*?"<>|]+/g, " ").trim() || "Canva design";
+      const file = new File([blob], `${safeTitle}.pdf`, { type: "application/pdf" });
+      setLinkUrl("");
+      handleFiles([file]);
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : "Canva import failed.");
+    } finally {
+      setCanvaBusy(false);
+      if (tempPath) postCanvaCleanup({ tempPath }).catch(() => {});
+    }
+  };
+
+  const handleCanvaDisconnect = async () => {
+    try {
+      await postCanvaDisconnect({});
+      await queryClient.invalidateQueries({ queryKey: ["canva-status"] });
+      toast.success("Canva disconnected.");
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : "Could not disconnect Canva.");
+    }
+  };
 
   return (
     <Dialog
@@ -91,7 +138,7 @@ export const AddPresentationDialog = ({ open, onOpenChange }: AddPresentationDia
           <DialogDescription>Upload a file, or import from a link.</DialogDescription>
         </DialogHeader>
 
-        <Tabs defaultValue="upload" className={styles.tabs}>
+        <Tabs defaultValue={defaultTab} className={styles.tabs}>
           <TabsList>
             <TabsTrigger value="upload" disabled={isUploading}>Upload File</TabsTrigger>
             <TabsTrigger value="link" disabled={isUploading}>Import from Link</TabsTrigger>
@@ -154,14 +201,63 @@ export const AddPresentationDialog = ({ open, onOpenChange }: AddPresentationDia
                 onChange={(e) => setLinkUrl(e.target.value)}
               />
 
-              <div className={styles.notice}>
-                <AlertCircle className={styles.noticeIcon} />
-                <p>{adapter.unavailableReason}</p>
-              </div>
-
-              <Button variant="secondary" disabled className={styles.linkSubmit}>
-                Import unavailable
-              </Button>
+              {linkSource === "canva" && canvaStatus.data?.configured ? (
+                canvaStatus.data.connected ? (
+                  <>
+                    <Button
+                      className={styles.linkSubmit}
+                      disabled={!linkUrl.trim() || canvaBusy}
+                      onClick={handleCanvaImport}
+                    >
+                      {canvaBusy ? (
+                        <>
+                          <Loader2 size={16} className={styles.spin} /> Exporting from Canva…
+                        </>
+                      ) : (
+                        "Import from Canva"
+                      )}
+                    </Button>
+                    <button type="button" className={styles.textLink} onClick={handleCanvaDisconnect} disabled={canvaBusy}>
+                      Disconnect Canva
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <div className={styles.notice}>
+                      <Link2 className={styles.noticeIcon} />
+                      <p>Connect your Canva account once so ClassPresenter can export your designs as PDF.</p>
+                    </div>
+                    <Button
+                      className={styles.linkSubmit}
+                      onClick={() => {
+                        window.location.href = "/_api/canva/connect";
+                      }}
+                    >
+                      Connect Canva
+                    </Button>
+                  </>
+                )
+              ) : (
+                <>
+                  <div className={styles.notice}>
+                    <AlertCircle className={styles.noticeIcon} />
+                    <p>
+                      {linkSource === "canva" && canvaStatus.isLoading
+                        ? "Checking Canva…"
+                        : linkSource === "canva" && canvaStatus.isError
+                          ? "Could not check the Canva connection. Make sure you are signed in and try again."
+                          : adapter.unavailableReason}
+                    </p>
+                  </div>
+                  <p className={styles.helpText}>
+                    Meanwhile you can download the {linkSource === "canva" ? "design from Canva" : "deck from Google Slides"} as a PDF
+                    ({linkSource === "canva" ? "Share, Download, PDF" : "File, Download, PDF"}) and add it from the Upload File tab.
+                  </p>
+                  <Button variant="secondary" disabled className={styles.linkSubmit}>
+                    Import unavailable
+                  </Button>
+                </>
+              )}
             </div>
           </TabsContent>
         </Tabs>

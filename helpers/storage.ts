@@ -99,3 +99,20 @@ export async function remove(args: {
     return { ok: false };
   }
 }
+
+/** Server-side upload of bytes we already hold (used by the Canva import). */
+export async function putObject(args: {
+  filename: string;
+  body: Uint8Array;
+  contentType: string;
+}): Promise<void> {
+  await s3().send(
+    new PutObjectCommand({
+      Bucket: bucket(),
+      Key: args.filename,
+      Body: args.body,
+      ContentType: args.contentType,
+      ContentLength: args.body.byteLength,
+    }),
+  );
+}
