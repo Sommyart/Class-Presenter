@@ -26,7 +26,7 @@ export type PresentationDetail = {
   slideCount: number;
   autoAdvance: boolean;
   /** "elapsed" counts up from zero; "countdown" counts down from globalCountdownSeconds. */
-  globalTimerMode: "elapsed" | "countdown";
+  globalTimerMode: "elapsed" | "countdown" | "off";
   globalCountdownSeconds: number;
   fileSizeBytes: number;
   /** One track played across the whole presentation, if set. */

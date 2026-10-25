@@ -64,8 +64,8 @@ export default function EditPresentationPage() {
   const [slides, setSlides] = useState<SlideDetail[]>([]);
   const [autoAdvance, setAutoAdvance] = useState(false);
 
-  // Whole-presentation timer: count up from zero, or count down from a set time.
-  const [gMode, setGMode] = useState<"elapsed" | "countdown">("elapsed");
+  // Whole-presentation timer: count up from zero, count down from a set time, or off.
+  const [gMode, setGMode] = useState<"elapsed" | "countdown" | "off">("elapsed");
   const [gH, setGH] = useState("0");
   const [gM, setGM] = useState("0");
   const [gS, setGS] = useState("0");
@@ -155,7 +155,9 @@ export default function EditPresentationPage() {
           toast.success(
             gMode === "countdown"
               ? `Countdown set to ${formatDuration(gSeconds)}`
-              : "Presentation timer will count up",
+              : gMode === "off"
+                ? "Presentation timer turned off. Slide timers still run."
+                : "Presentation timer will count up",
           ),
         onError: (err) =>
           toast.error(err instanceof Error ? err.message : "Couldn't save the presentation timer."),
@@ -290,7 +292,9 @@ export default function EditPresentationPage() {
             <span className={styles.globalTimerHint}>
               {gMode === "countdown"
                 ? "Rings a bell with a glowing alarm clock at 10 minutes left, and sounds again at zero. Slide timers run separately."
-                : "Shown on screen while you present. Slide timers run separately."}
+                : gMode === "off"
+                  ? "No presentation timer is shown while you present. Your slide timers still work."
+                  : "Shown on screen while you present. Slide timers run separately."}
             </span>
           </div>
         </div>
@@ -314,6 +318,15 @@ export default function EditPresentationPage() {
               onClick={() => setGMode("countdown")}
             >
               Countdown
+            </button>
+            <button
+              type="button"
+              role="radio"
+              aria-checked={gMode === "off"}
+              className={`${styles.segment} ${gMode === "off" ? styles.segmentActive : ""}`}
+              onClick={() => setGMode("off")}
+            >
+              Off
             </button>
           </div>
 

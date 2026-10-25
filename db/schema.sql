@@ -86,7 +86,7 @@ CREATE TABLE presentations (
   audio_path                TEXT,
   audio_name                TEXT,
   audio_size_bytes          BIGINT NOT NULL DEFAULT 0,
-  global_timer_mode         TEXT NOT NULL DEFAULT 'elapsed' CHECK (global_timer_mode = ANY (ARRAY['elapsed','countdown'])),
+  global_timer_mode         TEXT NOT NULL DEFAULT 'elapsed' CHECK (global_timer_mode = ANY (ARRAY['elapsed','countdown','off'])),
   global_countdown_seconds  INTEGER NOT NULL DEFAULT 0 CHECK (global_countdown_seconds >= 0 AND global_countdown_seconds <= 86400)
 );
 CREATE INDEX presentations_user_id_idx ON presentations (user_id);

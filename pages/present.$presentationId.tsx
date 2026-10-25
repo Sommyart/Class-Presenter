@@ -126,6 +126,7 @@ export default function PresentPage() {
   // Presentation-wide countdown. It is derived from the same elapsed clock the
   // count-up timer uses, so pausing, resetting and slide changes affect both
   // identically and the slide timers stay completely independent of it.
+  const globalTimerOff = data?.globalTimerMode === "off";
   const globalCountdownMs =
     data?.globalTimerMode === "countdown" && data.globalCountdownSeconds > 0
       ? data.globalCountdownSeconds * 1000
@@ -439,9 +440,9 @@ export default function PresentPage() {
     if (document.fullscreenElement) {
       await document.exitFullscreen().catch(() => undefined);
     }
-    toast(`Session ended — ${formatMs(state.globalElapsedMs)} elapsed`);
+    toast(globalTimerOff ? "Session ended" : `Session ended — ${formatMs(state.globalElapsedMs)} elapsed`);
     navigate("/presentations");
-  }, [navigate, state.globalElapsedMs]);
+  }, [navigate, state.globalElapsedMs, globalTimerOff]);
 
   useEffect(() => {
     const onKeydown = (e: KeyboardEvent) => {
@@ -557,24 +558,26 @@ export default function PresentPage() {
       </div>
 
       <div className={styles.timerCluster}>
-        <div
-          className={`${styles.timerBadge} ${styles.timerGlobal} ${
-            globalTimeUp
-              ? styles.timerComplete
-              : globalRemainingMs !== null && globalRemainingMs <= WARNING_THRESHOLD_MS
-                ? styles.timerWarning
-                : ""
-          }`}
-        >
-          <span className={styles.timerLabel}>
-            {globalRemainingMs === null ? "Global" : "Time left"}
-          </span>
-          <span className={styles.timerValue}>
-            {globalRemainingMs === null
-              ? formatMs(state.globalElapsedMs)
-              : formatCountdownMs(globalRemainingMs)}
-          </span>
-        </div>
+        {!globalTimerOff && (
+          <div
+            className={`${styles.timerBadge} ${styles.timerGlobal} ${
+              globalTimeUp
+                ? styles.timerComplete
+                : globalRemainingMs !== null && globalRemainingMs <= WARNING_THRESHOLD_MS
+                  ? styles.timerWarning
+                  : ""
+            }`}
+          >
+            <span className={styles.timerLabel}>
+              {globalRemainingMs === null ? "Global" : "Time left"}
+            </span>
+            <span className={styles.timerValue}>
+              {globalRemainingMs === null
+                ? formatMs(state.globalElapsedMs)
+                : formatCountdownMs(globalRemainingMs)}
+            </span>
+          </div>
+        )}
         {alarm && alarmVisible && (
           <AlarmClockWarning
             fraction={alarm.fraction}

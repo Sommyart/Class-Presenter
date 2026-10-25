@@ -103,7 +103,10 @@ export async function handle(request: Request) {
         slideCount: presentation.slideCount,
         autoAdvance: presentation.autoAdvance,
         // The column is constrained to these two values in the database.
-        globalTimerMode: presentation.globalTimerMode === "countdown" ? "countdown" : "elapsed",
+        globalTimerMode:
+          presentation.globalTimerMode === "countdown" || presentation.globalTimerMode === "off"
+            ? presentation.globalTimerMode
+            : "elapsed",
         globalCountdownSeconds: presentation.globalCountdownSeconds,
         fileSizeBytes: toNum(presentation.fileSizeBytes),
         audioUrl: presentationAudioUrl,
