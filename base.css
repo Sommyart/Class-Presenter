@@ -1,0 +1,143 @@
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap');
+
+:root {
+  /* Overlay layers */
+  --z-overlay: 400;
+
+  --z-spotlight: 1000; /* Tutorial spotlights/guided help */
+
+  /* System layers */
+  --z-critical: 2000; /* Critical system notifications */
+
+  /* spacing */
+  --spacing-1: 0.25rem;
+  --spacing-2: 0.5rem;
+  --spacing-3: 0.75rem;
+  --spacing-4: 1rem;
+  --spacing-6: 1.5rem;
+  --spacing-8: 2rem;
+  --spacing-12: 3rem;
+  --spacing-16: 4rem;
+  --spacing-20: 5rem;
+}
+
+:root {
+  --background: #FFFFFF;
+  --foreground: #14121F;
+
+  --surface: #F3F0FC;
+  --surface-foreground: #14121F;
+
+  --sidebar: #FFFFFF;
+  --sidebar-foreground: #14121F;
+
+  --card: #FFFFFF;
+  --card-foreground: #14121F;
+
+  --popup: #FFFFFF;
+  --popup-foreground: #14121F;
+
+  --primary: #7C5CE7;
+  --primary-foreground: #FFFFFF;
+
+  --secondary: #14121F;
+  --secondary-foreground: #FFFFFF;
+
+  --accent: #7C5CE7;
+  --accent-foreground: #FFFFFF;
+
+  --muted: #F3F0FC;
+  --muted-foreground: #6C6478;
+
+  --success: #2FAE66;
+  --success-foreground: #FFFFFF;
+  --error: #D9455B;
+  --error-foreground: #FFFFFF;
+  --warning: #C98A1E;
+  --warning-foreground: #FFFFFF;
+  --info: #4C7DF0;
+  --info-foreground: #FFFFFF;
+  --info-hover: #3E68D1;
+  --info-active: #3459B5;
+
+  --border: #EAE5F7;
+
+  --font-family-base: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-family-display: 'Sora', 'Inter', sans-serif;
+  --font-family-monospace: 'JetBrains Mono', ui-monospace, monospace;
+  --font-family-cursive: 'Sora', sans-serif;
+
+  --shadow: 0 1px 2px rgba(124, 92, 231, 0.06);
+  --shadow-md: 0 6px 16px rgba(124, 92, 231, 0.10);
+  --shadow-lg: 0 16px 36px rgba(124, 92, 231, 0.14);
+  --shadow-focus: 0 0 0 3px rgba(124, 92, 231, 0.25);
+
+  --radius-sm: 8px;
+  --radius: 12px;
+  --radius-md: 16px;
+  --radius-lg: 22px;
+  --radius-full: 999px;
+
+  --animation-duration-fast: 120ms;
+  --animation-duration-normal: 200ms;
+  --animation-duration-slow: 360ms;
+
+  --chart-color-1: #7C5CE7;
+  --chart-color-2: #2FAE66;
+  --chart-color-3: #C98A1E;
+  --chart-color-4: #4C7DF0;
+  --chart-color-5: #D9455B;
+}
+
+.dark {
+  --background: #16131F;
+  --foreground: #F1EEFA;
+
+  --surface: #1F1A2E;
+  --surface-foreground: #F1EEFA;
+
+  --sidebar: #16131F;
+  --sidebar-foreground: #F1EEFA;
+
+  --card: #1F1A2E;
+  --card-foreground: #F1EEFA;
+
+  --popup: #221D33;
+  --popup-foreground: #F1EEFA;
+
+  --primary: #9B81F5;
+  --primary-foreground: #16131F;
+
+  --secondary: #F1EEFA;
+  --secondary-foreground: #16131F;
+
+  --accent: #9B81F5;
+  --accent-foreground: #16131F;
+
+  --muted: #251F38;
+  --muted-foreground: #A79FC0;
+
+  --success: #4FC583;
+  --success-foreground: #0B1F14;
+  --error: #E37187;
+  --error-foreground: #260A0F;
+  --warning: #DCA850;
+  --warning-foreground: #241804;
+  --info: #82A4F5;
+  --info-foreground: #0A1530;
+  --info-hover: #93B1F7;
+  --info-active: #A5BDF9;
+
+  --border: #2C2640;
+
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+  --shadow-md: 0 6px 16px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 16px 36px rgba(0, 0, 0, 0.5);
+  --shadow-focus: 0 0 0 3px rgba(155, 129, 245, 0.3);
+
+  --chart-color-1: #9B81F5;
+  --chart-color-2: #4FC583;
+  --chart-color-3: #DCA850;
+  --chart-color-4: #82A4F5;
+  --chart-color-5: #E37187;
+}

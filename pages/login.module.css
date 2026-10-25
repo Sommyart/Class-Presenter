@@ -1,0 +1,90 @@
+.page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--surface);
+  padding: var(--spacing-6);
+}
+
+.card {
+  width: 100%;
+  max-width: 380px;
+  background: var(--card);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  padding: var(--spacing-8);
+  display: flex;
+  flex-direction: column;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  font-family: var(--font-family-display);
+  font-weight: 700;
+  font-size: 1.05rem;
+  text-decoration: none;
+  margin-bottom: var(--spacing-6);
+  align-self: center;
+}
+
+.brandName {
+  color: var(--foreground);
+}
+
+.brandAccent {
+  color: var(--primary);
+}
+
+.brandIcon {
+  width: 18px;
+  height: 18px;
+  color: var(--primary);
+}
+
+.title {
+  font-family: var(--font-family-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-align: center;
+  margin: 0;
+}
+
+.subtitle {
+  font-size: 0.85rem;
+  color: var(--muted-foreground);
+  text-align: center;
+  margin: var(--spacing-1) 0 var(--spacing-6) 0;
+}
+
+.switchLine {
+  font-size: 0.85rem;
+  color: var(--muted-foreground);
+  text-align: center;
+  margin: var(--spacing-4) 0 0 0;
+}
+
+.switchLink {
+  color: var(--primary);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  margin: var(--spacing-5, var(--spacing-4)) 0;
+  color: var(--muted-foreground);
+  font-size: 0.78rem;
+}
+
+.divider::before,
+.divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}

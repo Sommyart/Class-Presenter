@@ -1,0 +1,163 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-critical);
+  background: var(--background);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  animation: overlayIn 320ms ease both;
+}
+
+.overlayLeaving {
+  animation: overlayOut 500ms cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+@keyframes overlayIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes overlayOut {
+  from { opacity: 1; transform: scale(1); }
+  to   { opacity: 0; transform: scale(1.03); }
+}
+
+.inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: var(--spacing-6);
+}
+
+/* ---------- mark ---------- */
+.markWrap {
+  position: relative;
+  width: 62px;
+  height: 62px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: var(--spacing-6);
+}
+
+.mark {
+  width: 32px;
+  height: 32px;
+  color: var(--primary);
+  animation: markIn 700ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* A ring that sweeps once around the clock mark, echoing a timer. */
+.ring {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-full);
+  border: 2px solid var(--border);
+  border-top-color: var(--primary);
+  animation: ringSpin 1400ms cubic-bezier(0.5, 0, 0.2, 1) both;
+}
+
+@keyframes markIn {
+  from { opacity: 0; transform: scale(0.6); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes ringSpin {
+  from { opacity: 0; transform: rotate(0deg); }
+  25%  { opacity: 1; }
+  to   { opacity: 1; transform: rotate(360deg); }
+}
+
+/* ---------- wordmark ---------- */
+.title {
+  font-family: var(--font-family-display);
+  font-size: clamp(1.9rem, 6vw, 3rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin: 0;
+  display: flex;
+  gap: 0.18em;
+  line-height: 1.1;
+}
+
+.word {
+  display: inline-block;
+  color: var(--foreground);
+  animation: wordIn 720ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: 260ms;
+}
+
+.wordAccent {
+  color: var(--primary);
+  animation-delay: 420ms;
+}
+
+@keyframes wordIn {
+  from { opacity: 0; transform: translateY(14px); filter: blur(6px); }
+  to   { opacity: 1; transform: translateY(0); filter: blur(0); }
+}
+
+/* ---------- rule ---------- */
+.rule {
+  height: 1px;
+  width: 0;
+  background: var(--border);
+  margin: var(--spacing-6) 0 var(--spacing-4);
+  animation: ruleGrow 700ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: 760ms;
+}
+
+@keyframes ruleGrow {
+  from { width: 0; opacity: 0; }
+  to   { width: 190px; opacity: 1; }
+}
+
+/* ---------- credit ---------- */
+.credit {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1);
+  margin: 0;
+  animation: creditIn 800ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: 980ms;
+}
+
+.creditLabel {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+
+.creditName {
+  font-family: var(--font-family-display);
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  color: var(--foreground);
+}
+
+@keyframes creditIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .overlay,
+  .overlayLeaving,
+  .mark,
+  .ring,
+  .word,
+  .rule,
+  .credit {
+    animation: none;
+  }
+
+  .rule {
+    width: 190px;
+  }
+}

@@ -1,0 +1,127 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-6);
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--spacing-4);
+  flex-wrap: wrap;
+}
+
+.title {
+  font-family: var(--font-family-display);
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.subtitle {
+  font-size: 0.88rem;
+  color: var(--muted-foreground);
+  margin: var(--spacing-1) 0 0 0;
+}
+
+.addIcon {
+  width: 15px;
+  height: 15px;
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+}
+
+.searchWrap {
+  position: relative;
+  flex: 1;
+  max-width: 320px;
+}
+
+.searchIcon {
+  position: absolute;
+  left: var(--spacing-3);
+  top: 50%;
+  transform: translateY(-50%);
+  width: 15px;
+  height: 15px;
+  color: var(--muted-foreground);
+  pointer-events: none;
+}
+
+.searchInput {
+  padding-left: calc(var(--spacing-3) * 2 + 15px);
+}
+
+.sortTrigger {
+  width: 190px;
+  flex-shrink: 0;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: var(--spacing-4);
+}
+
+.emptyState {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  padding: var(--spacing-16) var(--spacing-6);
+  text-align: center;
+}
+
+.emptyTitle {
+  font-family: var(--font-family-display);
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.emptyBody {
+  font-size: 0.9rem;
+  color: var(--muted-foreground);
+  margin: var(--spacing-2) 0 1.25rem 0;
+}
+
+.emptyButton {
+  margin: 0 auto;
+}
+
+.errorState {
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  padding: var(--spacing-12) var(--spacing-6);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-2);
+}
+
+.errorIcon {
+  width: 26px;
+  height: 26px;
+  color: var(--error);
+  margin-bottom: var(--spacing-2);
+}
+
+@media (max-width: 560px) {
+  .toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .searchWrap {
+    max-width: none;
+  }
+
+  .sortTrigger {
+    width: 100%;
+  }
+}

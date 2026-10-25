@@ -1,0 +1,253 @@
+.root {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  background: #08090c;
+  display: flex;
+  flex-direction: column;
+  cursor: default;
+}
+
+.notFound {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-4);
+  color: var(--muted-foreground);
+  padding: var(--spacing-6);
+  text-align: center;
+}
+
+.notFoundIcon {
+  width: 30px;
+  height: 30px;
+  color: var(--error);
+}
+
+.loadingScreen {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-4);
+  color: var(--muted-foreground);
+  font-size: 0.9rem;
+}
+
+.slideImage {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+/* Slide transition — direction-aware, subtle, and quick enough not to get
+   in the way of presenting. */
+@keyframes slideInFromRight {
+  from { opacity: 0; transform: translateX(2.5%) scale(0.995); }
+  to   { opacity: 1; transform: translateX(0) scale(1); }
+}
+
+@keyframes slideInFromLeft {
+  from { opacity: 0; transform: translateX(-2.5%) scale(0.995); }
+  to   { opacity: 1; transform: translateX(0) scale(1); }
+}
+
+.slideEnterForward {
+  animation: slideInFromRight var(--animation-duration-slow) cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.slideEnterBackward {
+  animation: slideInFromLeft var(--animation-duration-slow) cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .slideEnterForward,
+  .slideEnterBackward {
+    animation: none;
+  }
+}
+
+.timerWarning .timerValue {
+  color: var(--warning);
+}
+
+.slideArea {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  overflow: hidden;
+}
+
+.slideCard {
+  width: 100%;
+  max-width: 1100px;
+  aspect-ratio: 16 / 9;
+  background: linear-gradient(160deg, #1a1710 0%, #0c0a07 100%);
+  border-radius: var(--radius-lg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-4);
+  text-align: center;
+  padding: var(--spacing-8);
+}
+
+.slideNumber {
+  font-family: var(--font-family-monospace);
+  font-size: 0.85rem;
+  color: rgba(245, 239, 225, 0.4);
+}
+
+.slideTitle {
+  font-family: var(--font-family-display);
+  font-size: clamp(1.6rem, 3.4vw, 2.8rem);
+  font-weight: 600;
+  color: #f5efe1;
+  margin: 0;
+  max-width: 32rem;
+}
+
+/* ---------- timer cluster (top right by default) ---------- */
+.timerCluster {
+  position: absolute;
+  top: var(--spacing-5, var(--spacing-4));
+  right: var(--spacing-5, var(--spacing-4));
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+  z-index: 10;
+}
+
+.timerBadge {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+  padding: var(--spacing-2) var(--spacing-3);
+  border-radius: var(--radius);
+  background: rgba(15, 13, 9, 0.75);
+  box-shadow: var(--shadow-lg);
+}
+
+.timerLabel {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(245, 239, 225, 0.5);
+}
+
+.timerIcon {
+  width: 11px;
+  height: 11px;
+}
+
+.timerValue {
+  font-family: var(--font-family-monospace);
+  font-weight: 700;
+  font-size: 1.4rem;
+  color: #f5efe1;
+  font-variant-numeric: tabular-nums;
+}
+
+.timerGlobal .timerValue {
+  color: rgba(245, 239, 225, 0.85);
+}
+
+.timerSlide .timerValue {
+  color: var(--primary);
+}
+
+.timerComplete .timerValue {
+  color: var(--error);
+}
+
+/* ---------- controls layer ---------- */
+.controlsLayer {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: var(--spacing-6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  transition: opacity var(--animation-duration-normal) ease, transform var(--animation-duration-normal) ease;
+}
+
+.controlsHidden {
+  opacity: 0;
+  transform: translateY(10px);
+  pointer-events: none;
+}
+
+.controlBar {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-1);
+  background: rgba(15, 13, 9, 0.8);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-2);
+  box-shadow: var(--shadow-lg);
+}
+
+.controlBtn {
+  color: rgba(245, 239, 225, 0.85) !important;
+}
+
+.controlBtn:hover {
+  background: rgba(255, 255, 255, 0.1) !important;
+}
+
+.controlBtnExit {
+  color: #e2793f !important;
+}
+
+.controlBtnExit:hover {
+  background: rgba(226, 121, 63, 0.15) !important;
+}
+
+.controlIcon {
+  width: 16px;
+  height: 16px;
+}
+
+.slideCounter {
+  font-family: var(--font-family-monospace);
+  font-size: 0.82rem;
+  color: rgba(245, 239, 225, 0.7);
+  padding: 0 var(--spacing-2);
+  min-width: 52px;
+  text-align: center;
+}
+
+.divider {
+  width: 1px;
+  height: 20px;
+  background: rgba(255, 255, 255, 0.15);
+  margin: 0 var(--spacing-1);
+}
+
+.musicGroup {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  padding-right: var(--spacing-1);
+}
+
+.volumeSlider {
+  width: 80px;
+  accent-color: var(--primary);
+  cursor: pointer;
+}

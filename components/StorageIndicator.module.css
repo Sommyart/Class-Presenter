@@ -1,0 +1,98 @@
+.card {
+  background: var(--card);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  padding: var(--spacing-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-3);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-3);
+  flex-wrap: wrap;
+}
+
+.label {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--muted-foreground);
+}
+
+.labelIcon {
+  width: 15px;
+  height: 15px;
+}
+
+.amount {
+  font-family: var(--font-family-monospace);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--foreground);
+  font-variant-numeric: tabular-nums;
+}
+
+.bar {
+  width: 100%;
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-3);
+  flex-wrap: wrap;
+}
+
+.remaining {
+  font-size: 0.8rem;
+  color: var(--muted-foreground);
+}
+
+.message {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-2);
+  font-size: 0.8rem;
+  line-height: 1.45;
+  margin: 0;
+  color: var(--warning);
+}
+
+.messageIcon {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.errorText {
+  font-size: 0.82rem;
+  color: var(--muted-foreground);
+  margin: 0;
+}
+
+/* state accents — the bar and message shift tone as the quota fills */
+.normal .message {
+  color: var(--muted-foreground);
+}
+
+.warning .message {
+  color: var(--warning);
+}
+
+.critical .message,
+.full .message {
+  color: var(--error);
+}
+
+.full .amount {
+  color: var(--error);
+}

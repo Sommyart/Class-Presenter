@@ -1,0 +1,512 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-6);
+}
+
+.notFound {
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-4);
+  color: var(--muted-foreground);
+}
+
+/* ---------- header ---------- */
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--spacing-4);
+  flex-wrap: wrap;
+}
+
+.backLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--muted-foreground);
+  text-decoration: none;
+  margin-bottom: var(--spacing-2);
+}
+
+.backIcon {
+  width: 14px;
+  height: 14px;
+}
+
+.titleRow {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+}
+
+.title {
+  font-family: var(--font-family-display);
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.subtitle {
+  font-size: 0.85rem;
+  color: var(--muted-foreground);
+  margin: var(--spacing-1) 0 0 0;
+}
+
+.headerIcon {
+  width: 15px;
+  height: 15px;
+}
+
+/* ---------- adapter honesty notice ---------- */
+.adapterNotice {
+  display: flex;
+  gap: var(--spacing-3);
+  background: var(--muted);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-4);
+}
+
+.adapterNoticeIcon {
+  width: 18px;
+  height: 18px;
+  color: var(--muted-foreground);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.adapterNotice p {
+  font-size: 0.85rem;
+  line-height: 1.55;
+  color: var(--muted-foreground);
+  margin: 0;
+}
+
+/* ---------- toolbar ---------- */
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-4);
+  flex-wrap: wrap;
+  background: var(--surface);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-4);
+}
+
+.autoAdvance {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+}
+
+.autoAdvanceLabel {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.autoAdvanceHint {
+  font-size: 0.76rem;
+  font-weight: 400;
+  color: var(--muted-foreground);
+}
+
+.toolbarIcon {
+  width: 14px;
+  height: 14px;
+}
+
+.bulkBar {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  flex-wrap: wrap;
+}
+
+.bulkCount {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--primary);
+  margin-right: var(--spacing-1);
+}
+
+.bulkDuration {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--card);
+  border-radius: var(--radius-full);
+  padding: 4px var(--spacing-3);
+}
+
+.bulkInput {
+  width: 40px;
+  border: none;
+  background: transparent;
+  font-family: var(--font-family-monospace);
+  font-size: 0.9rem;
+  text-align: right;
+  outline: none;
+  color: var(--foreground);
+}
+
+.bulkUnit {
+  font-size: 0.78rem;
+  color: var(--muted-foreground);
+}
+
+/* ---------- thumbnail grid ---------- */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: var(--spacing-3);
+}
+
+.thumb {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: var(--card);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  padding: 0;
+  cursor: pointer;
+  text-align: left;
+  border: 2px solid transparent;
+  transition: box-shadow var(--animation-duration-fast) ease, border-color var(--animation-duration-fast) ease;
+}
+
+.thumb:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.thumbSelected {
+  border-color: var(--primary);
+}
+
+.thumbCheck {
+  position: absolute;
+  top: var(--spacing-2);
+  right: var(--spacing-2);
+  z-index: 2;
+  color: var(--primary);
+  background: var(--card);
+  border-radius: var(--radius-full);
+  padding: 2px;
+}
+
+.checkIcon {
+  width: 16px;
+  height: 16px;
+  display: block;
+}
+
+.thumbPreview {
+  aspect-ratio: 16 / 9;
+  background: var(--muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.thumbImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.errorIcon {
+  width: 28px;
+  height: 28px;
+  color: var(--error);
+}
+
+.thumbNumber {
+  font-family: var(--font-family-display);
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--muted-foreground);
+  opacity: 0.5;
+}
+
+.thumbFooter {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: var(--spacing-2) var(--spacing-3) var(--spacing-3);
+}
+
+.thumbTitle {
+  font-size: 0.78rem;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.thumbTimer {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--font-family-monospace);
+  font-size: 0.74rem;
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.thumbTimerIcon {
+  width: 11px;
+  height: 11px;
+}
+
+.thumbNoTimer {
+  font-size: 0.72rem;
+  color: var(--muted-foreground);
+  opacity: 0.7;
+}
+
+/* ---------- sheet (per-slide config) ---------- */
+.sheet {
+  display: flex;
+  flex-direction: column;
+}
+
+.sheetBody {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-5, var(--spacing-4));
+  padding: var(--spacing-4) 0;
+  flex: 1;
+}
+
+.sheetRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.sheetRowLabel {
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+
+.durationRow {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spacing-2);
+}
+
+.durationField {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1);
+  font-size: 0.76rem;
+  color: var(--muted-foreground);
+}
+
+.durationInput {
+  height: 2.5rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: var(--card);
+  text-align: center;
+  font-family: var(--font-family-monospace);
+  font-size: 1rem;
+  color: var(--foreground);
+}
+
+.sheetFooter {
+  display: flex;
+  gap: var(--spacing-2);
+}
+
+.audioSection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-3);
+  padding-top: var(--spacing-4);
+  border-top: 1px solid var(--border);
+}
+
+.audioCurrent {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  background: var(--muted);
+  border-radius: var(--radius);
+  padding: var(--spacing-2) var(--spacing-3);
+}
+
+.audioIcon {
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+  color: var(--primary);
+}
+
+.audioName {
+  flex: 1;
+  min-width: 0;
+  font-size: 0.82rem;
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.audioHint {
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: var(--muted-foreground);
+  margin: 0;
+}
+
+.hiddenInput {
+  display: none;
+}
+
+/* ---------- presentation (global) timer ---------- */
+.globalTimer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-4);
+  flex-wrap: wrap;
+  background: var(--surface);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-4);
+}
+
+.globalTimerHead {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  min-width: 0;
+}
+
+.globalTimerIcon {
+  width: 20px;
+  height: 20px;
+  color: var(--primary);
+  flex-shrink: 0;
+}
+
+.globalTimerText {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.globalTimerTitle {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.globalTimerHint {
+  font-size: 0.76rem;
+  color: var(--muted-foreground);
+}
+
+.globalTimerControls {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  flex-wrap: wrap;
+}
+
+.segmented {
+  display: inline-flex;
+  background: var(--card);
+  border-radius: var(--radius-full);
+  padding: 3px;
+  box-shadow: var(--shadow);
+}
+
+.segment {
+  border: none;
+  background: transparent;
+  color: var(--muted-foreground);
+  font-family: inherit;
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 6px var(--spacing-4);
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: background var(--animation-duration-fast) ease, color var(--animation-duration-fast) ease;
+}
+
+.segment:hover {
+  color: var(--foreground);
+}
+
+.segmentActive,
+.segmentActive:hover {
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+
+.globalDuration {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+}
+
+.globalDurationField {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--card);
+  border-radius: var(--radius-full);
+  padding: 4px var(--spacing-3);
+  box-shadow: var(--shadow);
+}
+
+.globalDurationInput {
+  width: 38px;
+  border: none;
+  background: transparent;
+  font-family: var(--font-family-monospace);
+  font-size: 0.9rem;
+  text-align: right;
+  outline: none;
+  color: var(--foreground);
+}
+
+.globalDurationField span {
+  font-size: 0.78rem;
+  color: var(--muted-foreground);
+}
+
+.deckMusic {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  flex-wrap: wrap;
+}
+
+.deckMusic .audioCurrent {
+  background: var(--card);
+  max-width: 260px;
+}
+
+@media (max-width: 560px) {
+  .toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .bulkBar {
+    justify-content: space-between;
+  }
+}

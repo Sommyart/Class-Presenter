@@ -1,0 +1,421 @@
+.page {
+  min-height: 100vh;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-family-base);
+}
+
+/* ---------- nav ---------- */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: var(--z-overlay);
+  background: var(--background);
+  border-bottom: 1px solid var(--border);
+}
+
+.navInner {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: var(--spacing-4) var(--spacing-6);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-6);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  font-family: var(--font-family-display);
+  font-weight: 600;
+  font-size: 1.15rem;
+  color: var(--foreground);
+  text-decoration: none;
+}
+
+.brandIcon {
+  width: 22px;
+  height: 22px;
+  color: var(--primary);
+}
+
+.navLinks {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-8);
+}
+
+.navLinks a {
+  font-size: 0.9rem;
+  color: var(--muted-foreground);
+  text-decoration: none;
+}
+
+.navLinks a:hover {
+  color: var(--foreground);
+}
+
+.navActions {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+}
+
+/* ---------- shared section rhythm (generous, landing-page register) ---------- */
+.section,
+.sectionAlt {
+  padding: var(--spacing-20) var(--spacing-6);
+}
+
+.sectionAlt {
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.section > *,
+.sectionAlt > * {
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+.reveal,
+.heroReveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity var(--animation-duration-slow) ease, transform var(--animation-duration-slow) ease;
+}
+
+.reveal[data-revealed="true"],
+.heroReveal[data-revealed="true"] {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.eyebrow {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--primary);
+  margin-bottom: var(--spacing-3);
+}
+
+.sectionTitle {
+  font-family: var(--font-family-display);
+  font-size: clamp(1.6rem, 3vw, 2.3rem);
+  font-weight: 600;
+  line-height: 1.25;
+  max-width: 40rem;
+  margin: 0 0 var(--spacing-4) 0;
+}
+
+.sectionBody {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: var(--muted-foreground);
+  max-width: 38rem;
+}
+
+/* ---------- hero ---------- */
+.hero {
+  padding: var(--spacing-20) var(--spacing-6) var(--spacing-16);
+}
+
+.heroReveal {
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.heroBadge {
+  margin-bottom: var(--spacing-6);
+}
+
+.heroTitle {
+  font-family: var(--font-family-display);
+  font-size: clamp(2.4rem, 5.5vw, 4rem);
+  line-height: 1.12;
+  font-weight: 600;
+  margin: 0 0 var(--spacing-6) 0;
+}
+
+.heroSubtitle {
+  font-size: 1.15rem;
+  line-height: 1.65;
+  color: var(--muted-foreground);
+  max-width: 42rem;
+  margin: 0 0 var(--spacing-8) 0;
+}
+
+.heroActions {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.heroMock {
+  margin-top: var(--spacing-16);
+  width: 100%;
+  max-width: 640px;
+  background: var(--sidebar);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+}
+
+.heroMockBar {
+  display: flex;
+  gap: var(--spacing-2);
+  padding: var(--spacing-3) var(--spacing-4);
+  background: rgba(0, 0, 0, 0.15);
+}
+
+.heroMockDot {
+  width: 9px;
+  height: 9px;
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.heroMockSlide {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  background: linear-gradient(135deg, var(--sidebar) 0%, #000 130%);
+  display: flex;
+  align-items: flex-end;
+  padding: var(--spacing-6);
+}
+
+.heroMockSlideText {
+  color: var(--sidebar-foreground);
+  opacity: 0.6;
+  font-size: 0.85rem;
+}
+
+.heroMockTimer {
+  position: absolute;
+  top: var(--spacing-4);
+  right: var(--spacing-4);
+  font-family: var(--font-family-monospace);
+  font-weight: 700;
+  font-size: 1.3rem;
+  color: var(--primary-foreground);
+  background: rgba(193, 82, 27, 0.9);
+  padding: var(--spacing-2) var(--spacing-3);
+  border-radius: var(--radius);
+}
+
+/* ---------- feature grid ---------- */
+.featureGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spacing-6);
+  margin-top: var(--spacing-12);
+}
+
+.featureCard {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-6);
+}
+
+.featureIcon {
+  width: 24px;
+  height: 24px;
+  color: var(--primary);
+  margin-bottom: var(--spacing-4);
+}
+
+.featureTitle {
+  font-family: var(--font-family-display);
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0 0 var(--spacing-2) 0;
+}
+
+.featureBody {
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: var(--muted-foreground);
+  margin: 0;
+}
+
+/* ---------- steps ---------- */
+.stepsGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--spacing-6);
+  margin-top: var(--spacing-12);
+}
+
+.stepCard {
+  position: relative;
+  padding: var(--spacing-6);
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+
+.stepNumber {
+  font-family: var(--font-family-monospace);
+  font-size: 0.85rem;
+  color: var(--muted-foreground);
+  margin-bottom: var(--spacing-4);
+}
+
+.stepIcon {
+  width: 22px;
+  height: 22px;
+  color: var(--primary);
+  margin-bottom: var(--spacing-3);
+}
+
+.stepTitle {
+  font-family: var(--font-family-display);
+  font-size: 1.02rem;
+  font-weight: 600;
+  margin: 0 0 var(--spacing-2) 0;
+}
+
+.stepBody {
+  font-size: 0.88rem;
+  line-height: 1.55;
+  color: var(--muted-foreground);
+  margin: 0;
+}
+
+/* ---------- use cases ---------- */
+.useCaseGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--spacing-4);
+  margin-top: var(--spacing-12);
+}
+
+.useCaseCard {
+  padding: var(--spacing-5, var(--spacing-4));
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.useCaseIcon {
+  width: 20px;
+  height: 20px;
+  color: var(--primary);
+  margin-bottom: var(--spacing-3);
+}
+
+.useCaseTitle {
+  font-family: var(--font-family-display);
+  font-size: 0.98rem;
+  font-weight: 600;
+  margin: 0 0 var(--spacing-1) 0;
+}
+
+.useCaseBody {
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--muted-foreground);
+  margin: 0;
+}
+
+/* ---------- faq ---------- */
+.faqWrap {
+  margin-top: var(--spacing-8);
+  max-width: 42rem;
+}
+
+/* ---------- final cta ---------- */
+.finalCta {
+  padding: var(--spacing-20) var(--spacing-6);
+  text-align: center;
+  background: var(--sidebar);
+  color: var(--sidebar-foreground);
+}
+
+.finalCta .reveal {
+  max-width: 640px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.finalCtaIcon {
+  width: 32px;
+  height: 32px;
+  color: var(--primary);
+  margin-bottom: var(--spacing-5, var(--spacing-4));
+}
+
+.finalCtaTitle {
+  font-family: var(--font-family-display);
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 600;
+  margin: 0 0 var(--spacing-8) 0;
+}
+
+/* ---------- footer ---------- */
+.footer {
+  padding: var(--spacing-8) var(--spacing-6);
+}
+
+.footerInner {
+  max-width: 1180px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-4);
+  color: var(--muted-foreground);
+  font-size: 0.85rem;
+  flex-wrap: wrap;
+}
+
+.footerInner .brand {
+  font-size: 1rem;
+  color: var(--foreground);
+}
+
+/* ---------- responsive ---------- */
+@media (max-width: 900px) {
+  .navLinks {
+    display: none;
+  }
+
+  .featureGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .stepsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .useCaseGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 560px) {
+  .featureGrid,
+  .stepsGrid,
+  .useCaseGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .heroActions {
+    flex-direction: column;
+    width: 100%;
+  }
+}
