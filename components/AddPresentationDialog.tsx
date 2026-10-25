@@ -246,6 +246,8 @@ export const AddPresentationDialog = ({ open, onOpenChange, defaultTab = "upload
                         ? "Checking Canva…"
                         : linkSource === "canva" && canvaStatus.isError
                           ? "Could not check the Canva connection. Make sure you are signed in and try again."
+                          : linkSource === "canva" && canvaStatus.data?.missing?.length
+                          ? `${adapter.unavailableReason} Missing setting: ${canvaStatus.data.missing.join(", ")}.`
                           : adapter.unavailableReason}
                     </p>
                   </div>

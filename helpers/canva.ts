@@ -7,8 +7,13 @@ export const CANVA_API = "https://api.canva.com/rest/v1";
 export const CANVA_AUTHORIZE_URL = "https://www.canva.com/api/oauth/authorize";
 export const CANVA_SCOPES = "design:content:read design:meta:read";
 
+/** Names (never values) of the Canva settings that are missing or blank. */
+export function canvaMissingSettings(): string[] {
+  return ["CANVA_CLIENT_ID", "CANVA_CLIENT_SECRET"].filter((name) => !process.env[name]?.trim());
+}
+
 export function canvaConfigured(): boolean {
-  return Boolean(process.env.CANVA_CLIENT_ID && process.env.CANVA_CLIENT_SECRET);
+  return canvaMissingSettings().length === 0;
 }
 
 /** Must exactly match a redirect URL registered in the Canva developer portal. */

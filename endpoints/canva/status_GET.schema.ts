@@ -5,7 +5,7 @@ export const schema = z.object({});
 
 export type InputType = z.infer<typeof schema>;
 
-export type OutputType = { configured: boolean; connected: boolean };
+export type OutputType = { configured: boolean; connected: boolean; missing: string[] };
 
 export const getCanvaStatus = async (init?: RequestInit): Promise<OutputType> => {
   const result = await fetch(`/_api/canva/status`, {
