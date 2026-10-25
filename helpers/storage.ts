@@ -9,7 +9,6 @@ import {
   PutObjectCommand,
   GetObjectCommand,
   DeleteObjectCommand,
-  PutBucketCorsCommand,
 } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 
@@ -99,24 +98,4 @@ export async function remove(args: {
   } catch {
     return { ok: false };
   }
-}
-
-/** One-off: allow browser PUT/GET from the given origins. Used by /_api/setup. */
-export async function configureCors(origins: string[]): Promise<void> {
-  await s3().send(
-    new PutBucketCorsCommand({
-      Bucket: bucket(),
-      CORSConfiguration: {
-        CORSRules: [
-          {
-            AllowedOrigins: origins,
-            AllowedMethods: ["GET", "PUT", "HEAD"],
-            AllowedHeaders: ["*"],
-            ExposeHeaders: ["ETag"],
-            MaxAgeSeconds: 3600,
-          },
-        ],
-      },
-    }),
-  );
 }
