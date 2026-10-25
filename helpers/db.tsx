@@ -16,7 +16,7 @@ class FlootCamelCasePlugin extends CamelCasePlugin {
 export const db = new Kysely<DB>({
 plugins: [new FlootCamelCasePlugin()],
 dialect: new PostgresJSDialect({
-postgres: postgres(process.env.FLOOT_DATABASE_URL, {
+postgres: postgres(process.env.DATABASE_URL as string, {
 prepare: false,
 idle_timeout: 10,
 max: 3,

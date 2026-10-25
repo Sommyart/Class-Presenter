@@ -20,7 +20,7 @@ export interface Session {
   passwordChangeRequired?: boolean;
 }
 
-const CookieName = "floot_built_app_session";
+const CookieName = "cp_session";
 
 export class NotAuthenticatedError extends Error {
   constructor(message?: string) {

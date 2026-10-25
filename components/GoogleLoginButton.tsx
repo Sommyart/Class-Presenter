@@ -1,18 +1,18 @@
 import React from "react";
 import { OAuthLoginButton } from "./OAuthLoginButton";
 
-interface FlootLoginButtonProps {
+interface GoogleLoginButtonProps {
   className?: string;
   disabled?: boolean;
 }
 
-export const FlootLoginButton: React.FC<FlootLoginButtonProps> = ({
+export const GoogleLoginButton: React.FC<GoogleLoginButtonProps> = ({
   className,
   disabled,
 }) => {
   return (
     <OAuthLoginButton
-      provider="floot"
+      provider="google"
       className={className}
       disabled={disabled}
     >

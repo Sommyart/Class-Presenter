@@ -53,16 +53,7 @@ export function createOAuthPopupResponseHtml(
           function sendMessageToParent() {
             const message = ${messageJson};
             if (!window.opener) {
-              // special handling for mobile app
-              // we send the message back to the app by using the mobile_app_id as schema, which we set up in the
-              // Floot framework such that the mobile app will intercept and process as message
-              function b64urlEncode(str) {
-                const b64 = btoa(unescape(encodeURIComponent(str)));
-                return b64.replace(/\\+/g, "-").replace(/\\//g, "_").replace(/=+$/g, "");
-              }
-            
-              const payload = b64urlEncode(JSON.stringify(message));
-              location.href = \`${process.env.FLOOT_MOBILE_APP_ID}://bridge?payload=\${payload}\`;
+              location.href = "/";
               return true;
             }
             try {

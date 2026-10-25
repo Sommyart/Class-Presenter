@@ -1,5 +1,5 @@
 import React from "react";
-import { FlootLoginButton } from "./FlootLoginButton";
+import { GoogleLoginButton } from "./GoogleLoginButton";
 import styles from "./OAuthButtonGroup.module.css";
 
 interface OAuthButtonGroupProps {
@@ -11,9 +11,11 @@ export const OAuthButtonGroup: React.FC<OAuthButtonGroupProps> = ({
   className,
   disabled,
 }) => {
+  // Google sign-in is only offered when the deployment has OAuth credentials.
+  if (import.meta.env.VITE_GOOGLE_AUTH !== "true") return null;
   return (
     <div className={`${styles.container} ${className || ""}`}>
-      <FlootLoginButton disabled={disabled} />
+      <GoogleLoginButton disabled={disabled} />
       {/* Add more buttons here for other oauth providers as needed */}
     </div>
   );

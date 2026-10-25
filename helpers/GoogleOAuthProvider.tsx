@@ -8,34 +8,34 @@ import * as crypto from "crypto";
 
 
 
-export class FlootOAuthProvider implements OAuthProviderInterface {
-  public readonly name = "floot";
+export class GoogleOAuthProvider implements OAuthProviderInterface {
+  public readonly name = "google";
   public readonly clientId: string;
-  public readonly authUrl = "https://floot.com/_api/oauth/authorize";
+  public readonly authUrl = "https://accounts.google.com/o/oauth2/v2/auth";
   public readonly scopes = "openid email profile";
   public readonly redirectUri: string;
   private readonly clientSecret: string;
-  private readonly tokenUrl = "https://floot.com/_api/oauth/token";
-  private readonly userInfoUrl = "https://floot.com/_api/oauth/userinfo";
+  private readonly tokenUrl = "https://oauth2.googleapis.com/token";
+  private readonly userInfoUrl = "https://openidconnect.googleapis.com/v1/userinfo";
 
   constructor(redirectUri: string) {
-    this.clientId = process.env.FLOOT_OAUTH_CLIENT_ID || "";
-    this.clientSecret = process.env.FLOOT_OAUTH_CLIENT_SECRET || "";
+    this.clientId = process.env.GOOGLE_CLIENT_ID || "";
+    this.clientSecret = process.env.GOOGLE_CLIENT_SECRET || "";
     this.redirectUri = redirectUri;
 
     if (!this.clientId) {
       const error = new Error(
-        "FLOOT_OAUTH_CLIENT_ID environment variable is required"
+        "GOOGLE_CLIENT_ID environment variable is required"
       );
-      console.error("FlootOAuthProvider initialization failed:", error);
+      console.error("GoogleOAuthProvider initialization failed:", error);
       throw error;
     }
 
     if (!this.clientSecret) {
       const error = new Error(
-        "FLOOT_OAUTH_CLIENT_SECRET environment variable is required"
+        "GOOGLE_CLIENT_SECRET environment variable is required"
       );
-      console.error("FlootOAuthProvider initialization failed:", error);
+      console.error("GoogleOAuthProvider initialization failed:", error);
       throw error;
     }
   }
@@ -46,7 +46,7 @@ export class FlootOAuthProvider implements OAuthProviderInterface {
     codeVerifier?: string
   ): Promise<OAuthTokens> {
     console.log(
-      "FlootOAuthProvider: Exchanging authorization code for tokens",
+      "GoogleOAuthProvider: Exchanging authorization code for tokens",
       {
         codeLength: code.length,
         redirectUri,
@@ -69,12 +69,12 @@ export class FlootOAuthProvider implements OAuthProviderInterface {
       response = await fetch(this.tokenUrl, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "application/x-www-form-urlencoded",
         },
-        body: JSON.stringify(requestBody),
+        body: new URLSearchParams(requestBody as Record<string, string>).toString(),
       });
     } catch (fetchError) {
-      console.error("FlootOAuthProvider: Token exchange fetch error:", {
+      console.error("GoogleOAuthProvider: Token exchange fetch error:", {
         error:
           fetchError instanceof Error ? fetchError.message : String(fetchError),
         url: this.tokenUrl,
@@ -100,13 +100,13 @@ export class FlootOAuthProvider implements OAuthProviderInterface {
       } catch (textError) {
         errorText = "Could not read error response body";
         console.error(
-          "FlootOAuthProvider: Failed to read error response text:",
+          "GoogleOAuthProvider: Failed to read error response text:",
           textError
         );
       }
 
       console.error(
-        "FlootOAuthProvider: Token exchange failed with error response:",
+        "GoogleOAuthProvider: Token exchange failed with error response:",
         {
           status: response.status,
           statusText: response.statusText,
@@ -128,7 +128,7 @@ export class FlootOAuthProvider implements OAuthProviderInterface {
       data = JSON.parse(await response.text());
     } catch (jsonError) {
       console.error(
-        "FlootOAuthProvider: Failed to parse token exchange response JSON:",
+        "GoogleOAuthProvider: Failed to parse token exchange response JSON:",
         {
           error:
             jsonError instanceof Error ? jsonError.message : String(jsonError),
@@ -147,7 +147,7 @@ export class FlootOAuthProvider implements OAuthProviderInterface {
     if (!data.access_token) {
       throw new OAuthError(
         "TOKEN_EXCHANGE_FAILED",
-        "No access token received from Floot",
+        "No access token received from Google",
         this.name,
         data
       );
@@ -177,7 +177,7 @@ export class FlootOAuthProvider implements OAuthProviderInterface {
         },
       });
     } catch (fetchError) {
-      console.error("FlootOAuthProvider: User info fetch error:", {
+      console.error("GoogleOAuthProvider: User info fetch error:", {
         error:
           fetchError instanceof Error ? fetchError.message : String(fetchError),
         url: this.userInfoUrl,
@@ -203,13 +203,13 @@ export class FlootOAuthProvider implements OAuthProviderInterface {
       } catch (textError) {
         errorText = "Could not read error response body";
         console.error(
-          "FlootOAuthProvider: Failed to read user info error response text:",
+          "GoogleOAuthProvider: Failed to read user info error response text:",
           textError
         );
       }
 
       console.error(
-        "FlootOAuthProvider: User info fetch failed with error response:",
+        "GoogleOAuthProvider: User info fetch failed with error response:",
         {
           status: response.status,
           statusText: response.statusText,
@@ -233,7 +233,7 @@ export class FlootOAuthProvider implements OAuthProviderInterface {
       data = JSON.parse(await response.text());
     } catch (jsonError) {
       console.error(
-        "FlootOAuthProvider: Failed to parse user info response JSON:",
+        "GoogleOAuthProvider: Failed to parse user info response JSON:",
         {
           error:
             jsonError instanceof Error ? jsonError.message : String(jsonError),
@@ -262,10 +262,10 @@ export class FlootOAuthProvider implements OAuthProviderInterface {
       );
     }
 
-    if (!userInfo.id) {
+    if (!userInfo.sub) {
       throw new OAuthError(
         "PROVIDER_ERROR",
-        "Floot user info missing required id field",
+        "Google user info missing required sub field",
         this.name,
         userInfo
       );
@@ -274,7 +274,7 @@ export class FlootOAuthProvider implements OAuthProviderInterface {
     if (!userInfo.email) {
       throw new OAuthError(
         "PROVIDER_ERROR",
-        "Floot user info missing required email field",
+        "Google user info missing required email field",
         this.name,
         userInfo
       );
@@ -284,7 +284,7 @@ export class FlootOAuthProvider implements OAuthProviderInterface {
       email: userInfo.email,
       displayName: userInfo.name || userInfo.email.split("@")[0], // Fallback to email prefix if no name
       avatarUrl: userInfo.picture || null, // Support avatar URL if provided
-      providerUserId: userInfo.id,
+      providerUserId: userInfo.sub,
     };
 
     return mappedData;
@@ -316,6 +316,7 @@ export class FlootOAuthProvider implements OAuthProviderInterface {
       state: state,
       code_challenge: codeChallenge,
       code_challenge_method: "S256",
+      prompt: "select_account",
     });
 
     const authUrl = `${this.authUrl}?${params.toString()}`;

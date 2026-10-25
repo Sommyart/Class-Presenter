@@ -33,7 +33,7 @@ export function usePresentationDetail(presentationId: string | undefined) {
 export function useUpdateTimers(presentationId: string | undefined) {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: postUpdateTimers,
+    mutationFn: (body: Parameters<typeof postUpdateTimers>[0]) => postUpdateTimers(body),
     onSuccess: () => {
       if (presentationId) {
         queryClient.invalidateQueries({ queryKey: presentationDetailKey(presentationId) });
@@ -46,7 +46,7 @@ export function useUpdateTimers(presentationId: string | undefined) {
 export function useMarkPresented() {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: postMarkPresented,
+    mutationFn: (body: Parameters<typeof postMarkPresented>[0]) => postMarkPresented(body),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: PRESENTATIONS_QUERY_KEY });
     },
