@@ -895,7 +895,7 @@ var init_poller = __esm({
     init_circularReplacer();
     init_sleep();
     init_waiter();
-    runPolling = async ({ minDelay, maxDelay, maxWaitTime, abortController, client: client2, abortSignal }, input, acceptorChecks) => {
+    runPolling = async ({ minDelay, maxDelay, maxWaitTime, abortController, client: client3, abortSignal }, input, acceptorChecks) => {
       const observedResponses = {};
       const [minDelayMs, maxDelayMs] = [minDelay * 1e3, maxDelay * 1e3];
       let currentAttempt = 0;
@@ -916,7 +916,7 @@ var init_poller = __esm({
           }
           await sleep(delayMs / 1e3);
         }
-        const { state: state2, reason } = await acceptorChecks(client2, input);
+        const { state: state2, reason } = await acceptorChecks(client3, input);
         if (reason) {
           const message2 = createMessageFromResponse(reason);
           observedResponses[message2] |= 0;
@@ -927,12 +927,12 @@ var init_poller = __esm({
         }
         currentAttempt += 1;
         if (!didWarn403 && Date.now() >= warn403Time) {
-          checkWarn403(observedResponses, client2);
+          checkWarn403(observedResponses, client3);
           didWarn403 = true;
         }
       }
     };
-    checkWarn403 = (observedResponses = {}, client2) => {
+    checkWarn403 = (observedResponses = {}, client3) => {
       const orderedErrors = Object.keys(observedResponses);
       let maxCount = 0;
       let count403 = 0;
@@ -943,7 +943,7 @@ var init_poller = __esm({
           count403 += n3;
         }
       }
-      const clientLogger = client2?.config?.logger;
+      const clientLogger = client3?.config?.logger;
       const warningLogger = typeof clientLogger?.warn === "function" && !clientLogger.constructor?.name?.includes?.("NoOpLogger") ? clientLogger : console;
       if (count403 >= 3 || orderedErrors[orderedErrors.length - 1]?.startsWith("403:")) {
         warningLogger.warn(`@smithy/util-waiter WARN - 403 status code encountered during waiter polling.`);
@@ -1263,8 +1263,8 @@ var init_Schema = __esm({
       name;
       namespace;
       traits;
-      static assign(instance, values2) {
-        const schema18 = Object.assign(instance, values2);
+      static assign(instance2, values2) {
+        const schema18 = Object.assign(instance2, values2);
         return schema18;
       }
       static [Symbol.hasInstance](lhs) {
@@ -2203,15 +2203,15 @@ var init_exceptions = __esm({
         const candidate = value;
         return _ServiceException.prototype.isPrototypeOf(candidate) || Boolean(candidate.$fault) && Boolean(candidate.$metadata) && (candidate.$fault === "client" || candidate.$fault === "server");
       }
-      static [Symbol.hasInstance](instance) {
-        if (!instance)
+      static [Symbol.hasInstance](instance2) {
+        if (!instance2)
           return false;
-        const candidate = instance;
+        const candidate = instance2;
         if (this === _ServiceException) {
-          return _ServiceException.isInstance(instance);
+          return _ServiceException.isInstance(instance2);
         }
-        if (_ServiceException.isInstance(instance)) {
-          if (this.prototype.isPrototypeOf(instance)) {
+        if (_ServiceException.isInstance(instance2)) {
+          if (this.prototype.isPrototypeOf(instance2)) {
             return true;
           }
           const targetId = Object.prototype.hasOwnProperty.call(this, "shapeId") ? this.shapeId : void 0;
@@ -13177,10 +13177,10 @@ var init_invoke_store = __esm({
     InvokeStoreMulti = class _InvokeStoreMulti extends InvokeStoreBase {
       als;
       static async create() {
-        const instance = new _InvokeStoreMulti();
+        const instance2 = new _InvokeStoreMulti();
         const asyncHooks = await import("node:async_hooks");
-        instance.als = new asyncHooks.AsyncLocalStorage();
-        return instance;
+        instance2.als = new asyncHooks.AsyncLocalStorage();
+        return instance2;
       }
       getContext() {
         return this.als.getStore();
@@ -13206,10 +13206,10 @@ var init_invoke_store = __esm({
       }
     };
     (function(InvokeStore2) {
-      let instance = null;
+      let instance2 = null;
       async function getInstanceAsync(forceInvokeStoreMulti) {
-        if (!instance) {
-          instance = (async () => {
+        if (!instance2) {
+          instance2 = (async () => {
             const isMulti = forceInvokeStoreMulti === true || "AWS_LAMBDA_MAX_CONCURRENCY" in process.env;
             const newInstance = isMulti ? await InvokeStoreMulti.create() : new InvokeStoreSingle();
             if (!NO_GLOBAL_AWS_LAMBDA && globalThis.awslambda?.InvokeStore) {
@@ -13222,12 +13222,12 @@ var init_invoke_store = __esm({
             }
           })();
         }
-        return instance;
+        return instance2;
       }
       InvokeStore2.getInstanceAsync = getInstanceAsync;
       InvokeStore2._testing = process.env.AWS_LAMBDA_BENCHMARK_MODE === "1" ? {
         reset: () => {
-          instance = null;
+          instance2 = null;
           if (globalThis.awslambda?.InvokeStore) {
             delete globalThis.awslambda.InvokeStore;
           }
@@ -13551,10 +13551,10 @@ function createPaginator(ClientCtor, CommandCtor, inputTokenName, outputTokenNam
 var makePagedClientRequest, get;
 var init_createPaginator = __esm({
   "node_modules/@smithy/core/dist-es/legacy-root-exports/pagination/createPaginator.js"() {
-    makePagedClientRequest = async (CommandCtor, client2, input, withCommand = (_) => _, ...args) => {
+    makePagedClientRequest = async (CommandCtor, client3, input, withCommand = (_) => _, ...args) => {
       let command5 = new CommandCtor(input);
       command5 = withCommand(command5) ?? command5;
-      return await client2.send(command5, ...args);
+      return await client3.send(command5, ...args);
     };
     get = (fromObject, path) => {
       let cursor = fromObject;
@@ -25944,7 +25944,7 @@ var require_dist_cjs11 = __commonJS({
         };
         const requestHandler = isH22(this.callerClientConfig?.requestHandler) ? void 0 : this.callerClientConfig?.requestHandler;
         const region = this.profileData.region ?? await this.callerClientConfig?.region?.() ?? process.env.AWS_REGION;
-        const client2 = new SigninClient2({
+        const client3 = new SigninClient2({
           credentials: {
             accessKeyId: "",
             secretAccessKey: ""
@@ -25955,7 +25955,7 @@ var require_dist_cjs11 = __commonJS({
           userAgentAppId,
           ...this.init?.clientConfig
         });
-        this.createDPoPInterceptor(client2.middlewareStack);
+        this.createDPoPInterceptor(client3.middlewareStack);
         const commandInput = {
           tokenInput: {
             clientId: freshToken.clientId,
@@ -25964,7 +25964,7 @@ var require_dist_cjs11 = __commonJS({
           }
         };
         try {
-          const response = await client2.send(new CreateOAuth2TokenCommand2(commandInput));
+          const response = await client3.send(new CreateOAuth2TokenCommand2(commandInput));
           const { accessKeyId, secretAccessKey, sessionToken } = response.tokenOutput?.accessToken ?? {};
           const { refreshToken, expiresIn } = response.tokenOutput ?? {};
           if (!accessKeyId || !secretAccessKey || !sessionToken || !refreshToken) {
@@ -35371,10 +35371,10 @@ var require_dist_cjs16 = __commonJS({
     var paginateListObjectAnnotations = createPaginator2(S3Client2, ListObjectAnnotationsCommand, "ContinuationToken", "NextContinuationToken", "MaxAnnotationResults");
     var paginateListObjectsV2 = createPaginator2(S3Client2, ListObjectsV2Command, "ContinuationToken", "NextContinuationToken", "MaxKeys");
     var paginateListParts = createPaginator2(S3Client2, ListPartsCommand, "PartNumberMarker", "NextPartNumberMarker", "MaxParts");
-    var checkState$3 = async (client2, input) => {
+    var checkState$3 = async (client3, input) => {
       let reason;
       try {
-        let result = await client2.send(new HeadBucketCommand(input));
+        let result = await client3.send(new HeadBucketCommand(input));
         reason = result;
         return { state: WaiterState2.SUCCESS, reason };
       } catch (exception) {
@@ -35394,10 +35394,10 @@ var require_dist_cjs16 = __commonJS({
       const result = await createWaiter2({ ...serviceDefaults, ...params }, input, checkState$3);
       return checkExceptions2(result);
     };
-    var checkState$2 = async (client2, input) => {
+    var checkState$2 = async (client3, input) => {
       let reason;
       try {
-        let result = await client2.send(new HeadBucketCommand(input));
+        let result = await client3.send(new HeadBucketCommand(input));
         reason = result;
       } catch (exception) {
         reason = exception;
@@ -35416,10 +35416,10 @@ var require_dist_cjs16 = __commonJS({
       const result = await createWaiter2({ ...serviceDefaults, ...params }, input, checkState$2);
       return checkExceptions2(result);
     };
-    var checkState$1 = async (client2, input) => {
+    var checkState$1 = async (client3, input) => {
       let reason;
       try {
-        let result = await client2.send(new HeadObjectCommand(input));
+        let result = await client3.send(new HeadObjectCommand(input));
         reason = result;
         return { state: WaiterState2.SUCCESS, reason };
       } catch (exception) {
@@ -35439,10 +35439,10 @@ var require_dist_cjs16 = __commonJS({
       const result = await createWaiter2({ ...serviceDefaults, ...params }, input, checkState$1);
       return checkExceptions2(result);
     };
-    var checkState = async (client2, input) => {
+    var checkState = async (client3, input) => {
       let reason;
       try {
-        let result = await client2.send(new HeadObjectCommand(input));
+        let result = await client3.send(new HeadObjectCommand(input));
         reason = result;
       } catch (exception) {
         reason = exception;
@@ -36800,11 +36800,11 @@ var require_dist_cjs17 = __commonJS({
         }
       }
     };
-    var getSignedUrl2 = async (client2, command5, options = {}) => {
+    var getSignedUrl2 = async (client3, command5, options = {}) => {
       let s3Presigner;
       let region;
-      if (typeof client2.config.endpointProvider === "function") {
-        const endpointV2 = await getEndpointFromInstructions2(command5.input, command5.constructor, client2.config);
+      if (typeof client3.config.endpointProvider === "function") {
+        const endpointV2 = await getEndpointFromInstructions2(command5.input, command5.constructor, client3.config);
         const authScheme = endpointV2.properties?.authSchemes?.[0];
         if (authScheme?.name === "sigv4a") {
           region = authScheme?.signingRegionSet?.join(",");
@@ -36812,12 +36812,12 @@ var require_dist_cjs17 = __commonJS({
           region = authScheme?.signingRegion;
         }
         s3Presigner = new S3RequestPresigner({
-          ...client2.config,
+          ...client3.config,
           signingName: authScheme?.signingName,
           region: async () => region
         });
       } else {
-        s3Presigner = new S3RequestPresigner(client2.config);
+        s3Presigner = new S3RequestPresigner(client3.config);
       }
       const presignInterceptMiddleware = (next, context) => async (args) => {
         const { request } = args;
@@ -36847,14 +36847,14 @@ var require_dist_cjs17 = __commonJS({
         };
       };
       const middlewareName = "presignInterceptMiddleware";
-      const clientStack = client2.middlewareStack.clone();
+      const clientStack = client3.middlewareStack.clone();
       clientStack.addRelativeTo(presignInterceptMiddleware, {
         name: middlewareName,
         relation: "before",
         toMiddleware: "awsAuthMiddleware",
         override: true
       });
-      const handler = command5.resolveMiddleware(clientStack, client2.config, {});
+      const handler = command5.resolveMiddleware(clientStack, client3.config, {});
       const { output } = await handler({ input: command5.input });
       const { presigned } = output;
       return formatUrl2(presigned);
@@ -47257,13 +47257,13 @@ var PostgresDriver = class {
     this.#pool = isFunction(this.#config.pool) ? await this.#config.pool() : this.#config.pool;
   }
   async acquireConnection() {
-    const client2 = await this.#pool.connect();
-    let connection2 = this.#connections.get(client2);
+    const client3 = await this.#pool.connect();
+    let connection2 = this.#connections.get(client3);
     if (!connection2) {
-      connection2 = new PostgresConnection(client2, {
+      connection2 = new PostgresConnection(client3, {
         cursor: this.#config.cursor ?? null
       });
-      this.#connections.set(client2, connection2);
+      this.#connections.set(client3, connection2);
       if (this.#config?.onCreateConnection) {
         await this.#config.onCreateConnection(connection2);
       }
@@ -47297,8 +47297,8 @@ var PostgresDriver = class {
 var PostgresConnection = class {
   #client;
   #options;
-  constructor(client2, options) {
-    this.#client = client2;
+  constructor(client3, options) {
+    this.#client = client3;
     this.#options = options;
   }
   async executeQuery(compiledQuery) {
@@ -47530,8 +47530,8 @@ var PostgresJSDriver = class extends PostgresDriver {
   }
   async init(options) {
     const { controlPostgres, postgres: postgres2 } = this.#config;
-    const instance = isPostgresJSSql(postgres2) ? postgres2 : await postgres2(options);
-    this.#postgres = this.#assertPostgres(instance);
+    const instance2 = isPostgresJSSql(postgres2) ? postgres2 : await postgres2(options);
+    this.#postgres = this.#assertPostgres(instance2);
     if (!controlPostgres) return;
     const controlOptions = {
       ...this.#postgres.options,
@@ -49804,15 +49804,41 @@ var FlootCamelCasePlugin = class extends CamelCasePlugin {
     return kyselyIdentifierOverrides[str] ?? super.snakeCase(str);
   }
 };
-var db = new Kysely({
-  plugins: [new FlootCamelCasePlugin()],
-  dialect: new PostgresJSDialect({
-    postgres: src_default(process.env.DATABASE_URL, {
+var client = null;
+var instance = null;
+function getInstance() {
+  if (!instance) {
+    client = src_default(process.env.DATABASE_URL, {
       prepare: false,
-      idle_timeout: 10,
-      max: 3
-    })
-  })
+      idle_timeout: 5,
+      max_lifetime: 120,
+      connect_timeout: 10,
+      max: 5
+    });
+    instance = new Kysely({
+      plugins: [new FlootCamelCasePlugin()],
+      dialect: new PostgresJSDialect({ postgres: client })
+    });
+  }
+  return instance;
+}
+async function closeDb() {
+  const current = client;
+  client = null;
+  instance = null;
+  if (current) {
+    try {
+      await current.end({ timeout: 3 });
+    } catch {
+    }
+  }
+}
+var db = new Proxy({}, {
+  get(_target, prop) {
+    const real = getInstance();
+    const value = real[prop];
+    return typeof value === "function" ? value.bind(real) : value;
+  }
 });
 
 // node_modules/zod/v3/external.js
@@ -58483,8 +58509,11 @@ import crypto6 from "crypto";
 var CANVA_API = "https://api.canva.com/rest/v1";
 var CANVA_AUTHORIZE_URL = "https://www.canva.com/api/oauth/authorize";
 var CANVA_SCOPES = "design:content:read design:meta:read";
+function canvaMissingSettings() {
+  return ["CANVA_CLIENT_ID", "CANVA_CLIENT_SECRET"].filter((name) => !process.env[name]?.trim());
+}
 function canvaConfigured() {
-  return Boolean(process.env.CANVA_CLIENT_ID && process.env.CANVA_CLIENT_SECRET);
+  return canvaMissingSettings().length === 0;
 }
 function canvaRedirectUri(requestUrl) {
   return process.env.CANVA_REDIRECT_URI || `${new URL(requestUrl).origin}/_api/canva/callback`;
@@ -58709,15 +58738,15 @@ __export(cleanup_POST_exports, {
 // helpers/storage.ts
 var import_client_s3 = __toESM(require_dist_cjs16());
 var import_s3_request_presigner = __toESM(require_dist_cjs17());
-var client = null;
+var client2 = null;
 function bucket() {
   const name = process.env.STORAGE_BUCKET;
   if (!name) throw new Error("STORAGE_BUCKET is not configured");
   return name;
 }
 function s3() {
-  if (!client) {
-    client = new import_client_s3.S3Client({
+  if (!client2) {
+    client2 = new import_client_s3.S3Client({
       region: process.env.AWS_REGION || "auto",
       endpoint: process.env.AWS_ENDPOINT_URL_S3,
       forcePathStyle: true,
@@ -58730,7 +58759,7 @@ function s3() {
       }
     });
   }
-  return client;
+  return client2;
 }
 async function upload(args) {
   try {
@@ -58962,7 +58991,7 @@ async function handle13(request) {
     const { user } = await getServerUserSession(request);
     const configured = canvaConfigured();
     const connected = configured ? await hasConnection(user.id) : false;
-    return new Response(SuperJSON.stringify({ configured, connected }), {
+    return new Response(SuperJSON.stringify({ configured, connected, missing: canvaMissingSettings() }), {
       headers: { "Content-Type": "application/json" }
     });
   } catch (error2) {
@@ -59202,7 +59231,7 @@ async function handle16(request) {
         slideCount: presentation.slideCount,
         autoAdvance: presentation.autoAdvance,
         // The column is constrained to these two values in the database.
-        globalTimerMode: presentation.globalTimerMode === "countdown" ? "countdown" : "elapsed",
+        globalTimerMode: presentation.globalTimerMode === "countdown" || presentation.globalTimerMode === "off" ? presentation.globalTimerMode : "elapsed",
         globalCountdownSeconds: presentation.globalCountdownSeconds,
         fileSizeBytes: toNum2(presentation.fileSizeBytes),
         audioUrl: presentationAudioUrl,
@@ -59561,12 +59590,13 @@ __export(update_timers_POST_exports, {
 });
 
 // endpoints/presentations/update_timers_POST.schema.ts
-var GLOBAL_TIMER_MODES = ["elapsed", "countdown"];
+var GLOBAL_TIMER_MODES = ["elapsed", "countdown", "off"];
 var MAX_GLOBAL_COUNTDOWN_SECONDS = 24 * 60 * 60;
 var schema15 = external_exports.object({
   presentationId: external_exports.string().min(1),
   autoAdvance: external_exports.boolean().optional(),
-  // "elapsed" counts up from zero; "countdown" counts down from a set time.
+  // "elapsed" counts up from zero; "countdown" counts down from a set time; "off" hides the
+  // presentation timer entirely (slide timers still run).
   globalTimerMode: external_exports.enum(GLOBAL_TIMER_MODES).optional(),
   globalCountdownSeconds: external_exports.number().int().min(0).max(MAX_GLOBAL_COUNTDOWN_SECONDS).optional(),
   slides: external_exports.array(
@@ -59831,6 +59861,7 @@ var routes = {
 };
 
 // server/index.ts
+var inFlight = 0;
 var index_default = {
   async fetch(request) {
     const incoming = new URL(request.url);
@@ -59852,6 +59883,7 @@ var index_default = {
       headers: request.headers,
       body: hasBody ? await request.arrayBuffer() : void 0
     });
+    inFlight++;
     try {
       return await route.handle(forwarded);
     } catch (error2) {
@@ -59860,6 +59892,9 @@ var index_default = {
         status: 500,
         headers: { "Content-Type": "application/json" }
       });
+    } finally {
+      inFlight--;
+      if (inFlight === 0) await closeDb();
     }
   }
 };

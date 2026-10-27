@@ -1,4 +1,9 @@
 import { routes } from "./_routes";
+import { closeDb } from "../helpers/db";
+
+// Requests currently being handled by this instance. When the last one finishes the
+// database pool is closed, so no idle connection is carried across a function freeze.
+let inFlight = 0;
 
 // vercel.json rewrites /_api/:path* -> /api/index?__path=:path*, so the browser
 // keeps calling /_api/... exactly as the original app did.
@@ -28,6 +33,7 @@ export default {
       body: hasBody ? await request.arrayBuffer() : undefined,
     });
 
+    inFlight++;
     try {
       return await route.handle(forwarded);
     } catch (error) {
@@ -36,6 +42,9 @@ export default {
         status: 500,
         headers: { "Content-Type": "application/json" },
       });
+    } finally {
+      inFlight--;
+      if (inFlight === 0) await closeDb();
     }
   },
 };
