@@ -12,6 +12,7 @@ import {
   Music,
   Upload,
   Bell,
+  Sparkles,
 } from "lucide-react";
 import { Button } from "../components/Button";
 import { Badge } from "../components/Badge";
@@ -44,6 +45,9 @@ import { presentationAdapters } from "../helpers/presentationAdapters";
 import type { SlideDetail } from "../endpoints/presentations/detail_GET.schema";
 import { MAX_GLOBAL_COUNTDOWN_SECONDS } from "../endpoints/presentations/update_timers_POST.schema";
 import { playAlertPreview } from "../helpers/alertSounds";
+import { rebuildSlides } from "../helpers/rebuildSlides";
+import { useQueryClient } from "@tanstack/react-query";
+import { presentationDetailKey, STORAGE_QUERY_KEY } from "../helpers/usePresentationQueries";
 import styles from "./presentations.$presentationId.edit.module.css";
 
 function formatDuration(totalSeconds: number): string {
@@ -59,6 +63,23 @@ export default function EditPresentationPage() {
   const navigate = useNavigate();
   const { data, isLoading, isError, error } = usePresentationDetail(presentationId);
   const updateTimers = useUpdateTimers(presentationId);
+  const queryClient = useQueryClient();
+  const [rebuilding, setRebuilding] = useState<{ done: number; total: number } | null>(null);
+
+  const handleRebuild = async () => {
+    if (!presentationId || rebuilding) return;
+    setRebuilding({ done: 0, total: 1 });
+    try {
+      const count = await rebuildSlides(presentationId, (done, total) => setRebuilding({ done, total }));
+      await queryClient.invalidateQueries({ queryKey: presentationDetailKey(presentationId) });
+      await queryClient.invalidateQueries({ queryKey: STORAGE_QUERY_KEY });
+      toast.success(`Rebuilt ${count} slides in high quality. Timers were kept.`);
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "Couldn't rebuild the slides.");
+    } finally {
+      setRebuilding(null);
+    }
+  };
 
   // Local working copy, seeded from the server and written back on save.
   const [slides, setSlides] = useState<SlideDetail[]>([]);
@@ -464,6 +485,13 @@ export default function EditPresentationPage() {
             {data.audioName ? "Replace music" : "Music for whole presentation"}
           </Button>
         </div>
+
+        <Button variant="outline" size="sm" disabled={rebuilding !== null} onClick={handleRebuild}>
+          {rebuilding ? <Spinner size="sm" /> : <Sparkles className={styles.toolbarIcon} />}
+          {rebuilding
+            ? `Rebuilding ${Math.min(rebuilding.done, rebuilding.total)}/${rebuilding.total}`
+            : "Rebuild slides in HD"}
+        </Button>
 
         {!selectMode ? (
           <Button variant="outline" size="sm" onClick={() => setSelectMode(true)}>

@@ -51,13 +51,11 @@
   position: relative;
   width: 100%;
   height: 100%;
-  perspective: 1600px;
 }
 
 .stage .slideImage {
   position: absolute;
   inset: 0;
-  backface-visibility: hidden;
 }
 
 .leaving {
@@ -90,12 +88,12 @@
   to   { opacity: 0; transform: scale(1.18); }
 }
 @keyframes enterFlip {
-  from { opacity: 0; transform: rotateY(calc(var(--dir) * 80deg)) scale(0.92); }
-  to   { opacity: 1; transform: rotateY(0) scale(1); }
+  from { opacity: 0; transform: perspective(1600px) rotateY(calc(var(--dir) * 80deg)) scale(0.92); }
+  to   { opacity: 1; transform: perspective(1600px) rotateY(0) scale(1); }
 }
 @keyframes leaveFlip {
-  from { opacity: 1; transform: rotateY(0) scale(1); }
-  to   { opacity: 0; transform: rotateY(calc(var(--dir) * -80deg)) scale(0.92); }
+  from { opacity: 1; transform: perspective(1600px) rotateY(0) scale(1); }
+  to   { opacity: 0; transform: perspective(1600px) rotateY(calc(var(--dir) * -80deg)) scale(0.92); }
 }
 @keyframes enterRise {
   from { opacity: 0; transform: translateY(calc(var(--dir) * 12%)); }
@@ -112,6 +110,7 @@
 .leave_fade  { animation: leaveFade 0.6s ease both; }
 .enter_zoom  { animation: enterZoom 0.6s cubic-bezier(0.22, 1, 0.36, 1) both; }
 .leave_zoom  { animation: leaveZoom 0.6s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.enter_flip, .leave_flip { backface-visibility: hidden; }
 .enter_flip  { animation: enterFlip 0.6s cubic-bezier(0.22, 1, 0.36, 1) both; }
 .leave_flip  { animation: leaveFlip 0.6s cubic-bezier(0.22, 1, 0.36, 1) both; }
 .enter_rise  { animation: enterRise 0.6s cubic-bezier(0.22, 1, 0.36, 1) both; }

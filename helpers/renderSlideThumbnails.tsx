@@ -6,8 +6,9 @@
 // Rendered wide enough to look sharp when a slide fills a large display,
 // not just as a small library thumbnail. The editor scales the same asset
 // down via CSS.
-const THUMBNAIL_WIDTH = 1600;
-const JPEG_QUALITY = 0.82;
+// 2400px wide at high JPEG quality keeps text crisp on full-screen and 4K displays.
+const THUMBNAIL_WIDTH = 2400;
+const JPEG_QUALITY = 0.92;
 
 export interface RenderedSlide {
   slideIndex: number;

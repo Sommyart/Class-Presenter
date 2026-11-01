@@ -540,7 +540,9 @@ export default function PresentPage() {
               src={currentSlide.thumbnailUrl}
               alt={`Slide ${state.currentSlideIndex + 1}`}
               className={`${styles.slideImage} ${
-                slideAnim.style && slideAnim.slideId === currentSlide.id
+                // Only while the transition runs. Once it ends the image has no
+                // transform or animation left, so the browser draws it pixel-sharp.
+                slideAnim.fromUrl && slideAnim.style && slideAnim.slideId === currentSlide.id
                   ? styles[`enter_${slideAnim.style}`]
                   : ""
               }`}

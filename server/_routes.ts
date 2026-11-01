@@ -18,13 +18,15 @@ import * as r14 from "../endpoints/presentations/delete_POST";
 import * as r15 from "../endpoints/presentations/detail_GET";
 import * as r16 from "../endpoints/presentations/list_GET";
 import * as r17 from "../endpoints/presentations/mark_presented_POST";
-import * as r18 from "../endpoints/presentations/set_presentation_audio_POST";
-import * as r19 from "../endpoints/presentations/set_slide_audio_POST";
-import * as r20 from "../endpoints/presentations/thumbnails_presign_POST";
-import * as r21 from "../endpoints/presentations/update_timers_POST";
-import * as r22 from "../endpoints/presentations/upload_complete_POST";
-import * as r23 from "../endpoints/presentations/upload_init_POST";
-import * as r24 from "../endpoints/storage/usage_GET";
+import * as r18 from "../endpoints/presentations/original_url_GET";
+import * as r19 from "../endpoints/presentations/rebuild_complete_POST";
+import * as r20 from "../endpoints/presentations/set_presentation_audio_POST";
+import * as r21 from "../endpoints/presentations/set_slide_audio_POST";
+import * as r22 from "../endpoints/presentations/thumbnails_presign_POST";
+import * as r23 from "../endpoints/presentations/update_timers_POST";
+import * as r24 from "../endpoints/presentations/upload_complete_POST";
+import * as r25 from "../endpoints/presentations/upload_init_POST";
+import * as r26 from "../endpoints/storage/usage_GET";
 
 export type Handler = { handle: (request: Request) => Promise<Response> };
 
@@ -47,11 +49,13 @@ export const routes: Record<string, Handler> = {
   "GET /presentations/detail": r15,
   "GET /presentations/list": r16,
   "POST /presentations/mark_presented": r17,
-  "POST /presentations/set_presentation_audio": r18,
-  "POST /presentations/set_slide_audio": r19,
-  "POST /presentations/thumbnails_presign": r20,
-  "POST /presentations/update_timers": r21,
-  "POST /presentations/upload_complete": r22,
-  "POST /presentations/upload_init": r23,
-  "GET /storage/usage": r24,
+  "GET /presentations/original_url": r18,
+  "POST /presentations/rebuild_complete": r19,
+  "POST /presentations/set_presentation_audio": r20,
+  "POST /presentations/set_slide_audio": r21,
+  "POST /presentations/thumbnails_presign": r22,
+  "POST /presentations/update_timers": r23,
+  "POST /presentations/upload_complete": r24,
+  "POST /presentations/upload_init": r25,
+  "GET /storage/usage": r26,
 };

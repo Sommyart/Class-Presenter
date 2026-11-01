@@ -12,7 +12,7 @@ export const schema = z.object({
         // Exact byte length of the rendered thumbnail. The presigned URL
         // pins Content-Length to this value, so it must match the bytes the
         // client actually PUTs or S3 rejects it with SignatureDoesNotMatch.
-        sizeBytes: z.number().int().positive().max(5 * 1024 * 1024),
+        sizeBytes: z.number().int().positive().max(8 * 1024 * 1024),
       }),
     )
     .min(1)

@@ -1264,8 +1264,8 @@ var init_Schema = __esm({
       namespace;
       traits;
       static assign(instance2, values2) {
-        const schema18 = Object.assign(instance2, values2);
-        return schema18;
+        const schema20 = Object.assign(instance2, values2);
+        return schema20;
       }
       static [Symbol.hasInstance](lhs) {
         const isPrototype = this.prototype.isPrototypeOf(lhs);
@@ -1457,12 +1457,12 @@ var init_NormalizedSchema = __esm({
         this.memberName = memberName;
         const traitStack = [];
         let _ref = ref;
-        let schema18 = ref;
+        let schema20 = ref;
         this._isMemberSchema = false;
         while (isMemberSchema(_ref)) {
           traitStack.push(_ref[1]);
           _ref = _ref[0];
-          schema18 = deref(_ref);
+          schema20 = deref(_ref);
           this._isMemberSchema = true;
         }
         if (traitStack.length > 0) {
@@ -1474,20 +1474,20 @@ var init_NormalizedSchema = __esm({
         } else {
           this.memberTraits = 0;
         }
-        if (schema18 instanceof _NormalizedSchema) {
+        if (schema20 instanceof _NormalizedSchema) {
           const computedMemberTraits = this.memberTraits;
-          Object.assign(this, schema18);
-          this.memberTraits = Object.assign({}, computedMemberTraits, schema18.getMemberTraits(), this.getMemberTraits());
+          Object.assign(this, schema20);
+          this.memberTraits = Object.assign({}, computedMemberTraits, schema20.getMemberTraits(), this.getMemberTraits());
           this.normalizedTraits = void 0;
-          this.memberName = memberName ?? schema18.memberName;
+          this.memberName = memberName ?? schema20.memberName;
           return;
         }
-        this.schema = deref(schema18);
+        this.schema = deref(schema20);
         if (isStaticSchema(this.schema)) {
           this.name = `${this.schema[1]}#${this.schema[2]}`;
           this.traits = this.schema[3];
         } else {
-          this.name = this.memberName ?? String(schema18);
+          this.name = this.memberName ?? String(schema20);
           this.traits = 0;
         }
         if (this._isMemberSchema && !memberName) {
@@ -1635,8 +1635,8 @@ var init_NormalizedSchema = __esm({
         if (!isDoc && !isMap2) {
           throw new Error(`@smithy/core/schema - cannot get key for non-map: ${this.getName(true)}`);
         }
-        const schema18 = this.getSchema();
-        const memberSchema = isDoc ? 15 : schema18[4] ?? 0;
+        const schema20 = this.getSchema();
+        const memberSchema = isDoc ? 15 : schema20[4] ?? 0;
         return member([memberSchema, 0], "key");
       }
       getValueSchema() {
@@ -1789,11 +1789,11 @@ var init_TypeRegistry = __esm({
           }
         }
       }
-      register(shapeId, schema18) {
+      register(shapeId, schema20) {
         const qualifiedName = this.normalizeShapeId(shapeId);
         for (const r5 of [this, _TypeRegistry.for(qualifiedName.split("#")[0])]) {
           if (!r5.schemas.has(qualifiedName)) {
-            r5.schemas.set(qualifiedName, schema18);
+            r5.schemas.set(qualifiedName, schema20);
           }
         }
       }
@@ -1803,9 +1803,9 @@ var init_TypeRegistry = __esm({
           if (!shapeId.includes("#")) {
             const suffix = "#" + shapeId;
             const candidates = [];
-            for (const [shapeId2, schema18] of this.schemas.entries()) {
+            for (const [shapeId2, schema20] of this.schemas.entries()) {
               if (shapeId2.endsWith(suffix)) {
-                candidates.push(schema18);
+                candidates.push(schema20);
               }
             }
             if (candidates.length === 1) {
@@ -1851,9 +1851,9 @@ var init_TypeRegistry = __esm({
         return void 0;
       }
       find(predicate) {
-        for (const schema18 of this.schemas.values()) {
-          if (predicate(schema18)) {
-            return schema18;
+        for (const schema20 of this.schemas.values()) {
+          if (predicate(schema20)) {
+            return schema20;
           }
         }
         return void 0;
@@ -1923,11 +1923,11 @@ var init_schema = __esm({
 });
 
 // node_modules/@smithy/core/dist-es/submodules/client/smithy-client/schemaLogFilter.js
-function schemaLogFilter(schema18, data) {
+function schemaLogFilter(schema20, data) {
   if (data == null) {
     return data;
   }
-  const ns = NormalizedSchema.of(schema18);
+  const ns = NormalizedSchema.of(schema20);
   if (ns.getMergedTraits().sensitive) {
     return SENSITIVE_STRING;
   }
@@ -2004,14 +2004,14 @@ var init_command = __esm({
           delete requestOptions.metricsRecorder;
         }
         let isEventStream;
-        const schema18 = this.schema;
-        const marker = schema18?.[operationEventStreamMarker];
+        const schema20 = this.schema;
+        const marker = schema20?.[operationEventStreamMarker];
         if (marker !== void 0) {
           isEventStream = marker;
-        } else if (schema18) {
-          if (Array.isArray(schema18) && schema18[0] === 9) {
-            const [, , , , input$, output$] = schema18;
-            isEventStream = schema18[operationEventStreamMarker] = Boolean(NormalizedSchema.of(input$).getEventStreamMember() || NormalizedSchema.of(output$).getEventStreamMember());
+        } else if (schema20) {
+          if (Array.isArray(schema20) && schema20[0] === 9) {
+            const [, , , , input$, output$] = schema20;
+            isEventStream = schema20[operationEventStreamMarker] = Boolean(NormalizedSchema.of(input$).getEventStreamMember() || NormalizedSchema.of(output$).getEventStreamMember());
           }
         }
         if (isEventStream) {
@@ -9081,24 +9081,24 @@ var init_HttpProtocol = __esm({
       }
       resolveError(name, namespaces, registries) {
         const defaultErrorSchema = [-3, "", "Error", 0, [], [], 0];
-        let schema18;
+        let schema20;
         for (const registry of registries) {
           for (const ns of namespaces) {
             try {
               if (ns === "*") {
-                schema18 = registry.getSchema(name);
+                schema20 = registry.getSchema(name);
               } else {
-                schema18 = registry.getSchema(ns + "#" + name);
+                schema20 = registry.getSchema(ns + "#" + name);
               }
-              const errorCtor = registry.getErrorCtor(schema18);
+              const errorCtor = registry.getErrorCtor(schema20);
               if (errorCtor) {
-                return [schema18, errorCtor, "modeled"];
+                return [schema20, errorCtor, "modeled"];
               } else {
                 const syntheticErrorSchema = registry.getBaseException();
                 if (syntheticErrorSchema) {
                   const syntheticErrorCtor = registry.getErrorCtor(syntheticErrorSchema);
                   if (syntheticErrorCtor) {
-                    return [schema18, syntheticErrorCtor, "synthetic"];
+                    return [schema20, syntheticErrorCtor, "synthetic"];
                   }
                 }
               }
@@ -9148,8 +9148,8 @@ var init_HttpProtocol = __esm({
       getDefaultContentType() {
         throw new Error(`@smithy/core/protocols - ${this.constructor.name} getDefaultContentType() implementation missing.`);
       }
-      async deserializeHttpMessage(schema18, context, response, arg4, arg5) {
-        void schema18;
+      async deserializeHttpMessage(schema20, context, response, arg4, arg5) {
+        void schema20;
         void context;
         void response;
         void arg4;
@@ -9379,7 +9379,7 @@ var init_HttpBindingProtocol = __esm({
         dataObject.$metadata = this.deserializeMetadata(response);
         return dataObject;
       }
-      async deserializeHttpMessage(schema18, context, response, arg4, arg5) {
+      async deserializeHttpMessage(schema20, context, response, arg4, arg5) {
         let dataObject;
         if (arg4 instanceof Set) {
           dataObject = arg5;
@@ -9388,7 +9388,7 @@ var init_HttpBindingProtocol = __esm({
         }
         let discardResponseBody = true;
         const deserializer = this.deserializer;
-        const ns = NormalizedSchema.of(schema18);
+        const ns = NormalizedSchema.of(schema20);
         const nonHttpBindingMembers = [];
         for (const [memberName, memberSchema] of ns.structIterator()) {
           const memberTraits = memberSchema.getMemberTraits();
@@ -9474,7 +9474,7 @@ var init_RpcProtocol = __esm({
         const headers = {};
         const endpoint = await context.endpoint();
         const ns = NormalizedSchema.of(operationSchema?.input);
-        const schema18 = ns.getSchema();
+        const schema20 = ns.getSchema();
         let payload;
         const input = _input && typeof _input === "object" ? _input : {};
         const request = new HttpRequest({
@@ -9508,7 +9508,7 @@ var init_RpcProtocol = __esm({
               });
             }
           } else {
-            serializer.write(schema18, input);
+            serializer.write(schema20, input);
             payload = serializer.flush();
           }
         }
@@ -9761,8 +9761,8 @@ var init_HttpInterceptingShapeDeserializer = __esm({
         this.codecDeserializer.setSerdeContext(serdeContext);
         this.serdeContext = serdeContext;
       }
-      read(schema18, data) {
-        const ns = NormalizedSchema.of(schema18);
+      read(schema20, data) {
+        const ns = NormalizedSchema.of(schema20);
         const traits = ns.getMergedTraits();
         const toString = this.serdeContext?.utf8Encoder ?? toUtf8;
         if (traits.httpHeader || traits.httpResponseCode) {
@@ -9803,8 +9803,8 @@ var init_ToStringShapeSerializer = __esm({
         super();
         this.settings = settings;
       }
-      write(schema18, value) {
-        const ns = NormalizedSchema.of(schema18);
+      write(schema20, value) {
+        const ns = NormalizedSchema.of(schema20);
         switch (typeof value) {
           case "object":
             if (value === null) {
@@ -9902,8 +9902,8 @@ var init_HttpInterceptingShapeSerializer = __esm({
         this.codecSerializer.setSerdeContext(serdeContext);
         this.stringSerializer.setSerdeContext(serdeContext);
       }
-      write(schema18, value) {
-        const ns = NormalizedSchema.of(schema18);
+      write(schema20, value) {
+        const ns = NormalizedSchema.of(schema20);
         const traits = ns.getMergedTraits();
         if (traits.httpHeader || traits.httpLabel || traits.httpQuery) {
           this.stringSerializer.write(ns, value);
@@ -10292,8 +10292,8 @@ var init_jsonReviver = __esm({
 });
 
 // node_modules/@smithy/core/dist-es/submodules/protocols/json/needsReviver.js
-function needsReviver(schema18) {
-  const ns = NormalizedSchema.of(schema18);
+function needsReviver(schema20) {
+  const ns = NormalizedSchema.of(schema20);
   const raw = ns.getSchema();
   if (Array.isArray(raw) && ns.isStructSchema()) {
     if (REVIVER_SYMBOL in raw) {
@@ -10348,7 +10348,7 @@ var init_common = __esm({
 });
 
 // node_modules/@smithy/core/dist-es/submodules/protocols/json/parseJsonBody.js
-async function parseJsonBody(streamBody, context, schema18) {
+async function parseJsonBody(streamBody, context, schema20) {
   let parsingInput;
   if (detectBufferParsing() && typeof streamBody?.[Symbol.asyncIterator] === "function") {
     const buffer2 = await collectBody(streamBody, context);
@@ -10366,7 +10366,7 @@ async function parseJsonBody(streamBody, context, schema18) {
   if (parsingInput.length === 0) {
     return {};
   }
-  const reviver = schema18 && needsReviver(schema18) ? jsonReviver : void 0;
+  const reviver = schema20 && needsReviver(schema20) ? jsonReviver : void 0;
   try {
     return JSON.parse(parsingInput, reviver);
   } catch (e5) {
@@ -10486,8 +10486,8 @@ var init_JsonShapeDeserializer2 = __esm({
         super();
         this.settings = settings;
       }
-      async read(schema18, data) {
-        const reviver = needsReviver(schema18) ? jsonReviver : void 0;
+      async read(schema20, data) {
+        const reviver = needsReviver(schema20) ? jsonReviver : void 0;
         let parsed;
         if (typeof data === "string") {
           if (data.length === 0) {
@@ -10501,16 +10501,16 @@ var init_JsonShapeDeserializer2 = __esm({
           const buf = Buffer.isBuffer(data) ? data : Buffer.from(data.buffer, data.byteOffset, data.byteLength);
           parsed = JSON.parse(buf, reviver);
         } else {
-          parsed = await parseJsonBody(data, this.serdeContext, schema18);
+          parsed = await parseJsonBody(data, this.serdeContext, schema20);
         }
-        return this._read(schema18, parsed);
+        return this._read(schema20, parsed);
       }
-      readObject(schema18, data) {
-        return this._read(schema18, data);
+      readObject(schema20, data) {
+        return this._read(schema20, data);
       }
-      _read(schema18, value) {
+      _read(schema20, value) {
         const isObject3 = value !== null && typeof value === "object";
-        const ns = NormalizedSchema.of(schema18);
+        const ns = NormalizedSchema.of(schema20);
         if (isObject3) {
           if (ns.isStructSchema()) {
             return this._readStruct(ns, value);
@@ -10835,18 +10835,18 @@ var init_JsonShapeSerializer2 = __esm({
         this.settings = settings;
         this.json = alloc(INITIAL_BUFFER_SIZE);
       }
-      write(schema18, value) {
+      write(schema20, value) {
         this.i = 0;
         this.rawValue = value;
-        this.rootSchema = NormalizedSchema.of(schema18);
+        this.rootSchema = NormalizedSchema.of(schema20);
         this.passthrough = this.rootSchema.isBlobSchema() || this.rootSchema.isStringSchema();
         if (!this.passthrough) {
           this.writeValue(this.rootSchema, value, void 0);
         }
       }
-      writeDiscriminatedDocument(schema18, value) {
+      writeDiscriminatedDocument(schema20, value) {
         this.i = 0;
-        this.rootSchema = NormalizedSchema.of(schema18);
+        this.rootSchema = NormalizedSchema.of(schema20);
         const ns = this.rootSchema;
         if (ns.isStructSchema() && value != null && typeof value === "object") {
           this.writeValue(ns, value, void 0);
@@ -11008,11 +11008,11 @@ var init_JsonShapeSerializer2 = __esm({
         json2[i5++] = QUOTE;
         this.i = i5;
       }
-      writeValue(schema18, value, container) {
+      writeValue(schema20, value, container) {
         if (value == null) {
           if (container?.isStructSchema()) {
             if (value === void 0) {
-              const ns2 = NormalizedSchema.of(schema18);
+              const ns2 = NormalizedSchema.of(schema20);
               if (ns2.isIdempotencyToken()) {
                 this.writeAsciiQuoted(generateIdempotencyToken());
                 return;
@@ -11025,7 +11025,7 @@ var init_JsonShapeSerializer2 = __esm({
           this.i += 4;
           return;
         }
-        const ns = NormalizedSchema.of(schema18);
+        const ns = NormalizedSchema.of(schema20);
         const isObject3 = typeof value === "object";
         if (ns.isStringSchema()) {
           const mediaType = ns.getMergedTraits().mediaType;
@@ -11459,16 +11459,16 @@ var init_JsonShapeDeserializer = __esm({
         super();
         this.settings = settings;
       }
-      async read(schema18, data) {
-        const reviver = needsReviver(schema18) ? jsonReviver : void 0;
-        return this._read(schema18, typeof data === "string" ? JSON.parse(data, reviver) : await parseJsonBody(data, this.serdeContext, schema18));
+      async read(schema20, data) {
+        const reviver = needsReviver(schema20) ? jsonReviver : void 0;
+        return this._read(schema20, typeof data === "string" ? JSON.parse(data, reviver) : await parseJsonBody(data, this.serdeContext, schema20));
       }
-      readObject(schema18, data) {
-        return this._read(schema18, data);
+      readObject(schema20, data) {
+        return this._read(schema20, data);
       }
-      _read(schema18, value) {
+      _read(schema20, value) {
         const isObject3 = value !== null && typeof value === "object";
-        const ns = NormalizedSchema.of(schema18);
+        const ns = NormalizedSchema.of(schema20);
         if (isObject3) {
           if (ns.isStructSchema()) {
             const record = value;
@@ -11682,8 +11682,8 @@ var init_JsonShapeSerializer = __esm({
         super();
         this.settings = settings;
       }
-      write(schema18, value) {
-        this.rootSchema = NormalizedSchema.of(schema18);
+      write(schema20, value) {
+        this.rootSchema = NormalizedSchema.of(schema20);
         this.buffer = this._write(this.rootSchema, value);
       }
       flush() {
@@ -11699,15 +11699,15 @@ var init_JsonShapeSerializer = __esm({
         }
         return this.buffer;
       }
-      writeDiscriminatedDocument(schema18, value) {
-        this.write(schema18, value);
+      writeDiscriminatedDocument(schema20, value) {
+        this.write(schema20, value);
         if (typeof this.buffer === "object") {
-          this.buffer.__type = NormalizedSchema.of(schema18).getName(true);
+          this.buffer.__type = NormalizedSchema.of(schema20).getName(true);
         }
       }
-      _write(schema18, value, container) {
+      _write(schema20, value, container) {
         const isObject3 = value !== null && typeof value === "object";
-        const ns = NormalizedSchema.of(schema18);
+        const ns = NormalizedSchema.of(schema20);
         if (isObject3) {
           if (ns.isStructSchema()) {
             const record = value;
@@ -17757,7 +17757,7 @@ var init_ProtocolLib = __esm({
         try {
           return registry.getSchema(errorName);
         } catch (e5) {
-          return registry.find((schema18) => NormalizedSchema.of(schema18).getMergedTraits().awsQueryError?.[0] === errorName);
+          return registry.find((schema20) => NormalizedSchema.of(schema20).getMergedTraits().awsQueryError?.[0] === errorName);
         }
       }
     };
@@ -18294,8 +18294,8 @@ var init_XmlShapeDeserializer = __esm({
         this.serdeContext = serdeContext;
         this.stringDeserializer.setSerdeContext(serdeContext);
       }
-      read(schema18, bytes, key2) {
-        const ns = NormalizedSchema.of(schema18);
+      read(schema20, bytes, key2) {
+        const ns = NormalizedSchema.of(schema20);
         const memberSchemas = ns.getMemberSchemas();
         const isEventPayload = ns.isStructSchema() && ns.isMemberSchema() && !!Object.values(memberSchemas).find((memberNs) => {
           return !!memberNs.getMemberTraits().eventPayload;
@@ -18313,7 +18313,7 @@ var init_XmlShapeDeserializer = __esm({
         }
         const xmlString = (this.serdeContext?.utf8Encoder ?? toUtf8)(bytes);
         const parsedObject = this.parseXml(xmlString);
-        return this.readSchema(schema18, key2 ? parsedObject[key2] : parsedObject);
+        return this.readSchema(schema20, key2 ? parsedObject[key2] : parsedObject);
       }
       readSchema(_schema, value) {
         const ns = NormalizedSchema.of(_schema);
@@ -18443,11 +18443,11 @@ var init_QueryShapeSerializer = __esm({
         super();
         this.settings = settings;
       }
-      write(schema18, value, prefix = "") {
+      write(schema20, value, prefix = "") {
         if (this.buffer === void 0) {
           this.buffer = "";
         }
-        const ns = NormalizedSchema.of(schema18);
+        const ns = NormalizedSchema.of(schema20);
         if (prefix && !prefix.endsWith(".")) {
           prefix += ".";
         }
@@ -18784,8 +18784,8 @@ var init_XmlShapeSerializer = __esm({
         super();
         this.settings = settings;
       }
-      write(schema18, value) {
-        const ns = NormalizedSchema.of(schema18);
+      write(schema20, value) {
+        const ns = NormalizedSchema.of(schema20);
         if (ns.isStringSchema() && typeof value === "string") {
           this.stringBuffer = value;
         } else if (ns.isBlobSchema()) {
@@ -36985,10 +36985,10 @@ var CreateSchemaNode = freeze({
   is(node) {
     return node.kind === "CreateSchemaNode";
   },
-  create(schema18, params) {
+  create(schema20, params) {
     return freeze({
       kind: "CreateSchemaNode",
-      schema: IdentifierNode.create(schema18),
+      schema: IdentifierNode.create(schema20),
       ...params
     });
   },
@@ -37056,10 +37056,10 @@ var SchemableIdentifierNode = freeze({
       identifier: IdentifierNode.create(identifier)
     });
   },
-  createWithSchema(schema18, identifier) {
+  createWithSchema(schema20, identifier) {
     return freeze({
       kind: "SchemableIdentifierNode",
-      schema: IdentifierNode.create(schema18),
+      schema: IdentifierNode.create(schema20),
       identifier: IdentifierNode.create(identifier)
     });
   }
@@ -37090,10 +37090,10 @@ var DropSchemaNode = freeze({
   is(node) {
     return node.kind === "DropSchemaNode";
   },
-  create(schema18, params) {
+  create(schema20, params) {
     return freeze({
       kind: "DropSchemaNode",
-      schema: IdentifierNode.create(schema18),
+      schema: IdentifierNode.create(schema20),
       ...params
     });
   },
@@ -37150,10 +37150,10 @@ var TableNode = freeze({
       table: SchemableIdentifierNode.create(table2)
     });
   },
-  createWithSchema(schema18, table2) {
+  createWithSchema(schema20, table2) {
     return freeze({
       kind: "TableNode",
-      table: SchemableIdentifierNode.createWithSchema(schema18, table2)
+      table: SchemableIdentifierNode.createWithSchema(schema20, table2)
     });
   }
 });
@@ -37656,8 +37656,8 @@ function parseOrderedColumnName(column) {
   }
 }
 function parseStringReferenceWithTableAndSchema(parts) {
-  const [schema18, table2, column] = parts;
-  return ReferenceNode.create(ColumnNode.create(column), TableNode.createWithSchema(schema18, table2));
+  const [schema20, table2, column] = parts;
+  return ReferenceNode.create(ColumnNode.create(column), TableNode.createWithSchema(schema20, table2));
 }
 function parseStringReferenceWithTable(parts) {
   const [table2, column] = parts;
@@ -41092,9 +41092,9 @@ var WithSchemaTransformer = class extends OperationNodeTransformer {
   #schema;
   #schemableIds = /* @__PURE__ */ new Set();
   #ctes = /* @__PURE__ */ new Set();
-  constructor(schema18) {
+  constructor(schema20) {
     super();
-    this.#schema = schema18;
+    this.#schema = schema20;
   }
   transformNodeImpl(node) {
     if (!this.#isRootOperationNode(node)) {
@@ -41195,8 +41195,8 @@ var WithSchemaTransformer = class extends OperationNodeTransformer {
 // node_modules/kysely/dist/esm/plugin/with-schema/with-schema-plugin.js
 var WithSchemaPlugin = class {
   #transformer;
-  constructor(schema18) {
-    this.#transformer = new WithSchemaTransformer(schema18);
+  constructor(schema20) {
+    this.#transformer = new WithSchemaTransformer(schema20);
   }
   transformQuery(args) {
     return this.#transformer.transformNode(args.node);
@@ -41465,10 +41465,10 @@ var QueryCreator = class _QueryCreator {
    * select "p"."name" from "mammals"."pet" as "p"
    * ```
    */
-  withSchema(schema18) {
+  withSchema(schema20) {
     return new _QueryCreator({
       ...this.#props,
-      executor: this.#props.executor.withPluginAtFront(new WithSchemaPlugin(schema18))
+      executor: this.#props.executor.withPluginAtFront(new WithSchemaPlugin(schema20))
     });
   }
 };
@@ -42846,8 +42846,8 @@ function createExpressionBuilder(executor = NOOP_QUERY_EXECUTOR) {
         return new ExpressionWrapper(ParensNode.create(node));
       }
     },
-    withSchema(schema18) {
-      return createExpressionBuilder(executor.withPluginAtFront(new WithSchemaPlugin(schema18)));
+    withSchema(schema20) {
+      return createExpressionBuilder(executor.withPluginAtFront(new WithSchemaPlugin(schema20)));
     }
   });
   eb.fn = createFunctionModule();
@@ -42906,8 +42906,8 @@ function parseAliasedTable(from) {
 function parseTable(from) {
   const SCHEMA_SEPARATOR = ".";
   if (from.includes(SCHEMA_SEPARATOR)) {
-    const [schema18, table2] = from.split(SCHEMA_SEPARATOR).map(trim2);
-    return TableNode.createWithSchema(schema18, table2);
+    const [schema20, table2] = from.split(SCHEMA_SEPARATOR).map(trim2);
+    return TableNode.createWithSchema(schema20, table2);
   } else {
     return TableNode.create(from);
   }
@@ -44946,11 +44946,11 @@ var SchemaModule = class _SchemaModule {
    *   .execute()
    * ```
    */
-  createSchema(schema18) {
+  createSchema(schema20) {
     return new CreateSchemaBuilder({
       queryId: createQueryId(),
       executor: this.#executor,
-      node: CreateSchemaNode.create(schema18)
+      node: CreateSchemaNode.create(schema20)
     });
   }
   /**
@@ -44964,11 +44964,11 @@ var SchemaModule = class _SchemaModule {
    *   .execute()
    * ```
    */
-  dropSchema(schema18) {
+  dropSchema(schema20) {
     return new DropSchemaBuilder({
       queryId: createQueryId(),
       executor: this.#executor,
-      node: DropSchemaNode.create(schema18)
+      node: DropSchemaNode.create(schema20)
     });
   }
   /**
@@ -45086,8 +45086,8 @@ var SchemaModule = class _SchemaModule {
   /**
    * See {@link QueryCreator.withSchema}
    */
-  withSchema(schema18) {
-    return new _SchemaModule(this.#executor.withPluginAtFront(new WithSchemaPlugin(schema18)));
+  withSchema(schema20) {
+    return new _SchemaModule(this.#executor.withPluginAtFront(new WithSchemaPlugin(schema20)));
   }
 };
 
@@ -45622,10 +45622,10 @@ var Kysely = class _Kysely extends QueryCreator {
   /**
    * @override
    */
-  withSchema(schema18) {
+  withSchema(schema20) {
     return new _Kysely({
       ...this.#props,
-      executor: this.#props.executor.withPluginAtFront(new WithSchemaPlugin(schema18))
+      executor: this.#props.executor.withPluginAtFront(new WithSchemaPlugin(schema20))
     });
   }
   /**
@@ -45731,10 +45731,10 @@ var Transaction = class _Transaction extends Kysely {
   /**
    * @override
    */
-  withSchema(schema18) {
+  withSchema(schema20) {
     return new _Transaction({
       ...this.#props,
-      executor: this.#props.executor.withPluginAtFront(new WithSchemaPlugin(schema18))
+      executor: this.#props.executor.withPluginAtFront(new WithSchemaPlugin(schema20))
     });
   }
   withTables() {
@@ -48506,7 +48506,7 @@ function Connection(options, queues = {}, { onopen = noop2, onend = noop2, onclo
         break;
       }
       try {
-        handle26(incoming.subarray(0, length + 1));
+        handle28(incoming.subarray(0, length + 1));
       } catch (e5) {
         query && (query.cursorFn || query.describeFirst) && write(Sync);
         errored(e5);
@@ -48613,7 +48613,7 @@ function Connection(options, queues = {}, { onopen = noop2, onend = noop2, onclo
     delay = (typeof backoff2 === "function" ? backoff2(options.shared.retries) : backoff2) * 1e3;
     onclose(connection2, Errors.connection("CONNECTION_CLOSED", options, socket));
   }
-  function handle26(xs, x = xs[0]) {
+  function handle28(xs, x = xs[0]) {
     (x === 68 ? DataRow : (
       // D
       x === 100 ? CopyData : (
@@ -49199,13 +49199,13 @@ function Subscribe(postgres2, options) {
     }
     function data(x2) {
       if (x2[0] === 119) {
-        parse(x2.subarray(25), state3, sql3.options.parsers, handle26, options.transform);
+        parse(x2.subarray(25), state3, sql3.options.parsers, handle28, options.transform);
       } else if (x2[0] === 107 && x2[17]) {
         state3.lsn = x2.subarray(1, 9);
         pong();
       }
     }
-    function handle26(a5, b6) {
+    function handle28(a5, b6) {
       const path = b6.relation.schema + "." + b6.relation.table;
       call("*", a5, b6);
       call("*:" + path, a5, b6);
@@ -49229,7 +49229,7 @@ function Subscribe(postgres2, options) {
 function Time(x) {
   return new Date(Date.UTC(2e3, 0, 1) + Number(x / BigInt(1e3)));
 }
-function parse(x, state2, parsers2, handle26, transform) {
+function parse(x, state2, parsers2, handle28, transform) {
   const char = (acc, [k5, v]) => (acc[k5.charCodeAt(0)] = v, acc);
   Object.entries({
     R: (x2) => {
@@ -49268,7 +49268,7 @@ function parse(x, state2, parsers2, handle26, transform) {
       let i5 = 1;
       const relation = state2[x2.readUInt32BE(i5)];
       const { row } = tuples(x2, relation.columns, i5 += 7, transform);
-      handle26(row, {
+      handle28(row, {
         command: "insert",
         relation
       });
@@ -49278,7 +49278,7 @@ function parse(x, state2, parsers2, handle26, transform) {
       const relation = state2[x2.readUInt32BE(i5)];
       i5 += 4;
       const key2 = x2[i5] === 75;
-      handle26(
+      handle28(
         key2 || x2[i5] === 79 ? tuples(x2, relation.columns, i5 += 3, transform).row : null,
         {
           command: "delete",
@@ -49295,7 +49295,7 @@ function parse(x, state2, parsers2, handle26, transform) {
       const xs = key2 || x2[i5] === 79 ? tuples(x2, relation.columns, i5 += 3, transform) : null;
       xs && (i5 = xs.i);
       const { row } = tuples(x2, relation.columns, i5 + 3, transform);
-      handle26(row, {
+      handle28(row, {
         command: "update",
         relation,
         key: key2,
@@ -52173,9 +52173,9 @@ var ZodArray = class _ZodArray extends ZodType {
     return this.min(1, message2);
   }
 };
-ZodArray.create = (schema18, params) => {
+ZodArray.create = (schema20, params) => {
   return new ZodArray({
-    type: schema18,
+    type: schema20,
     minLength: null,
     maxLength: null,
     exactLength: null,
@@ -52183,30 +52183,30 @@ ZodArray.create = (schema18, params) => {
     ...processCreateParams(params)
   });
 };
-function deepPartialify(schema18) {
-  if (schema18 instanceof ZodObject) {
+function deepPartialify(schema20) {
+  if (schema20 instanceof ZodObject) {
     const newShape = {};
-    for (const key2 in schema18.shape) {
-      const fieldSchema = schema18.shape[key2];
+    for (const key2 in schema20.shape) {
+      const fieldSchema = schema20.shape[key2];
       newShape[key2] = ZodOptional.create(deepPartialify(fieldSchema));
     }
     return new ZodObject({
-      ...schema18._def,
+      ...schema20._def,
       shape: () => newShape
     });
-  } else if (schema18 instanceof ZodArray) {
+  } else if (schema20 instanceof ZodArray) {
     return new ZodArray({
-      ...schema18._def,
-      type: deepPartialify(schema18.element)
+      ...schema20._def,
+      type: deepPartialify(schema20.element)
     });
-  } else if (schema18 instanceof ZodOptional) {
-    return ZodOptional.create(deepPartialify(schema18.unwrap()));
-  } else if (schema18 instanceof ZodNullable) {
-    return ZodNullable.create(deepPartialify(schema18.unwrap()));
-  } else if (schema18 instanceof ZodTuple) {
-    return ZodTuple.create(schema18.items.map((item) => deepPartialify(item)));
+  } else if (schema20 instanceof ZodOptional) {
+    return ZodOptional.create(deepPartialify(schema20.unwrap()));
+  } else if (schema20 instanceof ZodNullable) {
+    return ZodNullable.create(deepPartialify(schema20.unwrap()));
+  } else if (schema20 instanceof ZodTuple) {
+    return ZodTuple.create(schema20.items.map((item) => deepPartialify(item)));
   } else {
-    return schema18;
+    return schema20;
   }
 }
 var ZodObject = class _ZodObject extends ZodType {
@@ -52422,8 +52422,8 @@ var ZodObject = class _ZodObject extends ZodType {
   //   }) as any;
   //   return merged;
   // }
-  setKey(key2, schema18) {
-    return this.augment({ [key2]: schema18 });
+  setKey(key2, schema20) {
+    return this.augment({ [key2]: schema20 });
   }
   // merge<Incoming extends AnyZodObject>(
   //   merging: Incoming
@@ -52869,10 +52869,10 @@ var ZodTuple = class _ZodTuple extends ZodType {
       status.dirty();
     }
     const items = [...ctx.data].map((item, itemIndex) => {
-      const schema18 = this._def.items[itemIndex] || this._def.rest;
-      if (!schema18)
+      const schema20 = this._def.items[itemIndex] || this._def.rest;
+      if (!schema20)
         return null;
-      return schema18._parse(new ParseInputLazyPath(ctx, item, ctx.path, itemIndex));
+      return schema20._parse(new ParseInputLazyPath(ctx, item, ctx.path, itemIndex));
     }).filter((x) => !!x);
     if (ctx.common.async) {
       return Promise.all(items).then((results) => {
@@ -53386,9 +53386,9 @@ var ZodPromise = class extends ZodType {
     }));
   }
 };
-ZodPromise.create = (schema18, params) => {
+ZodPromise.create = (schema20, params) => {
   return new ZodPromise({
-    type: schema18,
+    type: schema20,
     typeName: ZodFirstPartyTypeKind.ZodPromise,
     ...processCreateParams(params)
   });
@@ -53516,17 +53516,17 @@ var ZodEffects = class extends ZodType {
     util.assertNever(effect);
   }
 };
-ZodEffects.create = (schema18, effect, params) => {
+ZodEffects.create = (schema20, effect, params) => {
   return new ZodEffects({
-    schema: schema18,
+    schema: schema20,
     typeName: ZodFirstPartyTypeKind.ZodEffects,
     effect,
     ...processCreateParams(params)
   });
 };
-ZodEffects.createWithPreprocess = (preprocess, schema18, params) => {
+ZodEffects.createWithPreprocess = (preprocess, schema20, params) => {
   return new ZodEffects({
-    schema: schema18,
+    schema: schema20,
     effect: { type: "preprocess", transform: preprocess },
     typeName: ZodFirstPartyTypeKind.ZodEffects,
     ...processCreateParams(params)
@@ -59373,14 +59373,111 @@ async function handle18(request) {
   }
 }
 
-// endpoints/presentations/set_presentation_audio_POST.ts
-var set_presentation_audio_POST_exports = {};
-__export(set_presentation_audio_POST_exports, {
+// endpoints/presentations/original_url_GET.ts
+var original_url_GET_exports = {};
+__export(original_url_GET_exports, {
   handle: () => handle19
 });
 
+// endpoints/presentations/original_url_GET.schema.ts
+var schema12 = external_exports.object({ presentationId: external_exports.string().min(1) });
+
+// endpoints/presentations/original_url_GET.ts
+async function handle19(request) {
+  try {
+    const { user } = await getServerUserSession(request);
+    const url = new URL(request.url);
+    const input = schema12.parse({ presentationId: url.searchParams.get("presentationId") ?? "" });
+    const p3 = await db.selectFrom("presentations").select(["userId", "sourceType", "storagePath", "originalFileName", "slideCount"]).where("id", "=", input.presentationId).executeTakeFirst();
+    if (!p3 || p3.userId !== user.id) {
+      return new Response(SuperJSON.stringify({ error: "Presentation not found" }), {
+        status: 404,
+        headers: { "Content-Type": "application/json" }
+      });
+    }
+    if (p3.sourceType !== "pdf" && p3.sourceType !== "pptx" || !p3.storagePath) {
+      return new Response(
+        SuperJSON.stringify({ error: "This presentation has no original file to rebuild from." }),
+        { status: 400, headers: { "Content-Type": "application/json" } }
+      );
+    }
+    const signed = await getUrl({ visibility: "private", filename: p3.storagePath, expiresInSeconds: 900 });
+    if (!signed.ok) {
+      return new Response(SuperJSON.stringify({ error: "Couldn't open the original file." }), {
+        status: 400,
+        headers: { "Content-Type": "application/json" }
+      });
+    }
+    return new Response(
+      SuperJSON.stringify({
+        url: signed.url,
+        sourceType: p3.sourceType,
+        originalFileName: p3.originalFileName,
+        slideCount: p3.slideCount
+      }),
+      { headers: { "Content-Type": "application/json" } }
+    );
+  } catch (error2) {
+    const message2 = error2 instanceof Error ? error2.message : "Failed";
+    return new Response(SuperJSON.stringify({ error: message2 }), {
+      status: message2.toLowerCase().includes("not authenticated") ? 401 : 400,
+      headers: { "Content-Type": "application/json" }
+    });
+  }
+}
+
+// endpoints/presentations/rebuild_complete_POST.ts
+var rebuild_complete_POST_exports = {};
+__export(rebuild_complete_POST_exports, {
+  handle: () => handle20
+});
+
+// endpoints/presentations/rebuild_complete_POST.schema.ts
+var schema13 = external_exports.object({
+  presentationId: external_exports.string().min(1),
+  slides: external_exports.array(external_exports.object({ slideIndex: external_exports.number().int().min(0), thumbnailSizeBytes: external_exports.number().int().positive() })).min(1).max(500)
+});
+
+// endpoints/presentations/rebuild_complete_POST.ts
+async function handle20(request) {
+  try {
+    const { user } = await getServerUserSession(request);
+    const input = schema13.parse(SuperJSON.parse(await request.text()));
+    const p3 = await db.selectFrom("presentations").select(["id", "userId"]).where("id", "=", input.presentationId).executeTakeFirst();
+    if (!p3 || p3.userId !== user.id) {
+      return new Response(SuperJSON.stringify({ error: "Presentation not found" }), {
+        status: 404,
+        headers: { "Content-Type": "application/json" }
+      });
+    }
+    let updated = 0;
+    await db.transaction().execute(async (trx) => {
+      for (const s2 of input.slides) {
+        const r5 = await trx.updateTable("slides").set({ thumbnailSizeBytes: s2.thumbnailSizeBytes, updatedAt: /* @__PURE__ */ new Date() }).where("presentationId", "=", input.presentationId).where("slideIndex", "=", s2.slideIndex).executeTakeFirst();
+        updated += Number(r5.numUpdatedRows ?? 0);
+      }
+    });
+    await reconcileUserStorage(user.id);
+    return new Response(SuperJSON.stringify({ updated }), {
+      headers: { "Content-Type": "application/json" }
+    });
+  } catch (error2) {
+    const message2 = error2 instanceof Error ? error2.message : "Failed";
+    return new Response(SuperJSON.stringify({ error: message2 }), {
+      status: message2.toLowerCase().includes("not authenticated") ? 401 : 400,
+      headers: { "Content-Type": "application/json" }
+    });
+  }
+}
+
+// endpoints/presentations/set_presentation_audio_POST.ts
+var set_presentation_audio_POST_exports = {};
+__export(set_presentation_audio_POST_exports, {
+  handle: () => handle21
+});
+
 // endpoints/presentations/set_presentation_audio_POST.schema.ts
-var schema12 = external_exports.object({
+var schema14 = external_exports.object({
   presentationId: external_exports.string().min(1),
   // null clears the presentation-wide music.
   audioPath: external_exports.string().min(1).nullable(),
@@ -59389,11 +59486,11 @@ var schema12 = external_exports.object({
 });
 
 // endpoints/presentations/set_presentation_audio_POST.ts
-async function handle19(request) {
+async function handle21(request) {
   try {
     const { user } = await getServerUserSession(request);
     const json2 = SuperJSON.parse(await request.text());
-    const input = schema12.parse(json2);
+    const input = schema14.parse(json2);
     const presentation = await db.selectFrom("presentations").select(["id", "userId", "audioPath"]).where("id", "=", input.presentationId).executeTakeFirst();
     if (!presentation || presentation.userId !== user.id) {
       return new Response(SuperJSON.stringify({ error: "Presentation not found" }), {
@@ -59431,11 +59528,11 @@ async function handle19(request) {
 // endpoints/presentations/set_slide_audio_POST.ts
 var set_slide_audio_POST_exports = {};
 __export(set_slide_audio_POST_exports, {
-  handle: () => handle20
+  handle: () => handle22
 });
 
 // endpoints/presentations/set_slide_audio_POST.schema.ts
-var schema13 = external_exports.object({
+var schema15 = external_exports.object({
   presentationId: external_exports.string().min(1),
   slideIndex: external_exports.number().int().min(0),
   // null clears the slide's music.
@@ -59445,11 +59542,11 @@ var schema13 = external_exports.object({
 });
 
 // endpoints/presentations/set_slide_audio_POST.ts
-async function handle20(request) {
+async function handle22(request) {
   try {
     const { user } = await getServerUserSession(request);
     const json2 = SuperJSON.parse(await request.text());
-    const input = schema13.parse(json2);
+    const input = schema15.parse(json2);
     const presentation = await db.selectFrom("presentations").select(["id", "userId"]).where("id", "=", input.presentationId).executeTakeFirst();
     if (!presentation || presentation.userId !== user.id) {
       return new Response(SuperJSON.stringify({ error: "Presentation not found" }), {
@@ -59494,11 +59591,11 @@ async function handle20(request) {
 // endpoints/presentations/thumbnails_presign_POST.ts
 var thumbnails_presign_POST_exports = {};
 __export(thumbnails_presign_POST_exports, {
-  handle: () => handle21
+  handle: () => handle23
 });
 
 // endpoints/presentations/thumbnails_presign_POST.schema.ts
-var schema14 = external_exports.object({
+var schema16 = external_exports.object({
   presentationId: external_exports.string().min(1),
   slides: external_exports.array(
     external_exports.object({
@@ -59508,17 +59605,17 @@ var schema14 = external_exports.object({
       // Exact byte length of the rendered thumbnail. The presigned URL
       // pins Content-Length to this value, so it must match the bytes the
       // client actually PUTs or S3 rejects it with SignatureDoesNotMatch.
-      sizeBytes: external_exports.number().int().positive().max(5 * 1024 * 1024)
+      sizeBytes: external_exports.number().int().positive().max(8 * 1024 * 1024)
     })
   ).min(1).max(500)
 });
 
 // endpoints/presentations/thumbnails_presign_POST.ts
-async function handle21(request) {
+async function handle23(request) {
   try {
     const { user } = await getServerUserSession(request);
     const json2 = SuperJSON.parse(await request.text());
-    const input = schema14.parse(json2);
+    const input = schema16.parse(json2);
     const presentation = await db.selectFrom("presentations").select(["id", "userId"]).where("id", "=", input.presentationId).executeTakeFirst();
     if (!presentation || presentation.userId !== user.id) {
       return new Response(SuperJSON.stringify({ error: "Presentation not found" }), {
@@ -59586,13 +59683,13 @@ async function handle21(request) {
 // endpoints/presentations/update_timers_POST.ts
 var update_timers_POST_exports = {};
 __export(update_timers_POST_exports, {
-  handle: () => handle22
+  handle: () => handle24
 });
 
 // endpoints/presentations/update_timers_POST.schema.ts
 var GLOBAL_TIMER_MODES = ["elapsed", "countdown", "off"];
 var MAX_GLOBAL_COUNTDOWN_SECONDS = 24 * 60 * 60;
-var schema15 = external_exports.object({
+var schema17 = external_exports.object({
   presentationId: external_exports.string().min(1),
   autoAdvance: external_exports.boolean().optional(),
   // "elapsed" counts up from zero; "countdown" counts down from a set time; "off" hides the
@@ -59612,11 +59709,11 @@ var schema15 = external_exports.object({
 });
 
 // endpoints/presentations/update_timers_POST.ts
-async function handle22(request) {
+async function handle24(request) {
   try {
     const { user } = await getServerUserSession(request);
     const json2 = SuperJSON.parse(await request.text());
-    const input = schema15.parse(json2);
+    const input = schema17.parse(json2);
     const presentation = await db.selectFrom("presentations").select(["id", "userId"]).where("id", "=", input.presentationId).executeTakeFirst();
     if (!presentation || presentation.userId !== user.id) {
       return new Response(SuperJSON.stringify({ error: "Presentation not found" }), {
@@ -59666,11 +59763,11 @@ async function handle22(request) {
 // endpoints/presentations/upload_complete_POST.ts
 var upload_complete_POST_exports = {};
 __export(upload_complete_POST_exports, {
-  handle: () => handle23
+  handle: () => handle25
 });
 
 // endpoints/presentations/upload_complete_POST.schema.ts
-var schema16 = external_exports.object({
+var schema18 = external_exports.object({
   presentationId: external_exports.string().min(1),
   fileSizeBytes: external_exports.number().int().nonnegative(),
   slides: external_exports.array(
@@ -59683,11 +59780,11 @@ var schema16 = external_exports.object({
 });
 
 // endpoints/presentations/upload_complete_POST.ts
-async function handle23(request) {
+async function handle25(request) {
   try {
     const { user } = await getServerUserSession(request);
     const json2 = SuperJSON.parse(await request.text());
-    const input = schema16.parse(json2);
+    const input = schema18.parse(json2);
     const presentation = await db.selectFrom("presentations").select(["id", "userId"]).where("id", "=", input.presentationId).executeTakeFirst();
     if (!presentation || presentation.userId !== user.id) {
       return new Response(SuperJSON.stringify({ error: "Presentation not found" }), {
@@ -59735,12 +59832,12 @@ async function handle23(request) {
 // endpoints/presentations/upload_init_POST.ts
 var upload_init_POST_exports = {};
 __export(upload_init_POST_exports, {
-  handle: () => handle24
+  handle: () => handle26
 });
 
 // endpoints/presentations/upload_init_POST.schema.ts
 var uploadSourceTypes = ["pptx", "pdf"];
-var schema17 = external_exports.object({
+var schema19 = external_exports.object({
   title: external_exports.string().min(1).max(300),
   originalFileName: external_exports.string().min(1).max(300),
   sourceType: external_exports.enum(uploadSourceTypes),
@@ -59750,11 +59847,11 @@ var schema17 = external_exports.object({
 
 // endpoints/presentations/upload_init_POST.ts
 var ESTIMATED_THUMBNAIL_BYTES_PER_FILE = 2 * 1024 * 1024;
-async function handle24(request) {
+async function handle26(request) {
   try {
     const { user } = await getServerUserSession(request);
     const json2 = SuperJSON.parse(await request.text());
-    const input = schema17.parse(json2);
+    const input = schema19.parse(json2);
     await assertStorageAvailable(
       user.id,
       input.fileSizeBytes,
@@ -59812,9 +59909,9 @@ async function handle24(request) {
 // endpoints/storage/usage_GET.ts
 var usage_GET_exports = {};
 __export(usage_GET_exports, {
-  handle: () => handle25
+  handle: () => handle27
 });
-async function handle25(request) {
+async function handle27(request) {
   try {
     const { user } = await getServerUserSession(request);
     const usage = await reconcileUserStorage(user.id);
@@ -59851,6 +59948,8 @@ var routes = {
   "GET /presentations/detail": detail_GET_exports,
   "GET /presentations/list": list_GET_exports,
   "POST /presentations/mark_presented": mark_presented_POST_exports,
+  "GET /presentations/original_url": original_url_GET_exports,
+  "POST /presentations/rebuild_complete": rebuild_complete_POST_exports,
   "POST /presentations/set_presentation_audio": set_presentation_audio_POST_exports,
   "POST /presentations/set_slide_audio": set_slide_audio_POST_exports,
   "POST /presentations/thumbnails_presign": thumbnails_presign_POST_exports,
