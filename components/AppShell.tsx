@@ -1,6 +1,8 @@
 import React, { ReactNode } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Clock3, LayoutGrid, Presentation, Settings as SettingsIcon, LogOut } from "lucide-react";
+import { Clock3, LayoutGrid, Presentation, Settings as SettingsIcon, LogOut, Download } from "lucide-react";
+import { toast } from "sonner";
+import { usePwaInstall } from "../helpers/usePwaInstall";
 import { ThemeModeSwitch } from "./ThemeModeSwitch";
 import { Button } from "./Button";
 import { useAuth } from "../helpers/useAuth";
@@ -16,6 +18,7 @@ export const AppShell = ({ children }: { children: ReactNode }) => {
   const location = useLocation();
   const navigate = useNavigate();
   const { authState, logout } = useAuth();
+  const { canInstall, ios, install } = usePwaInstall();
   const displayName = authState.type === "authenticated" ? authState.user.displayName : "";
 
   const handleLogout = async () => {
@@ -51,6 +54,20 @@ export const AppShell = ({ children }: { children: ReactNode }) => {
         </nav>
 
         <div className={styles.sidebarFooter}>
+          {canInstall && (
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() =>
+                ios
+                  ? toast.info("To install: tap the Share button in Safari, then choose Add to Home Screen.")
+                  : install()
+              }
+            >
+              <Download className={styles.logoutIcon} />
+              Install app
+            </Button>
+          )}
           {displayName && <span className={styles.userName}>{displayName}</span>}
           <div className={styles.sidebarFooterRow}>
             <ThemeModeSwitch />

@@ -27,6 +27,13 @@ const routes = Object.entries(pageModules).map(([file, loader]) => {
   return <Route key={name} path={toPath(name)} element={element} />;
 });
 
+// Offline-capable shell + installability (production only, so dev hot reload is unaffected).
+if ("serviceWorker" in navigator && import.meta.env.PROD) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("/sw.js").catch(() => {});
+  });
+}
+
 createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <BrowserRouter>
