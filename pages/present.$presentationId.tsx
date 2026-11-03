@@ -25,6 +25,7 @@ import { usePresentationTimer } from "../helpers/usePresentationTimer";
 import { getCountdownAlertState } from "../helpers/countdownAlerts";
 import { playFinalAlarm, playWarningBell, unlockAlertAudio } from "../helpers/alertSounds";
 import { AlarmClockWarning } from "../components/AlarmClockWarning";
+import { SessionSummary, type SessionSummaryData } from "../components/SessionSummary";
 import styles from "./present.$presentationId.module.css";
 
 function formatMs(ms: number): string {
@@ -121,7 +122,7 @@ export default function PresentPage() {
     [data],
   );
 
-  const { state, start, pause, resume, goToSlide, reset } = usePresentationTimer(slideConfigs);
+  const { state, start, stop, pause, resume, goToSlide, reset } = usePresentationTimer(slideConfigs);
 
   // Presentation-wide countdown. It is derived from the same elapsed clock the
   // count-up timer uses, so pausing, resetting and slide changes affect both
@@ -196,6 +197,77 @@ export default function PresentPage() {
 
   const alarmVisible = alarm !== null && ((alarm.inWindow && !alarm.timeUp) || finalFlash);
 
+  // --- Session summary -----------------------------------------------------
+  // Which slides were shown, and for how long each. Dwell time is measured on
+  // the presentation clock, so paused time is not counted.
+  const [summary, setSummary] = useState<SessionSummaryData | null>(null);
+  const elapsedRef = useRef(0);
+  elapsedRef.current = state.globalElapsedMs;
+  const visitedRef = useRef<Set<number>>(new Set([0]));
+  const dwellRef = useRef<Map<number, number>>(new Map());
+  const enterRef = useRef<{ index: number; at: number }>({ index: 0, at: 0 });
+
+  useEffect(() => {
+    const now = elapsedRef.current;
+    const prev = enterRef.current;
+    if (prev.index !== state.currentSlideIndex) {
+      dwellRef.current.set(
+        prev.index,
+        (dwellRef.current.get(prev.index) ?? 0) + Math.max(0, now - prev.at),
+      );
+      enterRef.current = { index: state.currentSlideIndex, at: now };
+    }
+    visitedRef.current.add(state.currentSlideIndex);
+  }, [state.currentSlideIndex]);
+
+  // "Reset timers" starts the session over, so the summary starts over too.
+  const handleReset = useCallback(() => {
+    reset();
+    dwellRef.current = new Map();
+    visitedRef.current = new Set([enterRef.current.index]);
+    enterRef.current = { index: enterRef.current.index, at: 0 };
+  }, [reset]);
+
+  const endSession = useCallback(
+    (reason: "timeUp" | "manual") => {
+      if (summary || !data) return;
+      // When the countdown ran out, report exactly the planned length rather
+      // than a few frames past it.
+      const endAt = reason === "timeUp" && globalCountdownMs !== null ? globalCountdownMs : elapsedRef.current;
+      pause();
+      stop();
+      audioRef.current?.pause();
+      deckAudioRef.current?.pause();
+      setMusicPlaying(false);
+
+      const dwell = new Map(dwellRef.current);
+      const current = enterRef.current;
+      dwell.set(current.index, (dwell.get(current.index) ?? 0) + Math.max(0, endAt - current.at));
+
+      setSummary({
+        title: data.title,
+        reason,
+        durationMs: endAt,
+        countdownMs: globalCountdownMs,
+        slides: data.slides.map((s, i) => ({
+          index: i,
+          viewed: visitedRef.current.has(i),
+          dwellMs: dwell.get(i) ?? 0,
+          plannedSeconds: s.timerEnabled ? s.durationSeconds : null,
+        })),
+      });
+    },
+    [summary, data, globalCountdownMs, pause, stop],
+  );
+
+  // The global countdown reached zero: close the presentation by itself and
+  // show the summary. A short beat lets the alarm sound and 00:00 register.
+  useEffect(() => {
+    if (!globalTimeUp || summary) return;
+    const closeTimer = setTimeout(() => endSession("timeUp"), 1200);
+    return () => clearTimeout(closeTimer);
+  }, [globalTimeUp, summary, endSession]);
+
   // Start once, when the presentation's data is actually available.
   useEffect(() => {
     if (data && !startedRef.current) {
@@ -247,6 +319,7 @@ export default function PresentPage() {
   // after each move so one flick doesn't skip several slides.
   const handleWheel = useCallback(
     (e: React.WheelEvent) => {
+      if (summary) return;
       const delta = Math.abs(e.deltaY) >= Math.abs(e.deltaX) ? e.deltaY : e.deltaX;
       if (Math.abs(delta) < 8) return;
       if (wheelLockRef.current) return;
@@ -258,7 +331,7 @@ export default function PresentPage() {
       else goPrev();
       wakeControls();
     },
-    [goNext, goPrev, wakeControls],
+    [goNext, goPrev, wakeControls, summary],
   );
 
   // Auto Advance: only when the presentation has it switched on, and only
@@ -436,16 +509,30 @@ export default function PresentPage() {
     }
   }, []);
 
-  const handleExit = useCallback(async () => {
+  // Ending a session shows the summary first; leaving the page is a second step.
+  const handleExit = useCallback(() => endSession("manual"), [endSession]);
+
+  const handleLeave = useCallback(async () => {
     if (document.fullscreenElement) {
       await document.exitFullscreen().catch(() => undefined);
     }
-    toast(globalTimerOff ? "Session ended" : `Session ended — ${formatMs(state.globalElapsedMs)} elapsed`);
     navigate("/presentations");
-  }, [navigate, state.globalElapsedMs, globalTimerOff]);
+  }, [navigate]);
+
+  const handlePresentAgain = useCallback(() => {
+    // A fresh run of the same deck: simplest and safest is a clean page load.
+    window.location.reload();
+  }, []);
 
   useEffect(() => {
     const onKeydown = (e: KeyboardEvent) => {
+      if (summary) {
+        if (e.key === "Escape" || e.key === "Enter") {
+          e.preventDefault();
+          void handleLeave();
+        }
+        return;
+      }
       if (["ArrowRight", "ArrowDown", " "].includes(e.key)) {
         e.preventDefault();
         goNext();
@@ -466,7 +553,7 @@ export default function PresentPage() {
     };
     document.addEventListener("keydown", onKeydown);
     return () => document.removeEventListener("keydown", onKeydown);
-  }, [goNext, goPrev, handleExit, pause, resume, state.isPaused, toggleFullscreen, wakeControls]);
+  }, [goNext, goPrev, handleExit, handleLeave, summary, pause, resume, state.isPaused, toggleFullscreen, wakeControls]);
 
   const handleMouseMove = useCallback(
     (e: React.MouseEvent) => {
@@ -645,7 +732,7 @@ export default function PresentPage() {
           <Button
             variant="ghost"
             size="icon-sm"
-            onClick={reset}
+            onClick={handleReset}
             aria-label="Reset timers"
             className={styles.controlBtn}
           >
@@ -729,6 +816,10 @@ export default function PresentPage() {
           </Button>
         </div>
       </div>
+
+      {summary && (
+        <SessionSummary data={summary} onBack={() => void handleLeave()} onPresentAgain={handlePresentAgain} />
+      )}
     </div>
   );
 }
