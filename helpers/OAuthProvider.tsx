@@ -19,6 +19,8 @@ export type StandardUserData = Pick<
   "email" | "displayName" | "avatarUrl"
 > & {
   providerUserId: string;
+  /** True only when the provider vouches that the user controls this email address. */
+  emailVerified?: boolean;
 };
 
 export interface OAuthProviderInterface {

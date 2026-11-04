@@ -285,6 +285,8 @@ export class GoogleOAuthProvider implements OAuthProviderInterface {
       displayName: userInfo.name || userInfo.email.split("@")[0], // Fallback to email prefix if no name
       avatarUrl: userInfo.picture || null, // Support avatar URL if provided
       providerUserId: userInfo.sub,
+      // Google sends a boolean here (older responses can send the string "true").
+      emailVerified: userInfo.email_verified === true || userInfo.email_verified === "true",
     };
 
     return mappedData;

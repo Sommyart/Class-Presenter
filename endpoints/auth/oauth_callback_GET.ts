@@ -13,6 +13,7 @@ import { getOAuthProvider } from "../../helpers/getOAuthProvider";
 import { ensureUserStorage } from "../../helpers/userStorage";
 import { schema } from "./oauth_callback_GET.schema";
 import crypto from "crypto";
+import { sql } from "kysely";
 import { ZodError } from "zod";
 
 export async function handle(request: Request) {
@@ -330,7 +331,8 @@ export async function handle(request: Request) {
     const existingUsers = await db
       .selectFrom("users")
       .select(["id", "email", "displayName", "role", "avatarUrl"])
-      .where("email", "=", mappedUserData.email)
+      // Case-insensitive, like password login, so John@x.com and john@x.com are one person.
+      .where(sql`LOWER(email)`, "=", mappedUserData.email.toLowerCase())
       .limit(1)
       .execute();
 
@@ -353,9 +355,10 @@ export async function handle(request: Request) {
           .limit(1)
           .execute();
 
-        if (userPassword.length > 0) {
-          // User has a password but no OAuth accounts - they need to login with password first to link accounts
-          console.log("Password user trying to OAuth login - blocking");
+        if (userPassword.length > 0 && !mappedUserData.emailVerified) {
+          // The provider did not vouch for this email, so we can't safely attach
+          // this sign-in to the password account. Ask for the password instead.
+          console.log("Password user trying to OAuth login with unverified email - blocking");
 
           // Clean up OAuth state since we're discarding this attempt
           await db
@@ -378,6 +381,10 @@ export async function handle(request: Request) {
           });
         }
       }
+
+      // Reaching here with a password account means the provider verified the
+      // email, so the Google sign-in is linked to the same account below. The
+      // password keeps working, and both methods open the same presentations.
 
       // This is an OAuth user - check if this specific provider is already linked
       const existingProviderAccount = existingOAuthAccounts.find(
@@ -422,7 +429,7 @@ export async function handle(request: Request) {
       await db
         .updateTable("users")
         .set({
-          displayName: mappedUserData.displayName,
+          // Keep the name the person already has. Only fill in the photo if missing.
           avatarUrl: user.avatarUrl || mappedUserData.avatarUrl || null,
           updatedAt: now,
         })

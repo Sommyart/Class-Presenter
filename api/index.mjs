@@ -57681,7 +57681,9 @@ var GoogleOAuthProvider = class {
       // Fallback to email prefix if no name
       avatarUrl: userInfo.picture || null,
       // Support avatar URL if provided
-      providerUserId: userInfo.sub
+      providerUserId: userInfo.sub,
+      // Google sends a boolean here (older responses can send the string "true").
+      emailVerified: userInfo.email_verified === true || userInfo.email_verified === "true"
     };
     return mappedData;
   }
@@ -58170,14 +58172,14 @@ async function handle5(request) {
       });
     }
     let user;
-    const existingUsers = await db.selectFrom("users").select(["id", "email", "displayName", "role", "avatarUrl"]).where("email", "=", mappedUserData.email).limit(1).execute();
+    const existingUsers = await db.selectFrom("users").select(["id", "email", "displayName", "role", "avatarUrl"]).where(sql`LOWER(email)`, "=", mappedUserData.email.toLowerCase()).limit(1).execute();
     if (existingUsers.length > 0) {
       user = existingUsers[0];
       const existingOAuthAccounts = await db.selectFrom("oauthAccounts").select(["id", "provider", "providerUserId"]).where("userId", "=", user.id).execute();
       if (existingOAuthAccounts.length === 0) {
         const userPassword = await db.selectFrom("userPasswords").select(["userId"]).where("userId", "=", user.id).limit(1).execute();
-        if (userPassword.length > 0) {
-          console.log("Password user trying to OAuth login - blocking");
+        if (userPassword.length > 0 && !mappedUserData.emailVerified) {
+          console.log("Password user trying to OAuth login with unverified email - blocking");
           await db.deleteFrom("oauthStates").where("id", "=", oauthState.id).execute();
           const errorMessage = {
             type: "OAUTH_ERROR",
@@ -58222,7 +58224,7 @@ async function handle5(request) {
         }).execute();
       }
       await db.updateTable("users").set({
-        displayName: mappedUserData.displayName,
+        // Keep the name the person already has. Only fill in the photo if missing.
         avatarUrl: user.avatarUrl || mappedUserData.avatarUrl || null,
         updatedAt: now
       }).where("id", "=", user.id).execute();
