@@ -10,6 +10,8 @@ import {
   Play,
   Trash2,
   Clock3,
+  Download,
+  FileDown,
 } from "lucide-react";
 import {
   DropdownMenu,
@@ -32,6 +34,7 @@ import { Spinner } from "./Spinner";
 import { presentationAdapters } from "../helpers/presentationAdapters";
 import { formatBytes } from "../helpers/storageConfig";
 import { useDeletePresentation } from "../helpers/usePresentationQueries";
+import { downloadOriginalFile, downloadSlidesAsPdf } from "../helpers/downloadPresentation";
 import type { PresentationListItem } from "../endpoints/presentations/list_GET.schema";
 import type { PresentationSourceType } from "../helpers/schema";
 import styles from "./PresentationCard.module.css";
@@ -61,9 +64,32 @@ interface PresentationCardProps {
 
 export const PresentationCard = ({ presentation, className }: PresentationCardProps) => {
   const [confirmOpen, setConfirmOpen] = useState(false);
+  const [downloading, setDownloading] = useState<null | "original" | "pdf">(null);
   const deleteMutation = useDeletePresentation();
   const adapter = presentationAdapters[presentation.sourceType];
   const Icon = SOURCE_ICON[presentation.sourceType];
+
+  const hasOriginal = presentation.sourceType === "pdf" || presentation.sourceType === "pptx";
+
+  const runDownload = async (kind: "original" | "pdf") => {
+    if (downloading) return;
+    setDownloading(kind);
+    const toastId = toast.loading(kind === "original" ? "Getting your file..." : "Building your PDF...");
+    try {
+      if (kind === "original") {
+        await downloadOriginalFile(presentation.id, presentation.title);
+      } else {
+        await downloadSlidesAsPdf(presentation.id, presentation.title, (done, total) => {
+          toast.loading(`Building your PDF... slide ${done} of ${total}`, { id: toastId });
+        });
+      }
+      toast.success("Download started.", { id: toastId });
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : "Could not download the slides.", { id: toastId });
+    } finally {
+      setDownloading(null);
+    }
+  };
 
   const handleDelete = () => {
     deleteMutation.mutate(presentation.id, {
@@ -158,6 +184,31 @@ export const PresentationCard = ({ presentation, className }: PresentationCardPr
           <Button asChild variant="outline" size="sm">
             <Link to={`/presentations/${presentation.id}/edit`}>Edit</Link>
           </Button>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button
+                variant="outline"
+                size="icon-sm"
+                aria-label="Download slides"
+                title="Download slides"
+                disabled={downloading !== null}
+              >
+                {downloading ? <Spinner size="sm" /> : <Download className={styles.menuIcon} />}
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuItem onSelect={() => void runDownload("pdf")}>
+                <FileDown className={styles.menuIcon} />
+                Download as PDF
+              </DropdownMenuItem>
+              {hasOriginal && (
+                <DropdownMenuItem onSelect={() => void runDownload("original")}>
+                  <Download className={styles.menuIcon} />
+                  Download original ({adapter.label})
+                </DropdownMenuItem>
+              )}
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       </div>
 
